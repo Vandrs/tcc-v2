@@ -2,6 +2,8 @@
 
 return [
 
+    'app_name' => 'C3 - Projetos',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -65,7 +67,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pt_br',
 
     /*
     |--------------------------------------------------------------------------
@@ -201,6 +203,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'CurrencyUtil'           => App\Utils\CurrencyUtil::class,
+        'StringUtil'             => App\Utils\StringUtil::class,
+        'HtmlUtil'               => App\Utils\HtmlUtil::class,
+        'Util'                   => App\Utils\Utils::class,
+        'UrlUtil'                => App\Utils\UrlUtil::class,
+
+        'AssetLoader'            => App\Asset\AssetLoader::class
 
     ],
 

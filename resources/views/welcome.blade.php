@@ -1,45 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+@extends('layouts.master')
+@section('body')
+    <div class="container">
+        <div class="row margin-top-10">
+            <div class="col-xs-12">
+                <div class="well">
+                    <h1>C3 - Projetos</h1>
+                </div> 
             </div>
         </div>
-    </body>
-</html>
+        <div class="row margin-top-10">
+        	<div class="col-xs-12">
+        		<ul>
+        			@foreach($users as $user)
+        				<li>
+        					<a href="{{route('project.predictions',['userId' => $user->id])}}">{{$user->name}}</a>
+        				</li>
+        			@endforeach
+        		</ul>
+        	</div>
+        </div>
+    </div>
+@endsection
