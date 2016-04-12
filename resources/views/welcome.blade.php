@@ -11,9 +11,9 @@
         <div class="row margin-top-10">
         	<div class="col-xs-12">
         		<ul>
-        			@foreach($users as $user)
+        			@foreach($users as $idx => $user)
         				<li>
-        					<a href="{{route('project.predictions',['userId' => $user->id])}}">{{$user->name}}</a>
+        					{{($idx+1)}} - <a href="{{route('project.predictions',['userId' => $user->id])}}">{{$user->name}}</a>
         				</li>
         			@endforeach
         		</ul>
