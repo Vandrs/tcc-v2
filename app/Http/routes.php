@@ -14,4 +14,5 @@
 Route::get('/',['as' => 'users', 'uses' => 'UserController@all']);
 Route::get('/usuario/login/{id}',['as' => 'users', 'uses' => 'UserController@loginAs']);
 Route::get('/projetos/recomendar/{userId}',['as' => 'project.predictions', 'uses' => 'ProjectController@getPredictions']);
+Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 Route::get('/teste','TesteController@index');

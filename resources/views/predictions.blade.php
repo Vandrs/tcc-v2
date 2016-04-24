@@ -17,8 +17,10 @@
         			<tbody>
         				@foreach($user->notes as $projectNote)		
         					<tr>
-        						<td>{{$projectNote->project->title}}</td>
-        						<td>{{$projectNote->note}}</td>
+        						<td>
+                                <a href="{{route('site.project.view',['id' => $projectNote->project->id])}}">{{$projectNote->project->title}}</a>
+                                </td>
+        						<td>&nbsp;{{$projectNote->note}}</td>
         					</tr>
         				@endforeach
         			</tbody>
@@ -34,8 +36,10 @@
         			<tbody>
         				@foreach($predictions as $project)		
         					<tr>
-        						<td>{{$project->title}}</td>
-        						<td>{{$project->preference}}</td>
+        						<td>
+                                <a href="{{route('site.project.view',['id' => $project->id])}}">{{$project->title}}</a>
+                                </td>
+        						<td>&nbsp;{{$project->preference}}</td>
         					</tr>
         				@endforeach
         			</tbody>

@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\DB\User;
+use App\Models\DB\Project;
 use Auth;
 
 class UserController extends Controller
 {
     public function all(){
     	$users = User::orderBy('name','asc')->get();
-    	return view('welcome',['users' => $users]);
+    	$projects = Project::orderBy('title','asc')->get();
+    	return view('welcome',['users' => $users, 'projects' => $projects]);
     }
 
     public function loginAs(){
