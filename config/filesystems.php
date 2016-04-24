@@ -42,18 +42,19 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        'elasticsearch' => [
+            'driver' => 'local',
+            'root'   => storage_path('elastic'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'visibility' => 'public',
         ],
-
         's3' => [
             'driver' => 's3',
             'key' => 'your-key',
@@ -61,7 +62,6 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-
     ],
 
 ];
