@@ -7,7 +7,8 @@ class Jquery extends AssetBundle{
     protected $priority = 1;    
     public function __construct() {
         $basePath = url('/');
-        $this->baseJsPath = (env('APP_ENV','local') == 'local') ? $basePath.'/assets/js/jquery/src/' : $basePath.'/assets/js/jquery/dist/';
-        $this->jsfiles = (env('APP_ENV','local') == 'local') ? ['jquery-1-12-3.js'] : ['jquery-1-12-3.min.js'];
+        $env = Config::get('app.env');
+        $this->baseJsPath = ($env == 'local') ? $basePath.'/assets/js/jquery/src/' : $basePath.'/assets/js/jquery/dist/';
+        $this->jsfiles = ($env == 'local') ? ['jquery-1-12-3.js'] : ['jquery-1-12-3.min.js'];
     }
 }
