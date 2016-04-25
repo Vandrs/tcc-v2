@@ -11,8 +11,17 @@
 |
 */
 
-Route::get('/',['as' => 'users', 'uses' => 'UserController@all']);
-Route::get('/usuario/login/{id}',['as' => 'users', 'uses' => 'UserController@loginAs']);
-Route::get('/projetos/recomendar/{userId}',['as' => 'project.predictions', 'uses' => 'ProjectController@getPredictions']);
+Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);
+
+/*Projeto*/
 Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
+
+/*Usuario*/
+Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
+
+/*Teste*/
 Route::get('/teste','TesteController@index');
+Route::get('/teste/login/{id}',['as' => 'test.login', 'uses' => 'TesteController@loginAs']);
+Route::get('/teste/logout',['as' => 'test.logout', 'uses' => 'TesteController@logout']);
+Route::get('/teste/lista/login',['as' => 'test.users', 'uses' => 'TesteController@usersLoginList']);
+Route::get('/teste/lista/projetos',['as' => 'test.projects', 'uses' => 'TesteController@projectsList']);

@@ -13,6 +13,9 @@
 	"avg_note": {
 		"type":"float"
 	},
+	"total_notes":{
+		"type":"integer"
+	},
 	"created_at": {
 		"type":"date",
         "format":"epoch_millis||yyyy-MM-dd HH:mm:ss"

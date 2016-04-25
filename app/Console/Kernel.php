@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\MakeDiffMatrix::class
+        \App\Console\Commands\MakeDiffMatrix::class,
+        \App\Console\Commands\ProjetcsToElastic::class
     ];
 
     /**

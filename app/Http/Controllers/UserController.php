@@ -6,22 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\DB\User;
-use App\Models\DB\Project;
-use Auth;
+use App\Models\Business\SlopeOne;
+
 
 class UserController extends Controller
 {
-    public function all(){
-    	$users = User::orderBy('name','asc')->get();
-    	$projects = Project::orderBy('title','asc')->get();
-    	return view('welcome',['users' => $users, 'projects' => $projects]);
-    }
-
-    public function loginAs(){
-
-    }
-
-    public function logout(){
-
+    public function view($id){
+    	$user = User::findORFail($id);
+    	$slopeOne = new SlopeOne();
+    	$projects = $slopeOne->getPredictions($user);
+    	$data = ['page_tile' => 'Predições', 'user' => $user, 'predictions' => $projects];
+    	return view('user.view',$data);
     }
 }

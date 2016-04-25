@@ -47,6 +47,7 @@
     </head>
     <body {{isset($bodyDocumentClass)?"class=".$bodyDocumentClass:""}} itemscope itemtype="http://schema.org/WebPage">
         <meta itemprop="isFamilyFriendly" content="true">
+        @include('partials.menu-bar')        
         @yield('body')
         <script type="text/javascript">
         var BASE_URL = '{{url("/")}}/';
