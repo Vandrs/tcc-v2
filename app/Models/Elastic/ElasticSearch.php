@@ -5,8 +5,8 @@ namespace App\Models\Elastic;
 use Elastica\Client;
 use Elastica\Index;
 use Config;
-use App\Models\Elastic\ElasticProject;
-use App\Models\Elastic\ElasticModel;
+use App\Models\Elastic\Models\ElasticProject;
+use App\Models\Elastic\Models\ElasticModel;
 use Elastica\Type\Mapping;
 
 
@@ -49,7 +49,12 @@ class ElasticSearch{
 		];
 	}
 
-	private function getElasticIndex(){
+
+	public function getElasticClient(){
+		return $this->client;
+	}
+
+	public function getElasticIndex(){
 		return new Index($this->client,$this->index);
 	}
 

@@ -11,13 +11,17 @@
 |
 */
 
+/*Site*/
 Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);
+Route::get('/busca',['as' => 'search', 'uses' => 'SiteController@search']);
 
 /*Projeto*/
 Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
+
+
 
 /*Teste*/
 Route::get('/teste','TesteController@index');

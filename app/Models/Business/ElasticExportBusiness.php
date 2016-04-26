@@ -6,7 +6,7 @@ use App\Utils\ProgressBarTrait;
 use App\Utils\Utils;
 use App\Models\DB\Project;
 use App\Models\Elastic\ElasticSearch;
-use App\Models\Elastic\ElasticProject;
+use App\Models\Elastic\Models\ElasticProject;
 use App\Models\Business\ElasticProjectBusiness;
 use Elastica\Document;
 use Log;

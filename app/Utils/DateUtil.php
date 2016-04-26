@@ -3,8 +3,8 @@
 namespace App\Utils;
 
 class DateUtil{
-    public static function dateTimeInBrazil(){
-        return new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
+    public static function dateTimeInBrazil($time = 'now'){
+        return new \DateTime($time, new \DateTimeZone('America/Sao_Paulo'));
     }
 
     public static function strDbDateToBrDate($date,$withTime = true){

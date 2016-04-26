@@ -1,0 +1,10 @@
+Carga de dados:
+	Criar usuários: php artisan db:seed --class=UsersTableSeeder
+	Criar projetos: php artisan db:seed --class=ProjectsTableSeeder
+	Criar/Refazer avaliações: php artisan db:seed --class=ProjectNotesSeeder
+	#Refazer todo o banco e recriar tudo: php artisan db:seed
+
+Comandos:
+	Calcular matriz de diferenças: php artisan app:make-diff-matrix
+	Mapear models no elasticsearch: php artisan app:map-elastic-models
+	Enviar projetos para o Elasticsearch: php artisan app:projects-to-elastic

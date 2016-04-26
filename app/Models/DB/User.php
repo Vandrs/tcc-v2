@@ -28,4 +28,8 @@ class User extends Authenticatable
     public function notes(){
         return $this->hasMany(ProjectNote::class);
     }
+
+    public function qtdEvaluatedProjects(){
+        return ProjectNote::where('user_id','=',$this->id)->count();
+    }
 }

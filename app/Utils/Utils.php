@@ -68,4 +68,11 @@ class Utils{
       $message .= ". Line: ".$e->getLine();
       return $message;
     }
+
+    public static function calcFromIndex($page = 0, $size){
+      if($page <= 1){
+        return 0;
+      }
+      return (($page - 1) * $size);
+    }
 }
