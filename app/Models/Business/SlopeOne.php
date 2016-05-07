@@ -20,9 +20,16 @@ class SlopeOne{
 				$diffNotes = DiffMatrix::where('project_a','=',$ratedNote->project_id)
 						  		  	   ->where('project_b','=',$project->id)
 						  		  	   ->first();
-				array_push($diffs,($ratedNote->note + $diffNotes->diff));
+				if($diffNotes){
+					array_push($diffs,($ratedNote->note + $diffNotes->diff));	
+				}
 			});
-			$project->preference = array_sum($diffs) / count($diffs);
+			if(count($diffs)){
+				$project->preference = array_sum($diffs) / count($diffs);	
+			} else {
+				$project->preference = 0;
+			}
+			
 		});
 		return $notRated->sort(function($a,$b){
 			if($a->preference == $b->preference){

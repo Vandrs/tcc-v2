@@ -24,7 +24,13 @@
             </div>
         </div>
         <div class="row margin-top-10">
-            @foreach($projects as $project)
+            @foreach($projects as $idx => $project)
+            
+                @if($idx > 0 && ($idx % 3 == 0))
+                </div>
+                <div class="row margin-top-10">
+                @endif
+
                 <div class="col-xs-12 col-sm-6 col-md-4 margin-top-10">
                 @include('partials.project-card',['project' => $project])
                 </div>

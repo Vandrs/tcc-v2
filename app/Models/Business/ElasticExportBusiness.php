@@ -5,6 +5,7 @@ namespace App\Models\Business;
 use App\Utils\ProgressBarTrait;
 use App\Utils\Utils;
 use App\Models\DB\Project;
+use App\Models\Enums\EnumProject;
 use App\Models\Elastic\ElasticSearch;
 use App\Models\Elastic\Models\ElasticProject;
 use App\Models\Business\ElasticProjectBusiness;
@@ -41,7 +42,7 @@ class ElasticExportBusiness{
 		}
 		DB::table('projects')
 		  ->whereIn('id',$excludeIds)
-		  ->update(['in_elastic' => Project::ACTIVE]);
+		  ->update(['in_elastic' => EnumProject::STATUS_ACTIVE]);
 		$this->finishBar();
 	}
 
@@ -54,7 +55,7 @@ class ElasticExportBusiness{
 	}
 
 	private function getBaseQueryProjects($excludeIds = []){
-		return Project::where('in_elastic', '=', Project::INACTIVE)
+		return Project::where('in_elastic', '=', EnumProject::STATUS_INACTIVE)
 			   		  ->whereNotIn('id',$excludeIds);
 	}
 

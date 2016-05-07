@@ -5,6 +5,9 @@ namespace App\Models\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\DB\ProjectNote;
 use App\Models\DB\Category;
+use App\Models\DB\User;
+use App\Models\Enums\EnumProject;
+use DB;
 
 class Project extends Model{
 
@@ -26,6 +29,23 @@ class Project extends Model{
 
 	public function category(){
 		return $this->belongsTo(Category::class);
+	}
+
+	public function getMemberUsers(){
+		$roles = [ EnumProject::ROLE_CONTRIBUTOR, EnumProject::ROLE_OWNER, EnumProject::ROLE_MENTOR] ;
+		return User::select([
+                            DB::raw('users.*'),
+                            DB::raw('user_projects.role'),
+                            DB::raw('user_projects.id AS user_project_id')
+                        ])
+                      ->join('user_projects','user_projects.user_id','=','users.id')
+                      ->where('user_projects.project_id','=',$this->id)
+                      ->whereIn('user_projects.role', $roles)
+                      ->get();
+	}
+
+	private function getBaseQueryUsers(){
+
 	}
 
 	public function getAvgNote(){

@@ -8,7 +8,7 @@
         </div>
         <div class="row">
         	<div class="col-xs-12 col-sm-6">
-        		<table>
+        		<table class="table table-bordered table-striped">
         			<thead>
         				<tr>
         					<th colspan="2">Projetos avaliados</th>	
@@ -27,7 +27,7 @@
         		</table>
         	</div>
         	<div class="col-xs-12 col-sm-6">
-        		<table>
+        		<table class="table table-bordered table-striped">
         			<thead>
         				<tr>
         					<th colspan="2">Predições</th>	
@@ -45,6 +45,24 @@
         			</tbody>
         		</table>
         	</div>
+            <div class="col-xs-12 col-sm-6 margin-top-10">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Projetos em que atua</th>  
+                        </tr>   
+                    </thead>
+                    <tbody>
+                        @foreach($user->projectsAsOwner() as $project)      
+                            <tr>
+                                <td>
+                                <a href="{{route('site.project.view',['id' => $project->id])}}">{{$project->title}}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

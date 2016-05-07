@@ -7,8 +7,8 @@
             </div>
         </div>
         <div class="row">
-        	<div class="col-xs-12">
-        		<table>
+        	<div class="col-xs-12 col-sm-6">
+        		<table class="table table-bordered table-striped">
         			<thead>
         				<tr>
         					<th colspan="2">Notas</th>	
@@ -30,6 +30,24 @@
         			</tbody>
         		</table>
         	</div>
+            <div class="col-xs-12 col-sm-6">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Usuários</th>  
+                        </tr>   
+                    </thead>
+                    <tbody>
+                        @foreach($project->getMemberUsers() as $user)       
+                            <tr>
+                                <td>
+                                <a href="{{route('user.view',['id' => $user->id])}}">{{$user->name}}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
