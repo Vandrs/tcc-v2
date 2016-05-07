@@ -4,13 +4,14 @@ namespace App\Models\DB;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\DB\ProjectNote;
+use App\Models\DB\Category;
 
 class Project extends Model{
 
 	CONST ACTIVE = 1;
 	CONST INACTIVE = 0;
 
-	protected $fillable = ['title', 'description', 'in_elastic'];
+	protected $fillable = ['title', 'category_id','description', 'in_elastic'];
 
 	protected static function boot(){
 		parent::boot();
@@ -21,6 +22,10 @@ class Project extends Model{
 
 	public function notes(){
 		return $this->hasMany(ProjectNote::class);
+	}
+
+	public function category(){
+		return $this->belongsTo(Category::class);
 	}
 
 	public function getAvgNote(){

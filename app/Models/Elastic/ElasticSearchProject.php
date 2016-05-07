@@ -41,12 +41,18 @@ class ElasticSearchProject{
 
 	public function searchProject($term, $filters = [], $order = [], $size = 9, $page = 1){
 		$query = new Query();
-		if(empty($filters)){
-			$searchQuery = $this->simpleMultiMatchQuery($term);
+		$queryBuilder = new QueryBuilder;
+		$boolQuery = $queryBuilder->query()->bool();
+		if($term){
+			$boolQuery->addMust($this->simpleMultiMatchQuery($term));	
 		} else {
-			/*Bool Query com Filters*/
+			$boolQuery->addMust(new MatchAll());	
 		}
-		$query->setQuery($searchQuery)
+		
+		if(!empty($filters)){
+			$boolQuery->addFilter($queryBuilder->query()->term($filters));
+		}
+		$query->setQuery($boolQuery)
 			  ->setFrom(Utils::calcFromIndex($page,$size))
     		  ->setSize($size);
     	if(!empty($order)){
@@ -58,7 +64,7 @@ class ElasticSearchProject{
 	private function simpleMultiMatchQuery($term){
 		$multiMatchQuery = new MultiMatch();
 		$multiMatchQuery->setQuery($term)
-						->setFields(['title','description'])
+						->setFields(['title','description','category.name'])
 						->setType(MultiMatch::TYPE_BEST_FIELDS);
 		return $multiMatchQuery;
 	}

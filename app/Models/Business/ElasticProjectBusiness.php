@@ -15,6 +15,10 @@ class ElasticProjectBusiness{
 		self::instance()->excludeExportFields($data);
 		$data["avg_note"] = $project->getAvgNote();
 		$data["total_notes"] = $project->getTotalNotes();
+		$data["category"] = [
+			"id"   => $project->category->id,
+			"name" => $project->category->name
+		];
 		return $data;
 	}
 

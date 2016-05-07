@@ -2,10 +2,18 @@
 @section('body')
     <div class="container">
         <div class="row margin-top-20">
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <form action="{{route('search')}}" method="GET" class="inline">
-                    <div class="input-group">
-                      <input name="q" type="text" value="{{$searchTerm}}" required class="form-control" placeholder="Buscar por tema, assunto ou categoria">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <form action="{{route('search')}}" method="GET" class="row">
+                    <div class="col-xs-4">
+                        <select name='category_id' class="form-control" placeholder="Selecionar categoria"> 
+                            <option value="">Selecionar categoria</option>
+                            @foreach($categories as $category)
+                            <option value={{$category->id}} {{$category->id == $selectedCategoryId?"selected":""}}>{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="input-group col-xs-8">
+                      <input name="q" type="text" value="{{$searchTerm}}" class="form-control" placeholder="Buscar por tema, assunto ou categoria">
                       <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">Buscar <span class="glyphicon glyphicon-search"></span></button>
                       </span>
@@ -20,7 +28,9 @@
         </div>
         <div class="row margin-top-10">
             @foreach($projects as $project)
+                <div class="col-xs-12 col-sm-6 col-md-4 margin-top-10">
                 @include('partials.project-card',['project' => $project])
+                </div>
             @endforeach
         </div>
         <div class="row margin-top-10">

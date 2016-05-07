@@ -13,16 +13,23 @@
 
 $factory->define(\App\Models\DB\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(123456),
+        'name'           => $faker->name,
+        'email'          => $faker->safeEmail,
+        'password'       => bcrypt(123456),
         'remember_token' => str_random(10),
     ];
 });
 
 $factory->define(\App\Models\DB\Project::class, function (Faker\Generator $faker){
+    $categories = \App\Models\DB\Category::all();
+    $categoryId = null;
+    if($categories->count()){
+       $category = $categories->random(1);
+       $categoryId = $category->id;
+    }
 	return [
-		'title' => $faker->sentence(3, true),
-		'description' => $faker->paragraph(20, true)
+		'title'       => $faker->sentence(3, true),
+		'description' => $faker->paragraph(20, true),
+        'category_id' => $categoryId
 	];
 });

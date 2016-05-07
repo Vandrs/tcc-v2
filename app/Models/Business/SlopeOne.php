@@ -4,11 +4,15 @@ namespace App\Models\Business;
 
 use App\Models\DB\Project;
 use App\Models\DB\DiffMatrix;
+use Illuminate\Support\Collection;
 
 class SlopeOne{
 
 	public function getPredictions($user){
 		$ratedNotes = $user->notes;
+		if($ratedNotes->count() == 0){
+			return new Collection;
+		}
 		$notRated = $this->getUserNotRatedProjects($user);
 		$notRated->each(function($project) use($ratedNotes){
 			$diffs = [];

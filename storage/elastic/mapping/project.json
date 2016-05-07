@@ -23,5 +23,16 @@
 	"updated_at": {
 		"type":"date",
         "format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+	},
+	"category": {
+		"properties": {
+			"id": {
+				"type":"integer"
+			},
+			"name": {
+				"type":"string",
+				"analyzer":"brazilian"
+			}
+		}
 	}
 }

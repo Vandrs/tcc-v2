@@ -9,7 +9,7 @@ class ElasticProject extends ElasticModel{
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'description', 'avg_note', 'total_notes', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category','avg_note', 'total_notes', 'created_at', 'updated_at'];
 
 
 	public function __construct($attributes = null){
@@ -21,6 +21,13 @@ class ElasticProject extends ElasticModel{
 			return DateUtil::dateTimeInBrazil($value);
 		}
 		return null;
+	}
+
+	public function getCategoryAttribute($value){
+		if(is_array($value)){
+			return (object) $value;
+		}
+		return $value;
 	}
 
 	public function getUpdatedAtAttribute($value){
