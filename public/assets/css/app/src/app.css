@@ -41,6 +41,7 @@ body{
 
 .box {
 	background-color: #FFF;
+	padding-bottom: 20px;
     box-shadow: 0 2px 3px silver;
 }
 

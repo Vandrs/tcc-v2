@@ -44,10 +44,6 @@ class Project extends Model{
                       ->get();
 	}
 
-	private function getBaseQueryUsers(){
-
-	}
-
 	public function getAvgNote(){
 		return ProjectNote::where('project_id', '=', $this->id)->avg('note');
 	}

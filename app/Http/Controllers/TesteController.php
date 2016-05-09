@@ -29,7 +29,7 @@ class TesteController extends Controller
     public function loginAs($id){
     	$user = User::findOrFail($id);
     	Auth::login($user);
-    	return redirect()->route('home');
+    	return redirect()->route('admin.home');
     }
 
     public function logout(){

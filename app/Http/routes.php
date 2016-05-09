@@ -15,8 +15,12 @@
 Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);
 Route::get('/busca',['as' => 'search', 'uses' => 'SiteController@search']);
 
+/*Admin*/
+Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);
+
 /*Projeto*/
 Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectController@create']);
+Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);
 Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 
 /*Usuario*/

@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
 use App\Models\DB\Project;
-use App\Models\DB\Category;
+use App\Models\Business\CategoryBusiness;
 
 
 class ProjectController extends Controller
 {
 
 	public function __construct(){
-		//$this->middleware('auth')->only(['create']);
+		$this->middleware('auth')->only(['create','store']);
 	}
     public function getPredictions($userId){
     	return view('predictions',$data);
@@ -26,8 +26,15 @@ class ProjectController extends Controller
     }
 
     public function create(){
-    	$categories = Category::orderBy('name','ASC');
+    	$categories = CategoryBusiness::getCategoriesForDropDown();
     	AssetLoader::register([],['admin.css']);
-    	return view('project.create', ['categories' => $categories] );
+    	return view('project.create', [
+    		'categories' => $categories,
+    		'page_title' => 'Novo Projeto'
+    	] );
+    }
+
+    public function store(Request $request){
+        dd($request->all());
     }
 }

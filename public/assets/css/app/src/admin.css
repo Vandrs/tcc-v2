@@ -14,6 +14,11 @@
     transition: all 0.5s ease;
 }
 
+#wrapper #sidebar-wrapper .sidebar-brand{
+    font-weight: bold;
+    color: #999;
+}
+
 #wrapper.toggled {
     padding-left: 250px;
 }
@@ -127,3 +132,14 @@
 .navbar.main-menu{
     margin-bottom: 0px;
 }
+
+.breadcrumb{
+    background-color: #FFF;
+    border: solid 1px #F5F5F5;
+}
+
+.form-section-title{
+    font-size: 26px;
+    color: #949494;
+}
+

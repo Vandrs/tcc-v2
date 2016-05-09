@@ -162,6 +162,9 @@ return [
          * Providers de terceiros
          */
         Barryvdh\Debugbar\ServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
 
     ],
 
@@ -209,13 +212,17 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'CurrencyUtil'           => App\Utils\CurrencyUtil::class,
-        'StringUtil'             => App\Utils\StringUtil::class,
-        'HtmlUtil'               => App\Utils\HtmlUtil::class,
-        'Util'                   => App\Utils\Utils::class,
-        'UrlUtil'                => App\Utils\UrlUtil::class,
+        'CurrencyUtil' => App\Utils\CurrencyUtil::class,
+        'StringUtil' => App\Utils\StringUtil::class,
+        'HtmlUtil' => App\Utils\HtmlUtil::class,
+        'Util' => App\Utils\Utils::class,
+        'UrlUtil' => App\Utils\UrlUtil::class,
 
-        'AssetLoader'            => App\Asset\AssetLoader::class
+        'AssetLoader' => App\Asset\AssetLoader::class,
+
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

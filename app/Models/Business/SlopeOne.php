@@ -31,12 +31,13 @@ class SlopeOne{
 			}
 			
 		});
-		return $notRated->sort(function($a,$b){
+		$sortFunction = function($a, $b){
 			if($a->preference == $b->preference){
 				return 0;
 			}
 			return $a->preference < $b->preference ? 1 : -1;
-		});
+		};
+		return $notRated->sort($sortFunction)->values();
 	} 
 
 	public function getUserNotRatedProjects($user){
