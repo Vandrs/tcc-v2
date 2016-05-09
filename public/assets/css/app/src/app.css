@@ -3,6 +3,10 @@ body{
 	background-color: #f2f2f2;
 }
 
+body { 
+	padding-top: 40px; 
+}
+
 .no-border{
     border: none !important;
 }
@@ -65,4 +69,153 @@ body{
 
 .created-at .date{
 	font-weight: bold;
+}
+
+
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+}
+
+/*DEVICE HELPERS*/
+.pull-right{ 
+	float:right; 
+}
+
+.pull-left{ 
+	float:left; 
+}
+
+/* Desktop */
+@media screen and (min-width: 800px) {
+  .no-desktop {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .no-desktop {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  .on-desktop {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+/* Large desktop */
+@media screen and (min-width: 1200px) {
+  .no-large {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  .on-large {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
+/* tablet landscape*/
+@media only screen and (max-width: 1024px) {
+
+    .on-tablet{
+        display: block !important;
+        visibility: visible !important;
+    }
+
+   .no-tablet-landscape,
+   .no-tablet,
+   .no-tablet-portrait {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .on-tablet-landscape  {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+}
+
+/* tablet portrait */
+@media only screen and (max-width: 800px) {
+
+    .no-tablet-portrait,
+    .no-tablet {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .on-tablet,
+    .on-tablet-portrait {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+}
+
+/* Phones landscape*/
+@media only screen and (max-width: 640px) {
+    .btn.full-size-on-small, .full-size-on-small{
+        margin-bottom:10px;
+        width:100% !important;
+    }
+
+    .no-phone-landscape,
+    .no-phone {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .on-phone,
+    .on-phone-landscape {
+        display: block !important;
+        visibility: visible !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    .btn.full-size-on-small, .full-size-on-small{
+        width:100% !important;
+        margin-bottom:10px;
+    }
+
+    .no-phone-landscape,
+    .no-phone {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+
+}
+
+/* Phone Portrait */
+@media only screen and (max-width: 360px) {
+
+    .btn.full-size-on-small, .full-size-on-small{
+        width:100% !important;
+     	margin-bottom:10px;
+    }
+
+    .no-phone-portrait,
+    .no-phone {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+}
+
+@media only screen and (max-width: 320px) {
+
+    .btn.full-size-on-small, .full-size-on-small{
+        margin-bottom:10px;
+        width:100% !important;
+    }
+
+    .no-phone-portrait,
+    .no-phone {
+      display: none !important;
+      visibility: hidden !important;
+    }    
+
 }
