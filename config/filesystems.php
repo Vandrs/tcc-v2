@@ -46,6 +46,14 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('temp')
+        ],
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('images')
+        ],
         'elasticsearch' => [
             'driver' => 'local',
             'root'   => storage_path('elastic'),

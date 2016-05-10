@@ -25,7 +25,6 @@
         </div>
         <div class="row margin-top-10">
             @foreach($projects as $idx => $project)
-
                 @if($idx > 0 && ($idx % 3 == 0) )
                 </div>
                 <div class="row margin-top-10">

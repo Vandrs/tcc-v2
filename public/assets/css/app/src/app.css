@@ -4,7 +4,7 @@ body{
 }
 
 body { 
-	padding-top: 40px; 
+	padding-top: 50px; 
 }
 
 .no-border{
@@ -69,6 +69,14 @@ body {
 
 .created-at .date{
 	font-weight: bold;
+}
+
+.alert-messages{
+    list-style: none;
+}
+
+.full-size{
+    width: 100%;
 }
 
 

@@ -143,3 +143,23 @@
     color: #949494;
 }
 
+.input-file-conteiner{
+    position: relative;
+    display: block;
+}
+
+.input-file-conteiner button{
+    position: absolute;
+    z-index: 1;
+}
+
+.input-file-conteiner input[type="file"]{
+    z-index: 0;
+    color: #FFF;
+}
+
+.small{
+    font-size: 10px;
+    color: #949494;
+    font-weight: bold;
+}

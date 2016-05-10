@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\DB\ProjectNote;
 use App\Models\DB\Category;
 use App\Models\DB\User;
+use App\Models\DB\Image;
 use App\Models\Enums\EnumProject;
 use DB;
 
@@ -29,6 +30,10 @@ class Project extends Model{
 
 	public function category(){
 		return $this->belongsTo(Category::class);
+	}
+
+	public function images(){
+		return $this->hasMany(Image::class);
 	}
 
 	public function getMemberUsers(){

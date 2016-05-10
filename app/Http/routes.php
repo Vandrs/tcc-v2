@@ -23,6 +23,11 @@ Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectCo
 Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);
 Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 
+/*Image*/
+Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
+Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);
+Route::post('/image/temp/delete',['as' => 'image.temp-file.delete', 'uses' => 'ImageController@deleteTempFile']);
+
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
 

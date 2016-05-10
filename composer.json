@@ -12,7 +12,8 @@
         "guzzlehttp/guzzle": "^6.2",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "laravelcollective/html": "^5.2",
-        "league/glide": "^1.0"
+        "league/glide": "^1.0",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
