@@ -54,6 +54,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('images')
         ],
+        'image_cache' => [
+            'driver' => 'local',
+            'root' => storage_path('cache')
+        ],
         'elasticsearch' => [
             'driver' => 'local',
             'root'   => storage_path('elastic'),

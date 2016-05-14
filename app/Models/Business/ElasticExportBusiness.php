@@ -8,7 +8,6 @@ use App\Models\DB\Project;
 use App\Models\Enums\EnumProject;
 use App\Models\Elastic\ElasticSearch;
 use App\Models\Elastic\Models\ElasticProject;
-use App\Models\Business\ElasticProjectBusiness;
 use Elastica\Document;
 use Log;
 use DB;
@@ -40,10 +39,21 @@ class ElasticExportBusiness{
 			}
 			$qtdItems = $this->getQtdProjectsToExport($excludeIds);
 		}
-		DB::table('projects')
-		  ->whereIn('id',$excludeIds)
-		  ->update(['in_elastic' => EnumProject::STATUS_ACTIVE]);
+		$this->setActive($excludeIds);
 		$this->finishBar();
+	}
+
+	public function exportProject(Project $project){
+		$elasticDocument = new Document($project->id,ElasticProjectBusiness::getElasticProjectData($project));
+		$elasticSearch = new ElasticSearch;
+		$elasticSearch->bulkModelsToElastic(new ElasticProject, [$elasticDocument]);
+		$this->setActive([$project->id]);
+	}
+
+	private function setActive($ids){
+		DB::table('projects')
+			->whereIn('id', $ids)
+			->update(['in_elastic' => EnumProject::STATUS_ACTIVE]);
 	}
 
 	private function getProjectsToExport($excludeIds = []){

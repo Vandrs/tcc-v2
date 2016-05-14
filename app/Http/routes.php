@@ -27,6 +27,7 @@ Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectContr
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
 Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);
 Route::post('/image/temp/delete',['as' => 'image.temp-file.delete', 'uses' => 'ImageController@deleteTempFile']);
+Route::get('/image/get/{path}',['as' => 'image.get', 'uses' => 'ImageController@getImage']);
 
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);

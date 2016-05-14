@@ -17,6 +17,9 @@ abstract class ElasticModel extends Model{
 		parent::__construct($attributes);
 		$this->type = $type;
 		$this->mappingFile = $mappingFile;
+		if($attributes){
+			$this->transform();
+		}
 	}
 
 	public function getMapping(){
@@ -36,5 +39,9 @@ abstract class ElasticModel extends Model{
 			$content = $disk->get($this->mappingPath.$this->mappingFile);
 			$this->mapping = json_decode($content, true);
 		}
+	}
+
+	protected function transform(){
+
 	}
 }

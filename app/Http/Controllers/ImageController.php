@@ -4,22 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use League\Glide\ServerFactory;
 use App\Http\Requests;
 use App\Models\Business\TempImageBusiness;
+use Storage;
 
-class ImageController extends Controller
-{
+class ImageController extends Controller {
+
+	public function getImage(Request $request, $path){
+		$imageParameters = $request->input();
+		$glideServer = ServerFactory::create([
+			'source' => Storage::disk('images')->getDriver(),
+			'cache'  => Storage::disk('image_cache')->getDriver(),
+		]);
+		try{
+			return response($glideServer->outputImage($path,$imageParameters));
+		} catch (\Exception $e){
+			return response('File not found', Response::HTTP_NOT_FOUND);
+		}
+	}
+
     public function tempUpload(Request $request){
     	$imageFile = $request->file('image');
     	$tempImage = new TempImageBusiness;
     	if($data = $tempImage->upload($imageFile)){
-    		return json_encode([ 
+    		return json_encode([
     			'status' 	=> 1,
     			'file' 		=> $data
     		]);
     	} else {
-    		return json_encode([ 
-    			'status' 	=> 0, 
+    		return json_encode([
+    			'status' 	=> 0,
     			'class_msg' => 'alert-danger',
     			'msg' 		=> implode('<br />',$tempImage->getValidator()->messages()->all())
     		]);

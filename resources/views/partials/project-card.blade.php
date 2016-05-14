@@ -1,5 +1,13 @@
 <div class="project-card box">
 	<h4><a href="{{route('search',['category_id' => $project->category->id])}}">{{$project->category->name}}</a></h4>
+	@if($project->images->count())
+		<div class="project-image-cover">
+			<img class="img-responsive"
+				 src="{{$project->imageCoverOrFirst()->getImageUrl()}}"
+				 title="{{$project->imageCoverOrFirst()->title}}"/>
+		</div>
+	@endif
+
 	<h3><a href="{{route('site.project.view',['id' => $project->id])}}">{{$project->title}}</a></h3>
 	<p class="text-justify">{{StringUtil::limitaCaracteres($project->description,200,"...")}}</p>
 	<div class="evaluation">

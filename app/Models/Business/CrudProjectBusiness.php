@@ -11,8 +11,12 @@ use App\Utils\Utils;
 use Validator;
 use DB;
 use Log;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Jobs\SendPropertyToElastic;
 
 class CrudProjectBusiness{
+
+	use DispatchesJobs;
 
 	private $validator;
 
@@ -43,6 +47,7 @@ class CrudProjectBusiness{
 				}
 			}
 			DB::commit();
+			$this->dispathJob($project);
 			return $project;
 		}catch(\Exception $e){
 			Log::error(Utils::getExceptionFullMessage($e));
@@ -72,5 +77,10 @@ class CrudProjectBusiness{
 
 	public function getValidator(){
 		return $this->validator;
+	}
+
+	private function dispathJob(Project $project){
+		$job = new SendPropertyToElastic($project);
+		$this->dispatch($job->onQueue('elasticsearch'));
 	}
 }

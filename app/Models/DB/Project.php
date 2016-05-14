@@ -36,6 +36,15 @@ class Project extends Model{
 		return $this->hasMany(Image::class);
 	}
 
+	public function imageCoverOrFirst(){
+		$image = $this->images->where("cover",1,false)->first();
+		if($image){
+			return $image;
+		} else {
+			return $this->images->first();
+		}
+	}
+
 	public function getMemberUsers(){
 		$roles = [ EnumProject::ROLE_CONTRIBUTOR, EnumProject::ROLE_OWNER, EnumProject::ROLE_MENTOR] ;
 		return User::select([
