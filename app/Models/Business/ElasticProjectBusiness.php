@@ -26,6 +26,7 @@ class ElasticProjectBusiness{
 		];
 		$data["images"] = self::instance()->parseImages($project);
 		$data["urls"] = self::instance()->parseUrls($project);
+		$data["files"] = self::instance()->parseFiles($project);
 		return $data;
 	}
 
@@ -40,6 +41,19 @@ class ElasticProjectBusiness{
 			]);
 		});
 		return $images;
+	}
+
+	private function parseFiles(Project $project){
+		$files = [];
+		$project->files->each(function($file) use(&$files){
+			array_push($files,[
+				"id" => $file->id,
+				"title" => $file->title,
+				"file" => $file->file,
+				"url" => $file->url
+			]);
+		});
+		return $files;
 	}
 
 	private function parseUrls(Project $project){

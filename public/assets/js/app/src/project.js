@@ -130,11 +130,11 @@ function appendPhoto(file){
 }
 
 function appendFile(file){
-	var html = '<div class="file-container margin-top-10" data-id="'+file.id+'">'+
-					'<div class="col-xs-10 col-md-11">'+
+	var html = '<div class="file-container" data-id="'+file.id+'">'+
+					'<div class="col-xs-10 col-md-11 margin-top-10">'+
 						'<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
 					'</div>'+
-					'<div class="col-xs-2 col-md-1">'+
+					'<div class="col-xs-2 col-md-1 margin-top-10">'+
 						'<button type="button" class="btn btn-danger remove-file">'+
 							'<span class="glyphicon glyphicon-trash"></span>'+
 						'</button>'+
@@ -225,17 +225,17 @@ function removeUrl(button){
 
 function addUrl(button, inputIdx){
 	var html = "<div class='project-url'>" +
-					"<div class='col-xs-12 col-sm-8 col-md-10 margin-top-10'>"+
+					"<div class='col-xs-9 col-md-10 margin-top-10'>"+
 						"<div class='input-group'>"+
 							"<span class='input-group-addon'>http(s)://</span>"+
 							"<input type='text' class='form-control' name='urls[]' id='url_'"+inputIdx+"'>"+
 						"</div>"+
 					"</div>"+
-					"<div class='col-xs-12 col-sm-4 col-md-2'>"+
-						"<button type='button' 'Adicionar' class='add-url full-size-on-small btn btn-success margin-top-10 margin-right-5'>"+
+					"<div class='col-xs-3 col-md-2'>"+
+						"<button type='button' 'Adicionar' class='add-url btn btn-success margin-right-5 margin-top-10'>"+
 							"<span class='glyphicon glyphicon-plus'></span>"+
 						"</button>"+
-						"<button type='button' class='remove-url full-size-on-small btn btn-danger margin-top-10'>"+
+						"<button type='button' class='remove-url btn btn-danger margin-top-10'>"+
 							"<span class='glyphicon glyphicon-trash'></span>"+
 						"</button>"+
 					"</div>"+

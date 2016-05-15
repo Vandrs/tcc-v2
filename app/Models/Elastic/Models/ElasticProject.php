@@ -41,6 +41,17 @@ class ElasticProject extends ElasticModel{
 		} else {
 			$this->images = new Collection();
 		}
+
+		$files = $this->files;
+		if(!empty($files)){
+			$arrFiles = [];
+			foreach($files as $file){
+				array_push($arrFiles, (Object) $file);
+			}
+			$this->files = new Collection($arrFiles);
+		} else {
+			$this->files = new Collection();
+		}
 	}
 
 	public function getAvgNoteAttribute($value){
