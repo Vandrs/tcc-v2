@@ -7,6 +7,7 @@ use App\Models\DB\ProjectNote;
 use App\Models\DB\Category;
 use App\Models\DB\User;
 use App\Models\DB\Image;
+use App\Models\DB\File;
 use App\Models\Enums\EnumProject;
 use DB;
 
@@ -15,7 +16,11 @@ class Project extends Model{
 	CONST ACTIVE = 1;
 	CONST INACTIVE = 0;
 
-	protected $fillable = ['title', 'category_id','description', 'in_elastic'];
+	protected $fillable = ['title', 'category_id','description', 'urls', 'in_elastic'];
+
+	protected $casts = [
+		'urls' => 'array'
+	];
 
 	protected static function boot(){
 		parent::boot();
@@ -34,6 +39,10 @@ class Project extends Model{
 
 	public function images(){
 		return $this->hasMany(Image::class);
+	}
+
+	public function files(){
+		return $this->hasMany(Files::class);
 	}
 
 	public function imageCoverOrFirst(){

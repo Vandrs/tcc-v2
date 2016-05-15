@@ -79,6 +79,87 @@
 				</div>
 			</div>
 			<div class="row margin-top-10">
+				<div class="col-xs-12">
+					<label class="control-label" for="url_0">
+						Urls onde se pode saber mais sobre o projeto
+					</label>
+				</div>
+				<div class="project-urls">
+					@forelse(old('urls',[]) as $idx => $value)
+						<div class="project-url">
+							<div class="col-xs-12 col-sm-8 col-md-10 margin-top-10">
+								<div class="input-group">
+									<span class="input-group-addon">http(s)://</span>
+									<input type="text" value="{{$value}}" class="form-control" name="urls[]" id="url_{{$idx}}}">
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-2">
+							<button type="button" class="add-url full-size-on-small btn btn-success margin-top-10 margin-right-5">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+							@if($idx)
+							<button type='button' class='remove-url full-size-on-small btn btn-danger margin-top-10'>
+								<span class='glyphicon glyphicon-trash'></span>
+							</button>
+							@endif
+						</div>
+					@empty
+					<div class="project-url">
+						<div class="col-xs-12 col-sm-8 col-md-10 margin-top-10">
+							<div class="input-group">
+								<span class="input-group-addon">http(s)://</span>
+								<input type="text" class="form-control" name="urls[]" id="url_0">
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-2">
+						<button type="button" class="add-url full-size-on-small btn btn-success margin-top-10">
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
+					@endforelse
+				</div>
+			</div>
+			<div class="row margin-top-10">
+				<div class="col-xs-12">
+					<label class="control-label" for="file">
+						Anexos
+					</label>
+				</div>
+				<div class="col-xs-12">
+					<span class="input-file-conteiner">
+						<button type="button" data-route="{{route('file.temp-upload')}}" id="uploadFile" class="btn btn-primary full-size-on-small">
+							Selecionar Arquivos <span class="glyphicon glyphicon-file"></span>
+						</button>
+						{!!Form::file('file',['multiple'])!!}
+						{!!Form::hidden('files','[]')!!}
+					</span>
+				</div>
+				<div class="col-xs-12 margin-top-20">
+					<span class="small">Arquivos permitidos: (pdf, doc\docx, ppt\pptx) máximo 10MB;</span>
+				</div>
+				<div class="col-xs-12 margin-top-10 fileFeedBack">
+
+				</div>
+				<div class="files-container">
+					@if(!empty(old('files')))
+						@foreach(json_decode(old('files'),true) as $file)
+							<div class="file-container margin-top-10" data-id="{{$file['id']}}">
+								<div class="col-xs-10 col-md-11">
+									<input type="text" value="{{$file['title']}}" class="form-control" readonly/>
+								</div>
+								<div class="col-xs-2 col-md-1">
+									<button type="button" class="btn btn-danger remove-file">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+								</div>
+							</div>
+						@endforeach
+					@endif
+				</div>
+			</div>
+			<div class="row margin-top-10">
 				<div class="col-xs-12 text-right">
 					{!!Form::submit('Salvar',['class' => 'btn btn-primary full-size-on-small'])!!}
 					<a href="#" class="btn btn-default full-size-on-small">Cancelar</a>

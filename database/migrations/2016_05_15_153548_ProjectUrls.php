@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProjectCategoryRelation extends Migration
+class ProjectUrls extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class ProjectCategoryRelation extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->integer('category_id')->unsigned()->after('id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->text('urls')->nullable()->default(null)->after('in_elastic');
         });
     }
 
@@ -26,8 +25,7 @@ class ProjectCategoryRelation extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign('projects_category_id_foreign');
-            $table->dropColumn('category_id');
+            $table->dropColumn('urls');
         });
     }
 }

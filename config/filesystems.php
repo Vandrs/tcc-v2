@@ -54,6 +54,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('images')
         ],
+        'files' => [
+            'driver' => 'local',
+            'root' => storage_path('files')
+        ],
         'image_cache' => [
             'driver' => 'local',
             'root' => storage_path('cache')

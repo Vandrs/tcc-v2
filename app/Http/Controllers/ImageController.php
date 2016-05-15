@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use League\Glide\ServerFactory;
 use App\Http\Requests;
-use App\Models\Business\TempImageBusiness;
+use App\Models\Business\TempBusiness;
 use Storage;
 
 class ImageController extends Controller {
@@ -20,14 +20,14 @@ class ImageController extends Controller {
 		try{
 			return response($glideServer->outputImage($path,$imageParameters));
 		} catch (\Exception $e){
-			return response('File not found', Response::HTTP_NOT_FOUND);
+			return response('Arquivo não encontrado', Response::HTTP_NOT_FOUND);
 		}
 	}
 
     public function tempUpload(Request $request){
     	$imageFile = $request->file('image');
-    	$tempImage = new TempImageBusiness;
-    	if($data = $tempImage->upload($imageFile)){
+    	$tempImage = new TempBusiness;
+    	if($data = $tempImage->uploadImage($imageFile)){
     		return json_encode([
     			'status' 	=> 1,
     			'file' 		=> $data
@@ -42,16 +42,16 @@ class ImageController extends Controller {
     }
 
     public function tempFile(Request $request, $file){
-    	$tempImage = new TempImageBusiness;
+    	$tempImage = new TempBusiness;
     	if($image = $tempImage->getImage($file)){
     		return $image->response();
     	}
-    	return response('',Response::HTTP_NOT_FOUND);
+    	return response('Arquivo não encontrado',Response::HTTP_NOT_FOUND);
     }
 
     public function deleteTempFile(Request $request){
         $fileName = $request->input('file_name');
-        $tempImage = new TempImageBusiness;
+        $tempImage = new TempBusiness;
         try{
             $tempImage->deleteFile($fileName);
             return json_encode(['status' => 1]);

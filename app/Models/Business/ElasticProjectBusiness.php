@@ -25,6 +25,7 @@ class ElasticProjectBusiness{
 			"name" => $project->category->name
 		];
 		$data["images"] = self::instance()->parseImages($project);
+		$data["urls"] = self::instance()->parseUrls($project);
 		return $data;
 	}
 
@@ -39,6 +40,15 @@ class ElasticProjectBusiness{
 			]);
 		});
 		return $images;
+	}
+
+	private function parseUrls(Project $project){
+		$urls = [];
+		$projectUrls = $project->urls;
+		if(!empty($projectUrls)){
+			$urls = $projectUrls;
+		}
+		return $urls;
 	}
 
 	private function getExcludeExportFields(){
