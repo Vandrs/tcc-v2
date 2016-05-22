@@ -76,4 +76,22 @@
 			}
 		}
 	}
+	"members":{
+		"properties":{
+			"id":{
+				"type":"integer"
+			},
+			"name":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"email":{
+				"type":"string",
+				"index":"not_analyzed"
+			},
+			"role":{
+				"type":"integer"
+			}
+		}
+	}
 }

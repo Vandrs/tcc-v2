@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Models\Business\ProjectBusiness;
 use App\Models\Elastic\ElasticSearchProject;
 use App\Models\DB\Category;
+use Illuminate\Http\Response;
 use Auth;
 
 class SiteController extends Controller
@@ -55,5 +56,9 @@ class SiteController extends Controller
                         'selectedCategoryId' => $categoryid,
                         'categories'         => $categories
                     ]);
+    }
+
+    public function page404(){
+        return response(view('errors.404')->render(), Response::HTTP_NOT_FOUND);
     }
 }

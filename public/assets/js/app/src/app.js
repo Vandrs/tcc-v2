@@ -1,6 +1,7 @@
 var dataTableScrollLayout = "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
                             "<'row'<'col-sm-12'<'responsive-table-panel' tr>>>" +
                             "<'row'<'col-sm-5'i><'col-sm-7'p>>";
+
 function isvalidBRDate(strData)
 {
     var data = strData;
@@ -192,3 +193,7 @@ function startsWith(str,param){
   }
   return false;
 }
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});

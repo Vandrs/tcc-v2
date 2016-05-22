@@ -2,6 +2,7 @@ Carga de dados:
 	Criar usuários: php artisan db:seed --class=UsersTableSeeder
 	Criar projetos: php artisan db:seed --class=ProjectsTableSeeder
 	Criar/Refazer avaliações: php artisan db:seed --class=ProjectNotesSeeder
+	Vincular usuários a projetos sem usuários: php artisan db:seed --class=UserProjectsTableSeeder
 	#Refazer todo o banco e recriar tudo: php artisan db:seed
 
 Comandos:

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
 use App\Models\DB\Project;
 use App\Models\Business\CategoryBusiness;
 use App\Models\Business\CrudProjectBusiness;
+use App\Models\Enums\EnumCapabilities;
 use Auth;
+use Gate;
 
 
 class ProjectController extends Controller
@@ -17,9 +20,6 @@ class ProjectController extends Controller
 	public function __construct(){
 		$this->middleware('auth')->only(['create','store']);
 	}
-    public function getPredictions($userId){
-    	return view('predictions',$data);
-    }
 
     public function view($id){
     	$project = Project::findORFail($id);
@@ -28,7 +28,7 @@ class ProjectController extends Controller
 
     public function create(){
     	$categories = CategoryBusiness::getCategoriesForDropDown();
-    	AssetLoader::register(['project.js'],['admin.css'],['FileUpload']);
+        AssetLoader::register(['createProject.js'],['admin.css'],['FileUpload']);
     	return view('project.create', [
     		'categories' => $categories,
     		'page_title' => 'Novo Projeto'
@@ -44,5 +44,26 @@ class ProjectController extends Controller
         } else {
             return back()->withInput()->withErrors($crudBusiness->getValidator());
         }
+    }
+
+    public function edit($id){
+        try{
+            $project = Project::findOrFail($id);
+            AssetLoader::register(['editProject.js'],['admin.css'],['FileUpload']);
+            if(Gate::denies(EnumCapabilities::UPDATE_PROJECT, $project)){
+                return $this->notAllowed();
+            }
+            return view('project.update',[
+                'page_title' => 'Editar Projeto',
+                'project' => $project,
+                'categories' => CategoryBusiness::getCategoriesForDropDown()
+            ]);
+        } catch(ModelNotFoundException $e){
+            return $this->notFound();
+        }
+    }
+
+    public function update(Request $request, $id){
+        dd($id);
     }
 }

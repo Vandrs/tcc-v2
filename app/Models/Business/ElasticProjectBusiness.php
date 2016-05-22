@@ -2,7 +2,6 @@
 
 namespace App\Models\Business;
 use App\Models\DB\Project;
-use App\Models\DB\ProjectNote;
 
 class ElasticProjectBusiness{
 
@@ -27,6 +26,7 @@ class ElasticProjectBusiness{
 		$data["images"] = self::instance()->parseImages($project);
 		$data["urls"] = self::instance()->parseUrls($project);
 		$data["files"] = self::instance()->parseFiles($project);
+		$data["members"] = self::instance()->parseMembers($project);
 		return $data;
 	}
 
@@ -75,6 +75,19 @@ class ElasticProjectBusiness{
 				unset($data[$field]);
 			}
 		}
+	}
+
+	private function parseMembers(Project $project){
+		$members = [];
+		$project->getMembers()->each(function($user) use (&$members){
+			array_push($members,[
+				"id" => $user->id,
+				"name" => $user->name,
+				"email" => $user->email,
+				"role" => $user->role
+			]);
+		});
+		return $members;
 	}
 
 }

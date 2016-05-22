@@ -17,7 +17,7 @@
             <div class="row margin-top-10">
             @endif
             <div class="col-xs-12 col-sm-6 col-md-4 margin-top-10">
-            @include('partials.project-card',['project' => $project])
+            @include('partials.project-card',['project' => $project, 'showControls' => true])
             </div>
         @endforeach
     </div>

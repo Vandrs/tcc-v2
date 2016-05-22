@@ -9,9 +9,10 @@ use App\Models\DB\User;
 use App\Models\DB\Image;
 use App\Models\DB\File;
 use App\Models\Enums\EnumProject;
+use App\Models\Interfaces\C3Project;
 use DB;
 
-class Project extends Model{
+class Project extends Model implements C3Project{
 
 	CONST ACTIVE = 1;
 	CONST INACTIVE = 0;
@@ -54,7 +55,7 @@ class Project extends Model{
 		}
 	}
 
-	public function getMemberUsers(){
+	public function getMembers(){
 		$roles = [ EnumProject::ROLE_CONTRIBUTOR, EnumProject::ROLE_OWNER, EnumProject::ROLE_MENTOR] ;
 		return User::select([
                             DB::raw('users.*'),
@@ -64,6 +65,7 @@ class Project extends Model{
                       ->join('user_projects','user_projects.user_id','=','users.id')
                       ->where('user_projects.project_id','=',$this->id)
                       ->whereIn('user_projects.role', $roles)
+					  ->orderBy('name','ASC')
                       ->get();
 	}
 

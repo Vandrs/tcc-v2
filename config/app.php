@@ -218,6 +218,7 @@ return [
         'HtmlUtil' => App\Utils\HtmlUtil::class,
         'Util' => App\Utils\Utils::class,
         'UrlUtil' => App\Utils\UrlUtil::class,
+        'Capabilities' => App\Models\Enums\EnumCapabilities::class,
 
         'AssetLoader' => App\Asset\AssetLoader::class,
 

@@ -14,6 +14,6 @@ class Bootstrap extends AssetBundle{
         $this->baseCssPath = ($env == 'local') ? $basePath.'/assets/css/bootstrap/src/' : $basePath.'/assets/css/bootstrap/dist/';
         $this->baseJsPath  = ($env == 'local') ? $basePath.'/assets/js/bootstrap/src/'  : $basePath.'/assets/js/bootstrap/dist/';
         $this->jsfiles  = ($env == 'local') ? ['bootstrap.js'] : ['bootstrap.min.js'];
-        $this->cssfiles = ($env == 'local') ? ['bootstrap.css','bootstrap-theme.css'] : ['bootstrap.min.css','bootstrap-theme.min.css'];
+        $this->cssfiles = ($env == 'local') ? ['bootstrap.css'] : ['bootstrap.min.css'];
     }
 }

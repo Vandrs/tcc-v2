@@ -6,13 +6,14 @@ use App\Models\Elastic\Models\ElasticModel;
 use App\Models\Elastic\Dummies\Image;
 use App\Utils\DateUtil;
 use Illuminate\Support\Collection;
+use App\Models\Interfaces\C3Project;
 
-class ElasticProject extends ElasticModel{
+class ElasticProject extends ElasticModel implements C3Project{
 	
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'members', 'created_at', 'updated_at'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
@@ -52,6 +53,16 @@ class ElasticProject extends ElasticModel{
 		} else {
 			$this->files = new Collection();
 		}
+
+		$members = $this->members;
+		if(!empty($members)){
+			$this->members = new Collection();
+			foreach($members as $key => $member){
+				$this->members->put($key, (object) $member);
+			}
+		} else {
+			$this->members = new Collection();
+		}
 	}
 
 	public function getAvgNoteAttribute($value){
@@ -68,6 +79,11 @@ class ElasticProject extends ElasticModel{
 		} else {
 			return $this->images->first();
 		}
+	}
+
+	public function getMembers()
+	{
+		return $this->members;
 	}
 
 }

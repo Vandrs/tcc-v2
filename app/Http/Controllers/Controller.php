@@ -11,4 +11,27 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+
+    public function notAllowed($msg = null){
+        if(is_null($msg)){
+            $msg = trans('custom_messages.not_allowed');
+        }
+        $request = request();
+        $request->session()->flash('msg', $msg);
+        $request->session()->flash('class_msg', 'alert-danger');
+        return back();
+    }
+
+    public function ajaxNotAllowed($msg = null){
+        if(is_null($msg)){
+            $msg = trans('custom_messages.not_allowed');
+        }
+        return json_encode([
+            'status' => 0, 'msg' => $msg, 'class_msg' => 'alert_danger'
+        ]);
+    }
+
+    public function notFound(){
+        return redirect()->route('site.404');
+    }
 }

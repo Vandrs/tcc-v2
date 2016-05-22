@@ -38,7 +38,7 @@
                         </tr>   
                     </thead>
                     <tbody>
-                        @foreach($project->getMemberUsers() as $user)       
+                        @foreach($project->getMembers() as $user)
                             <tr>
                                 <td>
                                 <a href="{{route('user.view',['id' => $user->id])}}">{{$user->name}}</a>
