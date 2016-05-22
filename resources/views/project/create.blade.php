@@ -137,7 +137,7 @@
 					</span>
 				</div>
 				<div class="col-xs-12 margin-top-20">
-					<span class="small">Arquivos permitidos: (pdf, doc\docx, ppt\pptx) máximo 10MB;</span>
+					<span class="small">Arquivos permitidos: (pdf, doc, ppt) máximo 10MB;</span>
 				</div>
 				<div class="col-xs-12 margin-top-10 fileFeedBack">
 

@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     {!!Form::model($project, ['route' => ['admin.project.update',$project->id], 'method' => 'post', 'files' => true])!!}
-    {!!Form::token()!!}
     <div class="row">
         <div class="col-xs-12 box">
             @include('partials.view-errors')
@@ -39,7 +38,7 @@
             <div class="row margin-top-10">
                 <div class="col-xs-12">
 					<span class="input-file-conteiner">
-						<button type="button" data-route="{{route('image.temp-upload')}}" id="uploadImage" class="btn btn-primary full-size-on-small">
+						<button type="button" data-route="{{route('image.create',['projectId' => $project->id])}}" id="uploadImage" class="btn btn-primary full-size-on-small">
 							Selecionar imagens <span class="glyphicon glyphicon-picture"></span>
 						</button>
                         <input type="file" name="image" multiple />
@@ -52,9 +51,9 @@
 
                 </div>
                 <div class="col-xs-12 margin-top-10">
-                    <div class="row photos-container" data-exclude-route="{{route('image.temp-file.delete')}}">
+                    <div class="row photos-container" data-exclude-route="{{route('image.delete',['projectId' => $project->id])}}" data-update-route="{{route('image.update',['projectId' => $project->id])}}">
                         @foreach($project->images as $image)
-                            <div class='col-xs-12 col-sm-6 col-md-4 margin-top-20'>
+                            <div class='col-xs-12 col-sm-6 col-md-4 margin-top-20 photo-container'>
                                 <img src='{{$image->getImageUrl()}}' class='img-responsive'/>
                                 <input type='text' maxlength='50' value='{{$image->title}}' placeholder='Título da imagem' class='form-control photo-name margin-top-10' data-id='{{$image->id}}'/>
                                 <div class="checkbox">
@@ -128,19 +127,19 @@
                 </div>
                 <div class="col-xs-12">
 					<span class="input-file-conteiner">
-						<button type="button" data-route="{{route('file.temp-upload')}}" id="uploadFile" class="btn btn-primary full-size-on-small">
+						<button type="button" data-route="{{route('file.create',['project-id' => $project->id])}}" id="uploadFile" class="btn btn-primary full-size-on-small">
 							Selecionar Arquivos <span class="glyphicon glyphicon-file"></span>
 						</button>
                         {!!Form::file('file',['multiple'])!!}
 					</span>
                 </div>
                 <div class="col-xs-12 margin-top-20">
-                    <span class="small">Arquivos permitidos: (pdf, doc\docx, ppt\pptx) máximo 10MB;</span>
+                    <span class="small">Arquivos permitidos: (pdf, doc, ppt) máximo 10MB;</span>
                 </div>
                 <div class="col-xs-12 margin-top-10 fileFeedBack">
 
                 </div>
-                <div class="files-container">
+                <div class="files-container" data-exclude-route="{{route('file.delete',['projectId' => $project->id])}}">
                     @foreach($project->files as $file)
                         <div class="file-container" data-id="{{$file->id}}">
                             <div class="col-xs-10 col-md-11 margin-top-10">

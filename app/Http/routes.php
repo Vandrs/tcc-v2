@@ -31,10 +31,15 @@ Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageC
 Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);
 Route::post('/image/temp/delete',['as' => 'image.temp-file.delete', 'uses' => 'ImageController@deleteTempFile']);
 Route::get('/image/get/{path}',['as' => 'image.get', 'uses' => 'ImageController@getImage']);
+Route::post('/image/create/{projectId}',['as' => 'image.create', 'uses' => 'ImageController@create']);
+Route::post('/image/update/{projectId}',['as' => 'image.update', 'uses' => 'ImageController@update']);
+Route::post('/image/delete/{projectId}',['as' => 'image.delete', 'uses' => 'ImageController@delete']);
 
 /*Arquivo*/
 Route::post('/file/temp-upload',['as' => 'file.temp-upload', 'uses' => 'FileController@tempUpload']);
 Route::get('/file/get/{path}',['as' => 'file.get', 'uses' => 'FileController@get']);
+Route::post('/file/create/{projectId}',['as' => 'file.create', 'uses' => 'FileController@create']);
+Route::post('/file/delete/{projectId}',['as' => 'file.delete', 'uses' => 'FileController@delete']);
 
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);

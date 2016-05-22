@@ -30,7 +30,7 @@ class CrudProjectBusiness{
 			return false;
 		}
 		DB::beginTransaction();
-		//try{
+		try{
 			$project = Project::create($data);
 			$userProjectBusiness = new UserProjectBusiness;
 			if(!$userProjectBusiness->create($user, $project, EnumProject::ROLE_OWNER)){
@@ -51,12 +51,20 @@ class CrudProjectBusiness{
 			DB::commit();
 			$this->dispathJob($project);
 			return $project;
-		/*}catch(\Exception $e){
+		}catch(\Exception $e){
 			Log::error(Utils::getExceptionFullMessage($e));
 			$this->validator->errors()->add('generic',trans('custom_messages.unexpected_error'));
 			DB::rollback();
 			return false;
-		}*/
+		}
+	}
+
+	public function update(Project $project, $data){
+		$this->validator = Validator::make($data,$this->validation(),$this->messages());
+		if($this->validator->fails()){
+			return false;
+		}
+		return $project->update($data);
 	}
 
 	private function uploadImages($images, Project $project){
@@ -100,5 +108,9 @@ class CrudProjectBusiness{
 	private function dispathJob(Project $project){
 		$job = new SendPropertyToElastic($project);
 		$this->dispatch($job->onQueue('elasticsearch'));
+	}
+
+	public static function dispathElasticJob(Project $project){
+		(new self())->dispathJob($project);
 	}
 }

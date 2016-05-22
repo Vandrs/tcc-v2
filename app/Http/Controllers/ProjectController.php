@@ -64,6 +64,21 @@ class ProjectController extends Controller
     }
 
     public function update(Request $request, $id){
-        dd($id);
+        try{
+            $project = Project::findOrFail($id);
+            if(Gate::denies(EnumCapabilities::UPDATE_PROJECT, $project)){
+                return $this->notAllowed();
+            }
+            $projectBusiness = new CrudProjectBusiness();
+            if($projectBusiness->update($project, $request->only(['title','description','category_id','urls']))){
+                $request->session()->flash('msg','Projeto alterado com sucesso');
+                $request->session()->flash('class_msg','alert-success');
+                return redirect()->route('admin.home');
+            } else {
+                return back()->withErrors($projectBusiness->getValidator())->withInput();
+            }
+        } catch(ModelNotFoundException $e){
+            return $this->notFound();
+        }
     }
 }
