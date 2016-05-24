@@ -2,9 +2,12 @@
 
 namespace App\Models\Elastic;
 
+use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Elastic\ElasticSearch;
 use App\Models\Elastic\Models\ElasticProject;
+use App\Models\Enums\EnumProject;
+use App\Models\DB\User;
 use App\Utils\Utils;
 use Elastica\Search;
 use Elastica\Query;
@@ -61,6 +64,28 @@ class ElasticSearchProject{
     	return $this->doSearch($query, $page, $size);
 	}
 
+	public function searchUserProjects(User $user, $term = null, $filters = [], $page = 1, $size = 8){
+		$query = new Query();
+		$queryBuilder = new QueryBuilder;
+		$boolQuery = $queryBuilder->query()->bool();
+		if($term){
+			$boolQuery->addMust($this->simpleMultiMatchQuery($term));
+		}
+		if(!empty($filters)){
+			$boolQuery->addFilter($queryBuilder->query()->term($filters));
+		}
+		$boolQuery->addMust($queryBuilder->query()->term(["members.id" => $user->id]));
+		$boolQueryRole = $queryBuilder->query()->bool();
+		$boolQueryRole->addShould($queryBuilder->query()->match("members.role",EnumProject::ROLE_OWNER));
+		$boolQueryRole->addShould($queryBuilder->query()->match("members.role",EnumProject::ROLE_CONTRIBUTOR));
+		$boolQuery->addMust($boolQueryRole);
+		$query->setQuery($boolQuery)
+			  ->setFrom(Utils::calcFromIndex($page,$size))
+			  ->setSize($size);
+		$query->addSort(['title' => ['order' => 'asc','mode' => 'min']]);
+		return $this->doSearch($query, $page, $size);
+	}
+
 	private function simpleMultiMatchQuery($term){
 		$multiMatchQuery = new MultiMatch();
 		$multiMatchQuery->setQuery($term)
@@ -75,9 +100,8 @@ class ElasticSearchProject{
 			$result = $this->search->search();
 			return $this->makePaginator($result,$page,$size);	
 		}catch(\Exception $e){
-			dd(Utils::getExceptionFullMessage($e));
 			Log::error(Utils::getExceptionFullMessage($e));
-			return null;
+			return new Collection();
 		}
 	}
 
@@ -89,7 +113,7 @@ class ElasticSearchProject{
 							$size,
 							$page
 						 );
-		return  $paginator;
+		return $paginator;
 	}
 
 	public function parseProjects($items){

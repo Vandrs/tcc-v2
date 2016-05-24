@@ -41,10 +41,9 @@ class SlopeOne{
 	} 
 
 	public function getUserNotRatedProjects($user){
-		$excludeIds = [];
-		$user->notes->each(function($note) use(&$excludeIds){
-			array_push($excludeIds,$note->project_id);
-		});
-		return Project::whereNotIn('id',$excludeIds)->get();		
+		$excludeIds = $user->notes->pluck('project_id')->all();
+		$projectsAsOwner = $user->projectsAsOwner()->pluck('id')->all();
+		$excludeIds = array_merge($excludeIds,$projectsAsOwner);
+		return Project::whereNotIn('id',$excludeIds)->get();
 	}
 }

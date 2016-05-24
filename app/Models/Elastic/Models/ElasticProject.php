@@ -5,18 +5,34 @@ namespace App\Models\Elastic\Models;
 use App\Models\Elastic\Models\ElasticModel;
 use App\Models\Elastic\Dummies\Image;
 use App\Utils\DateUtil;
+use Elastica\Exception\NotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use App\Models\Interfaces\C3Project;
+use App\Models\Elastic\ElasticSearch;
 
 class ElasticProject extends ElasticModel implements C3Project{
 	
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'members', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'files', 'members', 'created_at', 'updated_at'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
+	}
+
+	public static function findById($id){
+		$model = new self();
+		$elasticSearch = new ElasticSearch;
+		$index = $elasticSearch->getElasticIndex();
+		$type = $index->getType($model->type);
+		try{
+			$document = $type->getDocument($id);
+			return new static($document->getData());
+		} catch(NotFoundException $e){
+			throw new ModelNotFoundException;
+		}
 	}
 
 	protected function transform(){

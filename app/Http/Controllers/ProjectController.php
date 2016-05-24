@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Elastic\ElasticSearchProject;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
 use App\Models\DB\Project;
+use App\Models\DB\Category;
 use App\Models\Business\CategoryBusiness;
 use App\Models\Business\CrudProjectBusiness;
 use App\Models\Enums\EnumCapabilities;
+use App\Models\Elastic\Models\ElasticProject;
 use Auth;
 use Gate;
 
@@ -18,11 +21,16 @@ class ProjectController extends Controller
 {
 
 	public function __construct(){
-		$this->middleware('auth')->only(['create','store']);
+		$this->middleware('auth')->except(['view']);
 	}
 
     public function view($id){
-    	$project = Project::findORFail($id);
+        try{
+            $project = ElasticProject::findById($id);
+        } catch(ModelNotFoundException $e){
+            $this->notFound();
+        }
+        AssetLoader::register(["projectPage.js"],[],["LightGallery"]);
     	return view('project.view',['project' => $project]);
     }
 
@@ -40,7 +48,7 @@ class ProjectController extends Controller
         if($project = $crudBusiness->create($request->except(["_token"]),Auth::user())){
             $request->session()->flash('msg','Projeto incluído com sucesso');
             $request->session()->flash('class_msg','alert-success');
-            return redirect()->route('admin.home');
+            return redirect()->route('admin.user.projects');
         } else {
             return back()->withInput()->withErrors($crudBusiness->getValidator());
         }
@@ -73,12 +81,43 @@ class ProjectController extends Controller
             if($projectBusiness->update($project, $request->only(['title','description','category_id','urls']))){
                 $request->session()->flash('msg','Projeto alterado com sucesso');
                 $request->session()->flash('class_msg','alert-success');
-                return redirect()->route('admin.home');
+                return redirect()->route('admin.user.projects');
             } else {
                 return back()->withErrors($projectBusiness->getValidator())->withInput();
             }
         } catch(ModelNotFoundException $e){
             return $this->notFound();
         }
+    }
+
+    public function userProjects(Request $request){
+        $page = $request->input('page',1);
+        $q = $request->get('q',null);
+        $categoryid = $request->get('category_id',null);
+        if($categoryid){
+            $filters = ["category_id" => $categoryid];
+        } else {
+            $filters = [];
+        }
+        $searchProject = new ElasticSearchProject;
+        $projects = $searchProject->searchUserProjects(Auth::user(), $q, $filters, $page, 4);
+        if($q){
+            $projects->appends(['q' => $q]);
+        }
+        if(!empty($filters)){
+            foreach($filters as $key => $value){
+                $projects->appends([$key => $value]);
+            }
+        }
+        $projects->setPath(route('admin.user.projects'));
+        $data = [
+            "categories"         => Category::orderBy('name','ASC')->get(),
+            "searchTerm"         => $q,
+            "selectedCategoryId" => $categoryid,
+            "page_title"         => 'Meus Projetos',
+            "projects"           => $projects
+        ];
+        AssetLoader::register([],['admin.css']);
+        return view('project.user-projects',$data);
     }
 }

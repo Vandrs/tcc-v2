@@ -20,6 +20,7 @@ Route::get('/pagina-nao-encontrada',['as' => 'site.404', 'uses' => 'SiteControll
 Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);
 
 /*Projeto*/
+Route::get('/meus-projetos',['as' => 'admin.user.projects', 'uses' => 'ProjectController@userProjects']);
 Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectController@create']);
 Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);
@@ -43,6 +44,7 @@ Route::post('/file/delete/{projectId}',['as' => 'file.delete', 'uses' => 'FileCo
 
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
+Route::get('/usuarios/meu-perfil',['as' => 'admin.user.profile', 'uses' => 'UserController@profile']);
 
 /*Teste*/
 Route::get('/teste','TesteController@index');
