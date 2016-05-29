@@ -26,6 +26,12 @@ Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectContr
 Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);
 Route::get('/projeto/editar/{id}',['as' => 'admin.project.edit', 'uses' => 'ProjectController@edit']);
 Route::post('/projeto/salvar/{id}',['as' => 'admin.project.update', 'uses' => 'ProjectController@update']);
+Route::get('/projeto/deletar/{id}',['as' => 'admin.project.delete', 'uses' => 'ProjectController@delete']);
+
+/*Avaliação Projeto*/
+Route::get('/projeto/minha-avaliacao/{projectId}',['as' => 'user.note.project','uses' => 'ProjectNotesController@getUserActualNote']);
+Route::post('/projeto/avaliar/{projectId}',['as' => 'project.rate','uses' => 'ProjectNotesController@rateProject']);
+
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);

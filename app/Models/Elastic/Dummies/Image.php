@@ -8,4 +8,8 @@ use App\Utils\ImageFileServerTrait;
 class Image extends Model {
     use ImageFileServerTrait;
     protected $fillable = ["id", "title", "file", "cover"];
+
+    public function getCoverAttribute($value){
+        return (int) $value;
+    }
 }

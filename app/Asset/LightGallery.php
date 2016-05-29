@@ -9,7 +9,6 @@ class LightGallery extends AssetBundle
     public function __construct()
     {
         $basePath = url('/');
-        $env = Config::get('app.env');
         $this->baseCssPath = $basePath.'/assets/css/lightGallery/dist/';
         $this->baseJsPath  = $basePath.'/assets/js/lightGallery/dist/';
         $this->jsfiles  = ["lightgallery-all.min.js"];

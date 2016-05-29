@@ -30,7 +30,7 @@ class ProjectController extends Controller
         } catch(ModelNotFoundException $e){
             $this->notFound();
         }
-        AssetLoader::register(["projectPage.js"],[],["LightGallery"]);
+        AssetLoader::register(["projectPage.js","projectRating.js"],[],["LightGallery","StarRating"]);
     	return view('project.view',['project' => $project]);
     }
 
@@ -57,7 +57,7 @@ class ProjectController extends Controller
     public function edit($id){
         try{
             $project = Project::findOrFail($id);
-            AssetLoader::register(['editProject.js'],['admin.css'],['FileUpload']);
+            AssetLoader::register(['editProject.js','deleteProject.js'],['admin.css'],['FileUpload']);
             if(Gate::denies(EnumCapabilities::UPDATE_PROJECT, $project)){
                 return $this->notAllowed();
             }
@@ -90,6 +90,27 @@ class ProjectController extends Controller
         }
     }
 
+    public function delete(Request $request, $id){
+        try{
+            $project = Project::findOrFail($id);
+            if(Gate::denies(EnumCapabilities::DELETE_PROJECT, $project)){
+                return $this->notAllowed();
+            }
+            $projectBusiness = new CrudProjectBusiness;
+            if($projectBusiness->delete($project)){
+                $request->session()->flash('msg', 'Projeto excluído com sucesso');
+                $request->session()->flash('class_msg', 'alert-success');
+                return redirect()->route('admin.user.projects');
+            } else {
+                return $this->unexpectedError("Não foi possível excluir o projeto!<br />Tente novamente mais tarde e se o erro persistir entre em contato com o administrador do sistema.");
+            }
+        } catch(ModelNotFoundException $e){
+            return $this->notFound();
+        } catch(\Exception $e){
+            return $this->unexpectedError();
+        }
+    }
+
     public function userProjects(Request $request){
         $page = $request->input('page',1);
         $q = $request->get('q',null);
@@ -100,7 +121,7 @@ class ProjectController extends Controller
             $filters = [];
         }
         $searchProject = new ElasticSearchProject;
-        $projects = $searchProject->searchUserProjects(Auth::user(), $q, $filters, $page, 4);
+        $projects = $searchProject->searchUserProjects(Auth::user(), $q, $filters, $page, 8);
         if($q){
             $projects->appends(['q' => $q]);
         }
@@ -117,7 +138,11 @@ class ProjectController extends Controller
             "page_title"         => 'Meus Projetos',
             "projects"           => $projects
         ];
-        AssetLoader::register([],['admin.css']);
+        AssetLoader::register(
+            ['projectRating.js','deleteProject.js'],
+            ['admin.css'],
+            ['StarRating']
+        );
         return view('project.user-projects',$data);
     }
 }

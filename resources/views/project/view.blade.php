@@ -12,7 +12,7 @@
                     <div class="col-xs-12 col-md-8 margin-top-10">
                         @if($project->images->count())
                         <div id="gallery" class="full-size">
-                            @foreach($project->images->sortByDesc('cover')->values() as $idx => $image)
+                            @foreach($project->images->sortByDesc(function($image){return $image->cover;})->values() as $idx => $image)
                                 <a href="{{$image->getImageUrl()}}" title="{{$image->title}}" {{$idx ? "class=hidden" : "" }} >
                                     <img src="{{$image->getImageUrl()}}" class="img-center img-responsive"/>
                                 </a>
@@ -53,16 +53,32 @@
                             </div>
                             <div class="col-xs-12">
                                 @if($project->avg_note)
-                                    <span class="h2">{{$project->avg_note}}</span>
-
+                                    <input readonly class="project-note-value" type="number" value="{{$project->avg_note}}" min="{{config('starrating.min')}}" max="{{config('starrating.max')}}"/>
                                 @else
                                     <div class="margin-top-10">Seja o primeiro a avaliar</div>
                                 @endif
                             </div>
                             <div class="col-xs-12 margin-top-10 margin-bottom-10">
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-star"></span>
+                                @if(Auth::check())
+                                <button type="button" class="btn btn-default" id="rate-project"
+                                        data-route="{{route('user.note.project',['projectId' => $project->id])}}"
+                                        data-rate-route="{{route('project.rate',['projectId' => $project->id])}}">
+                                    <span class="glyphicon glyphicon-star"></span> Avaliar
                                 </button>
+                                @else
+                                <button data-toggle="tooltip" type="button" class="btn btn-default disabled" title="Você deve estar logado para realizar avaliações">
+                                    <span class="glyphicon glyphicon-star"></span> Avaliar
+                                </button>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="project-rate-feedBack">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 rate-project-area hidden">
+
                             </div>
                         </div>
                         <div class="row margin-top-10">

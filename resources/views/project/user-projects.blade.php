@@ -4,30 +4,29 @@
 @endsection
 @section('content')
     @include('partials.view-errors')
-
     <div class="row margin-top-20">
     </div>
-    @if($projects->count())
-        <div class="row margin-bottom-20">
-            <div class="col-xs-12 col-md-8">
-                <form action="{{route('admin.user.projects')}}" method="GET" class="row">
-                    <div class="col-xs-4">
-                        <select name='category_id' class="form-control" placeholder="Selecionar categoria">
-                            <option value="">Selecionar categoria</option>
-                            @foreach($categories as $category)
-                                <option value={{$category->id}} {{$category->id == $selectedCategoryId?"selected":""}}>{{$category->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="input-group col-xs-8">
-                        <input name="q" type="text" value="{{$searchTerm}}" class="form-control" placeholder="Buscar por tema, assunto ou categoria">
-                      <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Buscar <span class="glyphicon glyphicon-search"></span></button>
-                      </span>
-                    </div>
-                </form>
-            </div>
+    <div class="row margin-bottom-20">
+        <div class="col-xs-12 col-md-8">
+            <form action="{{route('admin.user.projects')}}" method="GET" class="row">
+                <div class="col-xs-4">
+                    <select name='category_id' class="form-control" placeholder="Selecionar categoria">
+                        <option value="">Selecionar categoria</option>
+                        @foreach($categories as $category)
+                            <option value={{$category->id}} {{$category->id == $selectedCategoryId?"selected":""}}>{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="input-group col-xs-8">
+                    <input name="q" type="text" value="{{$searchTerm}}" class="form-control" placeholder="Buscar por tema, assunto ou categoria">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Buscar <span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+                </div>
+            </form>
         </div>
+    </div>
+    @if($projects->count())
         <div class="row margin-top-10">
             @foreach($projects as $idx => $project)
                 @if($idx > 0 && ($idx % 4 == 0) )

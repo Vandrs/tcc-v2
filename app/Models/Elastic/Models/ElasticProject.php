@@ -22,19 +22,6 @@ class ElasticProject extends ElasticModel implements C3Project{
 		parent::__construct($attributes, $this->type, $this->mappingFile);
 	}
 
-	public static function findById($id){
-		$model = new self();
-		$elasticSearch = new ElasticSearch;
-		$index = $elasticSearch->getElasticIndex();
-		$type = $index->getType($model->type);
-		try{
-			$document = $type->getDocument($id);
-			return new static($document->getData());
-		} catch(NotFoundException $e){
-			throw new ModelNotFoundException;
-		}
-	}
-
 	protected function transform(){
 		$category = $this->category;
 		if(!empty($category) && !is_object($category)){
@@ -81,20 +68,14 @@ class ElasticProject extends ElasticModel implements C3Project{
 		}
 	}
 
-	public function getAvgNoteAttribute($value){
-		if($value){
-			return number_format($value,'2',',','.');
-		}
-		return null;
-	}
-
 	public function imageCoverOrFirst(){
-		$image = $this->images->where("cover",1,false)->first();
-		if($image){
-			return $image;
-		} else {
-			return $this->images->first();
+		foreach($this->images->all() as $image){
+			if($image->cover == 1){
+
+				return $image;
+			}
 		}
+		return $this->images->first();
 	}
 
 	public function getMembers()

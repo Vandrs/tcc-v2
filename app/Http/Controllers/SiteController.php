@@ -9,6 +9,7 @@ use App\Models\Business\ProjectBusiness;
 use App\Models\Elastic\ElasticSearchProject;
 use App\Models\DB\Category;
 use Illuminate\Http\Response;
+use App\Asset\AssetLoader;
 use Auth;
 
 class SiteController extends Controller
@@ -21,6 +22,7 @@ class SiteController extends Controller
     	}
     	$business = new ProjectBusiness();
     	$projects = $business->getFeaturedProjects($user);
+        AssetLoader::register(['projectRating.js'],[],['StarRating']);
     	return view('site.welcome',['projects' => $projects]);
     }
 
@@ -50,6 +52,7 @@ class SiteController extends Controller
     	}
     	$projects->setPath(route('search'));
         $categories = Category::orderBy('name','ASC')->get();
+        AssetLoader::register(['projectRating.js'],[],['StarRating']);
     	return view('project.search-result', [
                         'projects'           => $projects, 
                         'searchTerm'         => $q,

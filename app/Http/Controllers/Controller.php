@@ -35,12 +35,22 @@ class Controller extends BaseController
         return redirect()->route('site.404');
     }
 
+    public function unexpectedError($msg = null){
+        if(is_null($msg)){
+            $msg = trans('custom_messages.unexpected_error');
+        }
+        $request = request();
+        $request->session()->flash('msg', $msg);
+        $request->session()->flash('class_msg', 'alert-danger');
+        return back();
+    }
+
     public function ajaxUnexpectedError($msg = null){
         if(is_null($msg)){
             $msg = trans('custom_messages.unexpected_error');
         }
         return json_encode([
-            'status' => 0, 'msg' => $msg, 'class_msg' => 'alert_danger'
+            'status' => 0, 'msg' => $msg, 'class_msg' => 'alert-danger'
         ]);
     }
 }

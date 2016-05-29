@@ -156,7 +156,12 @@
             </div>
             <div class="row margin-top-10">
                 <div class="col-xs-12 text-right">
-                    {!!Form::submit('Salvar',['class' => 'btn btn-primary full-size-on-small'])!!}
+                    <button type="submit" class="btn btn-primary full-size-on-small">
+                        <span class="glyphicon glyphicon-floppy-save"></span> Salvar
+                    </button>
+                    <a href="{{route('admin.project.delete',['id' => $project->id])}}" class="btn btn-danger delete-project full-size-on-small">
+                        <i class="glyphicon glyphicon-trash"></i> Excluir
+                    </a>
                     <a href="{{route('admin.user.projects')}}" class="btn btn-default full-size-on-small">Cancelar</a>
                 </div>
             </div>

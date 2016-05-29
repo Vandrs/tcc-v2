@@ -69,13 +69,13 @@
 			"file":{
 				"type":"string",
 				"index":"not_analyzed"
-			}
+			},
 			"url":{
 				"type":"string",
 				"index":"not_analyzed"
 			}
 		}
-	}
+	},
 	"members":{
 		"properties":{
 			"id":{

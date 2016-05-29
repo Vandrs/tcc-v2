@@ -3,6 +3,7 @@
 namespace App\Models\DB;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\DB\ProjectNote;
 use App\Models\DB\Category;
 use App\Models\DB\User;
@@ -13,6 +14,8 @@ use App\Models\Interfaces\C3Project;
 use DB;
 
 class Project extends Model implements C3Project{
+
+	use SoftDeletes;
 
 	CONST ACTIVE = 1;
 	CONST INACTIVE = 0;
@@ -47,12 +50,12 @@ class Project extends Model implements C3Project{
 	}
 
 	public function imageCoverOrFirst(){
-		$image = $this->images->where("cover",1,false)->first();
-		if($image){
-			return $image;
-		} else {
-			return $this->images->first();
+		foreach($this->images->all() as $image){
+			if($image->cover == 1){
+				return $image;
+			}
 		}
+		return $this->images->first();
 	}
 
 	public function getMembers(){
@@ -70,7 +73,7 @@ class Project extends Model implements C3Project{
 	}
 
 	public function getAvgNote(){
-		return ProjectNote::where('project_id', '=', $this->id)->avg('note');
+		return number_format(ProjectNote::where('project_id', '=', $this->id)->avg('note'),2);
 	}
 
 	public function getTotalNotes(){

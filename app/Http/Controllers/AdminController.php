@@ -19,7 +19,11 @@ class AdminController extends Controller
         $lastUpdatedProjects = $user->projectsAsOwner()->sortByDesc('updated_at')->take(4)->values();
         $projectBusiness = new ProjectBusiness();
         $featuredProjects = $projectBusiness->getFeaturedProjectsForUser($user);
-        AssetLoader::register([],['admin.css']);
+        AssetLoader::register(
+            ['projectRating.js','deleteProject.js'],
+            ['admin.css'],
+            ['StarRating']
+        );
         $data = [
             'user'             => $user,
             'userProjects'     => $lastUpdatedProjects,

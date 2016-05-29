@@ -197,3 +197,24 @@ function startsWith(str,param){
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+function showConfirmationModal(html,acceptCallBack,denyCallBack){
+    $("#appConfirmModal #confirmModalAction").unbind('click');
+    $("#appConfirmModal #denyModalAction").unbind('click');
+    $("#appConfirmModal").modal('show');
+    $("#appConfirmModal").find(".modal-body").html(html);
+    $("#appConfirmModal #denyModalAction").click(function(evento){
+        evento.preventDefault();
+        if(denyCallBack){
+            denyCallBack();
+        }
+        $("#appConfirmModal").modal('hide');
+    });
+    $("#appConfirmModal #confirmModalAction").click(function(evento){
+        evento.preventDefault();
+        if(acceptCallBack){
+            acceptCallBack();
+        }
+        $("#appConfirmModal").modal('hide');
+    });
+}

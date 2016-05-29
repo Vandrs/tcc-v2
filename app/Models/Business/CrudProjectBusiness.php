@@ -4,6 +4,7 @@ namespace App\Models\Business;
 use App\Models\DB\User;
 use App\Models\DB\Project;
 use App\Models\DB\UserProject;
+use App\Models\Elastic\Models\ElasticProject;
 use App\Models\Enums\EnumProject;
 use App\Models\Business\UserProjectBusiness;
 use App\Models\Business\ImageBusiness;
@@ -49,7 +50,7 @@ class CrudProjectBusiness{
 				}
 			}
 			DB::commit();
-			$this->dispathJob($project);
+			$this->exportProject($project);
 			return $project;
 		}catch(\Exception $e){
 			Log::error(Utils::getExceptionFullMessage($e));
@@ -64,7 +65,21 @@ class CrudProjectBusiness{
 		if($this->validator->fails()){
 			return false;
 		}
-		return $project->update($data);
+		if($project->update($data)){
+			$this->exportProject($project);
+			return $project;
+		}
+	}
+
+	public function delete(Project $project){
+		try{
+			ElasticProject::deleteById($project->id);
+			$project->delete();
+			return true;
+		} catch(\Exception $e){
+			Log::error(Utils::getExceptionFullMessage($e));
+			return false;
+		}
 	}
 
 	private function uploadImages($images, Project $project){
@@ -112,5 +127,10 @@ class CrudProjectBusiness{
 
 	public static function dispathElasticJob(Project $project){
 		(new self())->dispathJob($project);
+	}
+
+	public function exportProject(Project $project){
+		$elasticExport = new ElasticExportBusiness();
+		$elasticExport->exportProject($project);
 	}
 }
