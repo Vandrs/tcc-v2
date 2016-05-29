@@ -26,7 +26,8 @@ class ProjectBusiness{
 			return $projects->slice(0,$qtdProjects);
 		} else {
 			$excludeIds = $user->projectsAsOwner()->pluck('id');
-			
+			$searchProject = new ElasticSearchProject;
+			return $searchProject->getTopRatedProjects($qtdProjects,1,$excludeIds);
 		}
 	}
 }

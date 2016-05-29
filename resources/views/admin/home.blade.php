@@ -27,6 +27,12 @@
             </div>
         @endforeach
     </div>
+    @else
+        <div class="row margin-top-20">
+            <div class="col-xs-12">
+                <h4>Você ainda não possui projetos. Clique <a href="{{route('admin.project.create')}}" class="btn btn-primary">aqui</a> para iniciar um projeto agora mesmo.</h4>
+            </div>
+        </div>
     @endif
 
     @if($featuredProjects->count())

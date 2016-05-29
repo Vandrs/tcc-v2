@@ -30,15 +30,25 @@ class ElasticSearchProject{
 		$this->search->addType($elasticProject->getType());
 	}
 
-	public function getTopRatedProjects($size = 9, $page = 1){
+	public function getTopRatedProjects($size = 9, $page = 1, $excludeIds = []){
 		$query = new Query();
 		$query->setFrom(Utils::calcFromIndex($page,$size))
     		  ->setSize($size)
     		  ->setSort([
-    		  		'avg_note' 	  => 'desc',
-    		  		'total_notes' => 'desc'
-    		  	]);
-    	$query->setQuery(new MatchAll());
+				  'avg_note' 	=> 'desc',
+				  'total_notes' => 'desc'
+			  ]);
+		if(!empty($excludeIds)){
+			$queryBuilder = new QueryBuilder;
+			$boolQuery = $queryBuilder->query()->bool();
+			$boolQuery->addMust(new MatchAll());
+			foreach($excludeIds as $excludeId){
+				$boolQuery->addMustNot($queryBuilder->query()->term(['id' => $excludeId]));
+			}
+			$query->setQuery($boolQuery);
+		} else {
+			$query->setQuery(new MatchAll());
+		}
     	return $this->doSearch($query,$page,$size);
 	}
 
