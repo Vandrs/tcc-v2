@@ -6,3 +6,5 @@ Homestead.json
 .env
 .idea/
 storage/cache/
+storage/images/
+storage/files/
