@@ -26,7 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('app:make-diff-matrix')->cron('0 */6 * * *')->withoutOverlapping();
     }
 }
