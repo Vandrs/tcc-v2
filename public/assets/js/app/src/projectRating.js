@@ -83,5 +83,4 @@ function rateProject(note){
         },
         dataType:'json'
     });
-    console.log(route);
 }

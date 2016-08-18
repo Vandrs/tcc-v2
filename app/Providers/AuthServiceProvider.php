@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\Enums\EnumCapabilities;
 use App\Models\Enums\EnumProject;
 use App\Models\Interfaces\C3Project;
+use App\Models\Business\ProjectFollowerBusiness;
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -51,5 +52,16 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        $gate->define(EnumCapabilities::FOLLOW_PROJECT,function($user, C3Project $project){
+            $isMember = $project->getMembers()
+                                ->where('id', $user->id)
+                                ->first();
+            $isFollower = ProjectFollowerBusiness::isUserFollowingProject($user, $project);
+            if(empty($isMember) && empty($isFollower)){
+                return true;
+            }
+            return false;
+        });
+        
     }
 }

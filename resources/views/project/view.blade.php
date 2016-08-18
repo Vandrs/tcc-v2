@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@inject('projectFollower','App\Models\Business\ProjectFollowerBusiness')
 @section('body')
 	<div class="container project-container">
         <div class="row margin-top-20">
@@ -91,6 +92,33 @@
                                         <li><a href="{{route('user.view',['id' => $member->id])}}">{{$member->name}}</a></li>
                                     @endforeach
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="row margin-top-10">
+                            <div class="col-xs-12 project-section-label">
+                                Seguidores
+                            </div>
+                            <div class="col-xs-12 margin-top-10 followers-area">
+                                @include('project.partials.followers',['followers' => $project->followers])
+                            </div>
+                            <div class="col-xs-12 margin-top-10">
+                                @if(Auth::check())
+                                <button class="btn btn-default btn-follow {{ $projectFollower::isUserFollowingProject(Auth::user(), $project)  ? "following" : "" }}" 
+                                        data-follow-route="{{route('site.project.follow',['id' => $project->id])}}"
+                                        data-unfollow-route="{{route('site.project.unfollow',['id' => $project->id])}}">
+                                    <span class="glyphicon glyphicon-heart"></span> Seguir
+                                </button>
+                                @else
+                                <button data-toggle="tooltip" class="btn btn-default disabled" title="Você deve estar logado para poder seguir projetos">
+                                    <span class="glyphicon glyphicon-heart"></span> Seguir
+                                </button>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row margin-top-10">
+                            <div class="col-xs-12">
+                                <div class="project-follow-feedBack">
+                                </div>
                             </div>
                         </div>
                     </div>

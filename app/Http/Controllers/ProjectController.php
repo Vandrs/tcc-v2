@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
+use App\Utils\Utils;
 use App\Models\DB\Project;
 use App\Models\DB\Category;
 use App\Models\Business\CategoryBusiness;
 use App\Models\Business\CrudProjectBusiness;
+use App\Models\Business\ProjectFollowerBusiness;
 use App\Models\Enums\EnumCapabilities;
 use App\Models\Elastic\Models\ElasticProject;
-use Auth;
 use Gate;
-
+use Log;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -30,7 +32,11 @@ class ProjectController extends Controller
         } catch(ModelNotFoundException $e){
             $this->notFound();
         }
-        AssetLoader::register(["projectPage.js","projectRating.js"],[],["LightGallery","StarRating"]);
+        AssetLoader::register(
+            ["projectPage.js","projectRating.js","viewProject.js"],
+            [],
+            ["LightGallery","StarRating"]
+        );
     	return view('project.view',['project' => $project]);
     }
 
@@ -107,6 +113,7 @@ class ProjectController extends Controller
         } catch(ModelNotFoundException $e){
             return $this->notFound();
         } catch(\Exception $e){
+            Log::error(Utils::getExceptionFullMessage($e));
             return $this->unexpectedError();
         }
     }
@@ -144,5 +151,26 @@ class ProjectController extends Controller
             ['StarRating']
         );
         return view('project.user-projects',$data);
+    }
+
+    public function follow(Request $request, $id){
+        try{
+            $project = Project::findOrFail($id);
+            if(Gate::denies(EnumCapabilities::FOLLOW_PROJECT, $project)){
+                throw new \Exception("Usuário já está vinculado ao projeto");
+            }
+            if(ProjectFollowerBusiness::follow(Auth::user(),$project)){
+                CrudProjectBusiness::dispathElasticJob($project);
+            }
+            return json_encode(['status' => 1,'class_msg' => 'alert-success']);
+        } catch (\Exception $e){ 
+            Log::error(Utils::getExceptionFullMessage($e));    
+            return $this->ajaxUnexpectedError(null, $e->getMessage());
+        }
+        
+    }
+
+    public function unFollow(Request $request, $id){
+
     }
 }

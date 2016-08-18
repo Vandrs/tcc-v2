@@ -16,7 +16,7 @@ class ElasticProject extends ElasticModel implements C3Project{
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'files', 'members', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'files', 'members', 'followers', 'created_at', 'updated_at'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
@@ -58,14 +58,21 @@ class ElasticProject extends ElasticModel implements C3Project{
 		}
 
 		$members = $this->members;
+		$this->members = new Collection();
 		if(!empty($members)){
-			$this->members = new Collection();
 			foreach($members as $key => $member){
 				$this->members->put($key, (object) $member);
 			}
-		} else {
-			$this->members = new Collection();
 		}
+
+		$followers = $this->followers;
+		$this->followers = new Collection();
+		if(!empty($followers)){
+			foreach($followers as $key => $follower){
+				$this->followers->put($key, (object) $follower);
+			}
+		}
+
 	}
 
 	public function imageCoverOrFirst(){
@@ -78,9 +85,12 @@ class ElasticProject extends ElasticModel implements C3Project{
 		return $this->images->first();
 	}
 
-	public function getMembers()
-	{
+	public function getMembers(){
 		return $this->members;
+	}
+
+	public function getFollowers(){
+		return $this->followers;
 	}
 
 }

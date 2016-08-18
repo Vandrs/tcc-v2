@@ -28,8 +28,14 @@ Route::get('/projeto/editar/{id}',['as' => 'admin.project.edit', 'uses' => 'Proj
 Route::post('/projeto/salvar/{id}',['as' => 'admin.project.update', 'uses' => 'ProjectController@update']);
 Route::get('/projeto/deletar/{id}',['as' => 'admin.project.delete', 'uses' => 'ProjectController@delete']);
 
+Route::post('/projeto/follow/{id}',['as' => 'site.project.follow', 'uses' => 'ProjectController@follow']);
+Route::post('/projeto/unfollow/{id}',['as' => 'site.project.unfollow', 'uses' => 'ProjectController@unfollow']);
+
 /*Avaliação Projeto*/
-Route::get('/projeto/minha-avaliacao/{projectId}',['as' => 'user.note.project','uses' => 'ProjectNotesController@getUserActualNote']);
+Route::get('/projeto/minha-avaliacao/{projectId}',[
+	'as' => 'user.note.project',
+	'uses' => 'ProjectNotesController@getUserActualNote']
+);
 Route::post('/projeto/avaliar/{projectId}',['as' => 'project.rate','uses' => 'ProjectNotesController@rateProject']);
 
 

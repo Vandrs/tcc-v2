@@ -59,17 +59,27 @@ class Project extends Model implements C3Project{
 	}
 
 	public function getMembers(){
-		$roles = [ EnumProject::ROLE_CONTRIBUTOR, EnumProject::ROLE_OWNER, EnumProject::ROLE_MENTOR] ;
-		return User::select([
-                            DB::raw('users.*'),
-                            DB::raw('user_projects.role'),
-                            DB::raw('user_projects.id AS user_project_id')
-                        ])
+		$roles = [EnumProject::ROLE_CONTRIBUTOR, EnumProject::ROLE_OWNER, EnumProject::ROLE_MENTOR];
+		return $this->getProjectUsers($roles);
+	}
+
+	public function getFollowers(){
+		$roles = [EnumProject::ROLE_FOLLOWER];
+		return $this->getProjectUsers($roles);
+	}
+
+	private function getProjectUsers($roles = []){
+		$baseQuery  = User::select([
+                    	DB::raw('users.*'),
+                    	DB::raw('user_projects.role'),
+                    	DB::raw('user_projects.id AS user_project_id')
+                      ])		
                       ->join('user_projects','user_projects.user_id','=','users.id')
-                      ->where('user_projects.project_id','=',$this->id)
-                      ->whereIn('user_projects.role', $roles)
-					  ->orderBy('name','ASC')
-                      ->get();
+                      ->where('user_projects.project_id','=',$this->id);
+        if(!empty($roles)){
+        	$baseQuery->whereIn('user_projects.role', $roles);
+        }                      
+        return $baseQuery->orderBy('name','ASC')->get();
 	}
 
 	public function getAvgNote(){

@@ -27,6 +27,7 @@ class ElasticProjectBusiness{
 		$data["urls"] = self::instance()->parseUrls($project);
 		$data["files"] = self::instance()->parseFiles($project);
 		$data["members"] = self::instance()->parseMembers($project);
+		$data["followers"] = self::instance()->parseFollowers($project);
 		return $data;
 	}
 
@@ -88,6 +89,20 @@ class ElasticProjectBusiness{
 			]);
 		});
 		return $members;
+	}
+
+	private function parseFollowers(Project $project){
+		$followers = [];
+		$project->getFollowers()->each(function($user) use (&$followers){
+			array_push($followers,[
+				"id" => $user->id,
+				"name" => $user->name,
+				"email" => $user->email,
+				"role" => $user->role
+			]);
+			return $followers;
+		});
+		return $followers;
 	}
 
 }

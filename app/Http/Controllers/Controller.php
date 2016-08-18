@@ -45,7 +45,7 @@ class Controller extends BaseController
         return back();
     }
 
-    public function ajaxUnexpectedError($msg = null){
+    public function ajaxUnexpectedError($msg = null, $except = null){
         if(is_null($msg)){
             $msg = trans('custom_messages.unexpected_error');
         }

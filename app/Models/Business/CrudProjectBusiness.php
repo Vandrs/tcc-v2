@@ -4,6 +4,7 @@ namespace App\Models\Business;
 use App\Models\DB\User;
 use App\Models\DB\Project;
 use App\Models\DB\UserProject;
+use App\Models\Interfaces\C3Project;
 use App\Models\Elastic\Models\ElasticProject;
 use App\Models\Enums\EnumProject;
 use App\Models\Business\UserProjectBusiness;
@@ -132,5 +133,12 @@ class CrudProjectBusiness{
 	public function exportProject(Project $project){
 		$elasticExport = new ElasticExportBusiness();
 		$elasticExport->exportProject($project);
+	}
+
+	public static function extractProjetoFromC3Project(C3Project $c3Project){
+		if($c3Project instanceof Project){
+			return $c3Project;
+		}
+		return Project::findOrFail($c3Project->id);
 	}
 }
