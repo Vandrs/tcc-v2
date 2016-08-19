@@ -162,7 +162,8 @@ class ProjectController extends Controller
             if(ProjectFollowerBusiness::follow(Auth::user(),$project)){
                 CrudProjectBusiness::dispathElasticJob($project);
             }
-            return json_encode(['status' => 1,'class_msg' => 'alert-success']);
+            $html = view('project.partials.followers',['followers' => $project->getFollowers()])->render();
+            return json_encode(['status' => 1,'class_msg' => 'alert-success', 'html' => $html]);
         } catch (\Exception $e){ 
             Log::error(Utils::getExceptionFullMessage($e));    
             return $this->ajaxUnexpectedError(null, $e->getMessage());
@@ -171,6 +172,17 @@ class ProjectController extends Controller
     }
 
     public function unFollow(Request $request, $id){
-
+        try{
+            $project = Project::findOrFail($id);
+            if(ProjectFollowerBusiness::isUserFollowingProject(Auth::user(), $project)){
+                ProjectFollowerBusiness::unfollow(Auth::user(), $project);
+                CrudProjectBusiness::dispathElasticJob($project);
+            }
+            $html = view('project.partials.followers',['followers' => $project->getFollowers()])->render();
+            return json_encode(['status' => 1,'class_msg' => 'alert-success', 'html' => $html]);
+        } catch (\Exception $e){ 
+            Log::error(Utils::getExceptionFullMessage($e));    
+            return $this->ajaxUnexpectedError(null, $e->getMessage());
+        }
     }
 }

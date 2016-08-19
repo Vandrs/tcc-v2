@@ -50,7 +50,7 @@ class Controller extends BaseController
             $msg = trans('custom_messages.unexpected_error');
         }
         return json_encode([
-            'status' => 0, 'msg' => $msg, 'class_msg' => 'alert-danger'
+            'status' => 0, 'msg' => $msg, 'class_msg' => 'alert-danger', 'except' => $except
         ]);
     }
 }

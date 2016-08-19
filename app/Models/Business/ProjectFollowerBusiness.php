@@ -26,7 +26,7 @@ class ProjectFollowerBusiness{
 		return $userProject;
 	}
 
-	public static function unFollow(){
+	public static function unfollow(User $user, C3Project $project){
 		$userProjectBuiness = new UserProjectBusiness();
 		return $userProjectBuiness->delete($user, $project);
 	}

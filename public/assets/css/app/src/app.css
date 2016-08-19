@@ -100,7 +100,7 @@ body {
     font-weight: bold;
 }
 
-.project-container .project-members{
+.project-container .project-members, .project-container .project-followers{
     background-color: #ECF5F5;
     border:1px solid #ffffff;
     padding-top:10px;

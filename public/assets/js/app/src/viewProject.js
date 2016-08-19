@@ -13,7 +13,6 @@ $(document).ready(function(){
 
 function followProcess(route, btn){
 	var feedBackArea = '.project-follow-feedBack';
-
 	$.ajax({
 		"url":route,
 		"type":"POST",
@@ -25,6 +24,7 @@ function followProcess(route, btn){
 				} else {
 					$(btn).addClass('following');
 				}
+				$('.followers-area').html(data.html);
 			} else {
 				addFeedBack(feedBackArea, data.msg, data.class_msg);
 			}
