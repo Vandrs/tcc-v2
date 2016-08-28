@@ -9,6 +9,7 @@ use App\Models\DB\Category;
 use App\Models\DB\User;
 use App\Models\DB\Image;
 use App\Models\DB\File;
+use App\Models\DB\Post;
 use App\Models\Enums\EnumProject;
 use App\Models\Interfaces\C3Project;
 use DB;
@@ -88,6 +89,14 @@ class Project extends Model implements C3Project{
 
 	public function getTotalNotes(){
 		return ProjectNote::where('project_id', '=', $this->id)->count();	
+	}
+
+	public function posts(){
+		return $this->hasMany(Post::class);
+	}
+
+	public function getPosts(){
+		return $this->posts;
 	}
 	
 }
