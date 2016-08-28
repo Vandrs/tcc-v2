@@ -100,7 +100,7 @@ class Project extends Model implements C3Project{
 	}
 
 	public function isMember($user){
-		$this->getMembers()->where('id',$user->id,false)->first()
+		return $this->getMembers()->where('id',$user->id,false)->first();
 	}
 	
 }
