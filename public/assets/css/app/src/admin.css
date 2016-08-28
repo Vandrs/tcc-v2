@@ -163,3 +163,8 @@
     color: #949494;
     font-weight: bold;
 }
+
+table thead tr{
+    background-color: #007DB7;
+    color: #FFF;
+}    
