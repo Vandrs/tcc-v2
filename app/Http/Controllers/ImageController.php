@@ -28,6 +28,7 @@ class ImageController extends Controller {
 		try{
 			return response($glideServer->outputImage($path,$imageParameters));
 		} catch (\Exception $e){
+			dd($e->getMessage());
 			return response('Arquivo não encontrado', Response::HTTP_NOT_FOUND);
 		}
 	}
@@ -46,6 +47,19 @@ class ImageController extends Controller {
     			'class_msg' => 'alert-danger',
     			'msg' 		=> implode('<br />',$tempImage->getValidator()->messages()->all())
     		]);
+    	}
+    }
+
+    public function simpleUpload(Request $request){
+    	$imageFile = $request->file('image');
+    	$imageBusiness = new ImageBusiness();
+    	if($fileName = $imageBusiness->simpleUpload($imageFile)){
+    		return json_encode(['status' => 1, 'image' => $fileName, 'name' => $imageFile->getClientOriginalName()]);
+    	} else {
+    		return json_encode([
+    			 'status' => 0, 
+    			 'msg' 	  => implode('<br />',$imageBusiness->getValidator()->messages()->all())
+    			]);
     	}
     }
 
