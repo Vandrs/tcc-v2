@@ -1,3 +1,5 @@
+@inject('assetLoader','App\Asset\AssetLoader')
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -41,7 +43,7 @@
         {{Config::get('app.app_name')}}
         @endif
         </title>        
-        @foreach ( AssetLoader::css() as $style )
+        @foreach ( $assetLoader::css() as $style )
         <link type="text/css" rel="stylesheet" href="{{$style}}"/>
         @endforeach
     </head>
@@ -54,7 +56,7 @@
         var GENERIC_ERROR_MSG = '{{trans('custom_messages.unexpected_error')}}';
         var TOKEN = '{{csrf_token()}}';
         </script>
-        @foreach ( AssetLoader::js() as $script )
+        @foreach ( $assetLoader::js() as $script )
         <script type="text/javascript" src="{{$script}}"></script>    
         @endforeach
     </body>

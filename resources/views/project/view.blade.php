@@ -22,7 +22,7 @@
                         @endif
                         <h2>Sobre o Projeto</h2>
                         <div class="project-description project-box">
-                            {{$project->description}}
+                            {!!$project->description!!}
                         </div>
                         @if( count($project->urls) || $project->files->count())
                         <div class="project-extra">
@@ -37,6 +37,30 @@
                             </ul>
                         </div>
                         @endif
+                        @if($project->getPosts()->count())
+                        <div class="updates-area">
+                            <h2>Últimas atualizações</h2>
+                            @foreach($project->getPosts()->sortByDesc('created_at') as $post)
+                            <div class="post-area project-box">
+                                <h3>{{$post->title}}</h3>
+                                <div class="post-text">
+                                    {!!$post->text!!}
+                                </div>
+                                <div class="post-info-area text-right margin-top-10">
+                                    Por: <strong>{{$post->createUser['name']}}</strong> em {{DateUtil::strDbDateToBrDate($post->created_at,false)}}
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        @endif
+                        <div class="comments-area">
+                            <h3>Comentários</h3>
+                            <script>
+                                DISQUS_PAGE_URL = {{$disqus_page_url}};
+                                DISQUS_PAGE_IDENTIFIER = {{$discus_page_id}};
+                            </script>
+                            <div id="disqus_thread"></div>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-md-4 margin-top-30">
                         <div class="row">
