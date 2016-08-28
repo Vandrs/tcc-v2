@@ -30,6 +30,22 @@ class ImageBusiness{
 		}
 	}
 
+	public function simpleUpload(UploadedFile $file){
+		$tempBusiness = new TempBusiness;
+		$this->validator = Validator::make(
+			['image' => $file ], 
+			$tempBusiness->imageValidation(), 
+			$tempBusiness->messages()
+		);
+		if($this->validator->fails()){
+			return false;
+		}
+		$fileName = Utils::radomName().".".$file->guessClientExtension();
+		$file->move(storage_path('images'),$fileName);
+		return 	route('image.get',['path' => $fileName]);	
+
+	}
+
 	public function create(UploadedFile $file, Project $project){
 		$tempBusiness = new TempBusiness;
 		$this->validator = Validator::make(['image' => $file ], $tempBusiness->imageValidation(), $tempBusiness->messages());
