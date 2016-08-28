@@ -27,9 +27,18 @@ Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'Proj
 Route::get('/projeto/editar/{id}',['as' => 'admin.project.edit', 'uses' => 'ProjectController@edit']);
 Route::post('/projeto/salvar/{id}',['as' => 'admin.project.update', 'uses' => 'ProjectController@update']);
 Route::get('/projeto/deletar/{id}',['as' => 'admin.project.delete', 'uses' => 'ProjectController@delete']);
-
 Route::post('/projeto/follow/{id}',['as' => 'site.project.follow', 'uses' => 'ProjectController@follow']);
 Route::post('/projeto/unfollow/{id}',['as' => 'site.project.unfollow', 'uses' => 'ProjectController@unfollow']);
+
+/*Post*/
+Route::get('/projeto/posts/{projectId}',['as' => 'admin.project.posts', 'uses' => 'BlogController@posts']);
+Route::get('/projeto/posts/list/{projectId}',['as' => 'admin.project.posts.list', 'uses' => 'BlogController@getPosts']);
+Route::get('/projeto/post/novo/{projectId}',['as' => 'admin.project.post.create', 'uses' => 'BlogController@createPost']);
+Route::post('/projeto/post/save/{projectId}',['as' => 'admin.project.post.save', 'uses' => 'BlogController@savePost']);
+Route::get('/projeto/post/editar/{projectId}/{id}',['as' => 'admin.project.post.edit', 'uses' => 'BlogController@editPost']);
+Route::post('/projeto/post/update/{projectId}/{id}',['as' => 'admin.project.post.update', 'uses' => 'BlogController@updatePost']);
+Route::get('/projeto/post/deletar/{projectId}/{id}',['as' => 'admin.project.post.delete', 'uses' => 'BlogController@deletePost']);
+
 
 /*Avaliação Projeto*/
 Route::get('/projeto/minha-avaliacao/{projectId}',[
@@ -37,7 +46,6 @@ Route::get('/projeto/minha-avaliacao/{projectId}',[
 	'uses' => 'ProjectNotesController@getUserActualNote']
 );
 Route::post('/projeto/avaliar/{projectId}',['as' => 'project.rate','uses' => 'ProjectNotesController@rateProject']);
-
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
@@ -47,6 +55,7 @@ Route::get('/image/get/{path}',['as' => 'image.get', 'uses' => 'ImageController@
 Route::post('/image/create/{projectId}',['as' => 'image.create', 'uses' => 'ImageController@create']);
 Route::post('/image/update/{projectId}',['as' => 'image.update', 'uses' => 'ImageController@update']);
 Route::post('/image/delete/{projectId}',['as' => 'image.delete', 'uses' => 'ImageController@delete']);
+Route::post('/image/upload',['as' => 'image.upload', 'uses' => 'ImageController@simpleUpload']);
 
 /*Arquivo*/
 Route::post('/file/temp-upload',['as' => 'file.temp-upload', 'uses' => 'FileController@tempUpload']);
