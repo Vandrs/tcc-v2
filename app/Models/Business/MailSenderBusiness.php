@@ -4,7 +4,7 @@ namespace App\Models\Business;
 
 use Mail;
 
-class MailSender{
+class MailSenderBusiness{
 	public static function send($mailData){
         Mail::send($mailData['view'],$mailData,function($mailClass) use (&$mailData){
             if(isset($mailData['sender'])){

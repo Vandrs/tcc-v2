@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\DB\User;
 use App\Models\DB\Project;
+use App\Models\Business\MailBusiness;
+use App\Jobs\SendEmailJob;
 use Auth;
 
 class TesteController extends Controller
 {
     public function index(){
-		
     }
 
     public function usersLoginList(){

@@ -16,6 +16,7 @@ class ElasticProjectBusiness{
 
 	public static function getElasticProjectData(Project $project){
 		$data = $project->getAttributes();
+		$data['url'] = $project->url;
 		self::instance()->excludeExportFields($data);
 		$data["avg_note"] = $project->getAvgNote();
 		$data["total_notes"] = $project->getTotalNotes();

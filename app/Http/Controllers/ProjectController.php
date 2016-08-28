@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
 use App\Utils\Utils;
+use App\Utils\UrlUtil;
 use App\Models\DB\Project;
 use App\Models\DB\Category;
 use App\Models\Business\CategoryBusiness;
@@ -26,8 +27,9 @@ class ProjectController extends Controller
 		$this->middleware('auth')->except(['view']);
 	}
 
-    public function view(Request $request, $id){
+    public function view(Request $request, $path){
         try{
+            $id = UrlUtil::getIdByUrlPath($path);
             $project = ElasticProject::findById($id);
         } catch(ModelNotFoundException $e){
             $this->notFound();

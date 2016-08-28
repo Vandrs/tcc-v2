@@ -13,7 +13,7 @@
                         @foreach($projects as $project)       
                             <tr>
                                 <td>
-                                <a href="{{route('site.project.view',['id' => $project->id])}}">{{$project->title}}</a>
+                                <a href="{{$project->url}}">{{$project->title}}</a>
                                 </td>
                                 <td>&nbsp; Média {{$project->getAvgNote()}}</td>
                             </tr>

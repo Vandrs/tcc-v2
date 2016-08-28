@@ -8,14 +8,7 @@ class UrlUtil {
 	public static function getIdByUrlPath($path){
 		$position = strrpos($path,'-');
         $id = substr($path,++$position);
-		$id = str_ireplace('it','',$id);
         return $id;
-	}
-
-	public static function isITUrl($path){
-		$position = strrpos($path,'-');
-        $id = substr($path,++$position);
-        return str_contains($id, 'it');
 	}
 
 	public static function makeExternal($url){
@@ -24,4 +17,5 @@ class UrlUtil {
 		}
 		return "http://".$url;
 	}
+	
 }

@@ -12,6 +12,7 @@ use App\Models\DB\File;
 use App\Models\DB\Post;
 use App\Models\Enums\EnumProject;
 use App\Models\Interfaces\C3Project;
+use App\Utils\StringUtil;
 use DB;
 
 class Project extends Model implements C3Project{
@@ -101,6 +102,11 @@ class Project extends Model implements C3Project{
 
 	public function isMember($user){
 		return $this->getMembers()->where('id',$user->id,false)->first();
+	}
+
+	public function getUrlAttribute($value = null){
+		$path = StringUtil::toUrl($this->title."-".$this->id);
+		return route('site.project.view',['path' => $path]);
 	}
 	
 }

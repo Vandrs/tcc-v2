@@ -16,7 +16,7 @@ class ElasticProject extends ElasticModel implements C3Project{
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'avg_note', 'total_notes', 'images', 'files', 'members', 'followers', 'posts', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'url', 'avg_note', 'total_notes', 'images', 'files', 'members', 'followers', 'posts', 'created_at', 'updated_at'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
@@ -106,7 +106,7 @@ class ElasticProject extends ElasticModel implements C3Project{
 	}
 
 	public function isMember($user){
-		return $this->getMembers()->where('id', $user->id, false);
+		return $this->getMembers()->where('id', $user->id, false)->first();
 	}
 
 }

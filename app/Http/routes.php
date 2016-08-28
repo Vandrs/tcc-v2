@@ -22,7 +22,7 @@ Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);
 /*Projeto*/
 Route::get('/meus-projetos',['as' => 'admin.user.projects', 'uses' => 'ProjectController@userProjects']);
 Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectController@create']);
-Route::get('/projeto/{id}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
+Route::get('/projeto/{path}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);
 Route::get('/projeto/editar/{id}',['as' => 'admin.project.edit', 'uses' => 'ProjectController@edit']);
 Route::post('/projeto/salvar/{id}',['as' => 'admin.project.update', 'uses' => 'ProjectController@update']);
