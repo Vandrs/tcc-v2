@@ -105,4 +105,8 @@ class ElasticProject extends ElasticModel implements C3Project{
 		return $this->posts;
 	}
 
+	public function isMember($user){
+		return $this->getMembers()->where('id', $user->id, false);
+	}
+
 }

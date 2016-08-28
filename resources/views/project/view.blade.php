@@ -56,8 +56,8 @@
                         <div class="comments-area">
                             <h3>Comentários</h3>
                             <script>
-                                DISQUS_PAGE_URL = {{$disqus_page_url}};
-                                DISQUS_PAGE_IDENTIFIER = {{$discus_page_id}};
+                                DISQUS_PAGE_URL = '{{$disqus_page_url}}';
+                                DISQUS_PAGE_IDENTIFIER = '{{$discus_page_id}}';
                             </script>
                             <div id="disqus_thread"></div>
                         </div>
@@ -127,11 +127,13 @@
                             </div>
                             <div class="col-xs-12 margin-top-10">
                                 @if(Auth::check())
-                                <button class="btn btn-default btn-follow {{ $projectFollower::isUserFollowingProject(Auth::user(), $project)  ? "following" : "" }}" 
-                                        data-follow-route="{{route('site.project.follow',['id' => $project->id])}}"
-                                        data-unfollow-route="{{route('site.project.unfollow',['id' => $project->id])}}">
-                                    <span class="glyphicon glyphicon-heart"></span> Seguir
-                                </button>
+                                    @if(!$project->isMember(Auth::user()))
+                                        <button class="btn btn-default btn-follow {{ $projectFollower::isUserFollowingProject(Auth::user(), $project)  ? "following" : "" }}" 
+                                                data-follow-route="{{route('site.project.follow',['id' => $project->id])}}"
+                                                data-unfollow-route="{{route('site.project.unfollow',['id' => $project->id])}}">
+                                            <span class="glyphicon glyphicon-heart"></span> Seguir
+                                        </button>
+                                    @endif
                                 @else
                                 <button data-toggle="tooltip" class="btn btn-default disabled" title="Você deve estar logado para poder seguir projetos">
                                     <span class="glyphicon glyphicon-heart"></span> Seguir

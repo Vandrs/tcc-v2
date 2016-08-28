@@ -98,5 +98,9 @@ class Project extends Model implements C3Project{
 	public function getPosts(){
 		return $this->posts;
 	}
+
+	public function isMember($user){
+		$this->getMembers()->where('id',$user->id,false)->first()
+	}
 	
 }
