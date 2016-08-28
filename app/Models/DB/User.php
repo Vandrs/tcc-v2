@@ -10,6 +10,7 @@ use DB;
 
 class User extends Authenticatable
 {
+
     /**
      * The attributes that are mass assignable.
      *
