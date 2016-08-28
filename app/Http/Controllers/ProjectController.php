@@ -26,18 +26,18 @@ class ProjectController extends Controller
 		$this->middleware('auth')->except(['view']);
 	}
 
-    public function view($id){
+    public function view(Request $request, $id){
         try{
             $project = ElasticProject::findById($id);
         } catch(ModelNotFoundException $e){
             $this->notFound();
         }
         AssetLoader::register(
-            ["projectPage.js","projectRating.js","viewProject.js"],
+            ["projectPage.js","projectRating.js","viewProject.js","disqus.js"],
             [],
             ["LightGallery","StarRating"]
         );
-    	return view('project.view',['project' => $project]);
+    	return view('project.view',['project' => $project, 'disqus_page_url' => $request->url(), 'discus_page_id' => 'project-'.$id]);
     }
 
     public function create(){
