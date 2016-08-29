@@ -87,6 +87,7 @@ class ProjectController extends Controller
             }
             $projectBusiness = new CrudProjectBusiness();
             if($projectBusiness->update($project, $request->only(['title','description','category_id','urls']))){
+                CrudProjectBusiness::dispatchNotificationJob($project);
                 $request->session()->flash('msg','Projeto alterado com sucesso');
                 $request->session()->flash('class_msg','alert-success');
                 return redirect()->route('admin.user.projects');

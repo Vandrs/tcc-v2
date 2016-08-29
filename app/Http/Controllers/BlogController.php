@@ -111,7 +111,9 @@ class BlogController extends Controller
     		if($post = $postBusiness->createPost($data, Auth::user())){
     			$request->session()->flash('msg','Post criado com sucesso!');	
     			$request->session()->flash('class_msg','alert-success');
-    			CrudProjectBusiness::dispathElasticJob(Project::find($projectId));
+    			$project = Project::find($projectId);
+    			CrudProjectBusiness::dispathElasticJob($project);
+    			CrudProjectBusiness::dispatchNotificationJob($project);
     			return redirect()->route('admin.project.posts',['projectId' => $projectId]);
     		} else {
     			return back()->withErrors($postBusiness->getValidator())->withInput();
@@ -130,7 +132,9 @@ class BlogController extends Controller
     		if($result = $postBusiness->updatePost($data, $post, Auth::user())){
     			$request->session()->flash('msg','Post alterado com sucesso!');	
     			$request->session()->flash('class_msg','alert-success');
-    			CrudProjectBusiness::dispathElasticJob(Project::find($projectId));
+    			$project = Project::find($projectId);
+    			CrudProjectBusiness::dispathElasticJob($project);
+    			CrudProjectBusiness::dispatchNotificationJob($project);
     			return redirect()->route('admin.project.posts',['projectId' => $projectId]);
     		} else {
     			return back()->withErrors($postBusiness->getValidator())->withInput();

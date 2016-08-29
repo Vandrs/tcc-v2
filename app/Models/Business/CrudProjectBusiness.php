@@ -7,6 +7,7 @@ use App\Models\DB\UserProject;
 use App\Models\Interfaces\C3Project;
 use App\Models\Elastic\Models\ElasticProject;
 use App\Models\Enums\EnumProject;
+use App\Models\Enums\EnumQueues;
 use App\Models\Business\UserProjectBusiness;
 use App\Models\Business\ImageBusiness;
 use App\Models\Business\FileBusiness;
@@ -16,6 +17,7 @@ use DB;
 use Log;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\SendPropertyToElastic;
+use App\Jobs\NotifyProjectFollowers;
 
 class CrudProjectBusiness{
 
@@ -123,7 +125,12 @@ class CrudProjectBusiness{
 
 	private function dispathJob(Project $project){
 		$job = new SendPropertyToElastic($project);
-		$this->dispatch($job->onQueue('elasticsearch'));
+		$this->dispatch($job->onQueue(EnumQueues::ELASTICSEARCH));
+	}
+
+	public static function dispatchNotificationJob(Project $project){
+		$job = (new NotifyProjectFollowers($project))->onQueue(EnumQueues::NOTIFICATION);
+		(new self())->dispatch($job);
 	}
 
 	public static function dispathElasticJob(Project $project){

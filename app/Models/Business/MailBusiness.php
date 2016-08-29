@@ -36,9 +36,9 @@ class MailBusiness {
 
 	public function messages(){
 		return [
-			"to.required" => "Campo to deve ter ao menos 1 destinatário",
-			"to.array" 	  => "Campo to com formato inválido",
-			"to.view"     => "Campo view é obrigatório"
+			"to.required"   => "Campo to deve ter ao menos 1 destinatário",
+			"to.array" 	    => "Campo to com formato inválido",
+			"view.required" => "Campo view é obrigatório"
 		];
 	}
 
