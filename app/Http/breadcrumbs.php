@@ -39,4 +39,10 @@ BreadCrumbs::register('admin.project.blog.post.update', function($breadcrumbs, $
 	$breadcrumbs->push('Editar Post', route('admin.project.post.edit', ['projectId' => $project->id, 'id' => $post->id]));
 });
 
+BreadCrumbs::register('admin.project.management', function($breadcrumbs, $project){
+	$breadcrumbs->parent('admin.project.update', $project);
+	$breadcrumbs->push('Gerenciamento', route('admin.project.management', ['id' => $project->id]));
+});
+
+
 

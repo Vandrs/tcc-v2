@@ -55,6 +55,11 @@
         var BASE_URL = '{{url("/")}}/';
         var GENERIC_ERROR_MSG = '{{trans('custom_messages.unexpected_error')}}';
         var TOKEN = '{{csrf_token()}}';
+        @if(isset($js_variables) && count($js_variables))
+        @foreach($js_variables as $key => $val)
+        var {{$key}} = '{{$val}}'
+        @endforeach                
+        @endif
         </script>
         @foreach ( $assetLoader::js() as $script )
         <script type="text/javascript" src="{{$script}}"></script>    

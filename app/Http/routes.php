@@ -30,7 +30,7 @@ Route::get('/projeto/deletar/{id}',['as' => 'admin.project.delete', 'uses' => 'P
 Route::post('/projeto/follow/{id}',['as' => 'site.project.follow', 'uses' => 'ProjectController@follow']);
 Route::post('/projeto/unfollow/{id}',['as' => 'site.project.unfollow', 'uses' => 'ProjectController@unfollow']);
 
-/*Post*/
+/*Post Projeto*/
 Route::get('/projeto/posts/{projectId}',['as' => 'admin.project.posts', 'uses' => 'BlogController@posts']);
 Route::get('/projeto/posts/list/{projectId}',['as' => 'admin.project.posts.list', 'uses' => 'BlogController@getPosts']);
 Route::get('/projeto/post/novo/{projectId}',['as' => 'admin.project.post.create', 'uses' => 'BlogController@createPost']);
@@ -39,13 +39,14 @@ Route::get('/projeto/post/editar/{projectId}/{id}',['as' => 'admin.project.post.
 Route::post('/projeto/post/update/{projectId}/{id}',['as' => 'admin.project.post.update', 'uses' => 'BlogController@updatePost']);
 Route::get('/projeto/post/deletar/{projectId}/{id}',['as' => 'admin.project.post.delete', 'uses' => 'BlogController@deletePost']);
 
-
 /*Avaliação Projeto*/
-Route::get('/projeto/minha-avaliacao/{projectId}',[
-	'as' => 'user.note.project',
-	'uses' => 'ProjectNotesController@getUserActualNote']
-);
+Route::get('/projeto/minha-avaliacao/{projectId}',['as' => 'user.note.project','uses' => 'ProjectNotesController@getUserActualNote']);
 Route::post('/projeto/avaliar/{projectId}',['as' => 'project.rate','uses' => 'ProjectNotesController@rateProject']);
+
+/*Gerenciamento Projeto*/
+Route::get('/project/gerenciar/{id}',['as' => 'admin.project.management', 'uses' => 'ProjectManagementController@index']);
+Route::get('/project/gerenciar/primeiro-acesso/{id}',['as' => 'admin.project.management.first', 'uses' => 'ProjectManagementController@firstTimeAccess']);
+Route::post('/project/gerenciar/criar-chaves/{id}',['as' => 'admin.project.management.keys', 'uses' => 'ProjectManagementController@assignKeys']);
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);

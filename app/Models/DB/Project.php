@@ -22,7 +22,7 @@ class Project extends Model implements C3Project{
 	CONST ACTIVE = 1;
 	CONST INACTIVE = 0;
 
-	protected $fillable = ['title', 'category_id','description', 'urls', 'in_elastic'];
+	protected $fillable = ['title', 'category_id','description', 'urls', 'in_elastic', 'trello_account', 'trello_board_id'];
 
 	protected $casts = [
 		'urls' => 'array'

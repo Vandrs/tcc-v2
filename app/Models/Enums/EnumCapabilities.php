@@ -10,4 +10,5 @@ class EnumCapabilities
     const DELETE_PROJECT 	= 'delete-project';
     const FOLLOW_PROJECT 	= 'follow-project';
     const MAKE_POST_PROJECT = 'make-post-project';
+    const MANAGE_PROJECT	= 'manage-project';
 }
