@@ -20,6 +20,14 @@
 	"total_notes":{
 		"type":"integer"
 	},
+	"trello_account":{
+		"type":"string",
+		"index":"not_analyzed"
+	}, 
+	"trello_board_id":{
+		"type":"string",
+		"index":"not_analyzed"
+	},
 	"created_at": {
 		"type":"date",
         "format":"epoch_millis||yyyy-MM-dd HH:mm:ss"

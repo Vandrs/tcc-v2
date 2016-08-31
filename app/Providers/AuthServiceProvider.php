@@ -34,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define(EnumCapabilities::UPDATE_PROJECT,function($user, C3Project $project){
             $exists = $project->getMembers()
                               ->where('id', $user->id)
+                              ->whereIn('role',[EnumProject::ROLE_OWNER, EnumProject::ROLE_CONTRIBUTOR], false)
                               ->first();
             if($exists){
                 return true;
@@ -64,6 +65,17 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->define(EnumCapabilities::MAKE_POST_PROJECT, function($user, C3Project $project){
+            $exists = $project->getMembers()
+                              ->where('id', $user->id)
+                              ->whereIn('role',[EnumProject::ROLE_OWNER, EnumProject::ROLE_CONTRIBUTOR], false)
+                              ->first();
+            if($exists){
+                return true;
+            }
+            return false;
+        });
+
+        $gate->define(EnumCapabilities::MANAGE_PROJECT, function($user, C3Project $project){
             $exists = $project->getMembers()
                               ->where('id', $user->id)
                               ->whereIn('role',[EnumProject::ROLE_OWNER, EnumProject::ROLE_CONTRIBUTOR], false)
