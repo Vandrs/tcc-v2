@@ -1,4 +1,14 @@
 $(document).ready(function(){
+
+    tinymce.init({ 
+        selector:"textarea",
+        language: "pt_BR",
+        plugins : "table link code textcolor",
+        toolbar: "undo redo | paragraph title bold italic forecolor backcolor | format | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | table | removeformat | code",
+        extended_valid_elements : "article[class|name|id],figure[class|name|id],figcaption[class|name|id]",
+        relative_urls: false
+    });
+    
     var urlsIdx = $('.project-url').length;
     var fotoUploadUrl = $('#uploadImage').attr('data-route');
     var fileUploadUrl = $('#uploadFile').attr('data-route');
