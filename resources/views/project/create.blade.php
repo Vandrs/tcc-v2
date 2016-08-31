@@ -16,7 +16,7 @@
 			<div class="row margin-top-10">
 				<div class="col-xs-12 control-group {{$errors->has('title')?'has-error':''}}">
 				{!!Form::label('title','Título*',['class' => 'control-label'])!!}
-				{!!Form::text('title', null,['class' => 'form-control', 'placeholder' => 'Título do projeto', 'maxlenth' => '100'])!!}
+				{!!Form::text('title', null,['class' => 'form-control', 'placeholder' => 'Título do projeto', 'maxlenth' => '50'])!!}
 				</div>
 			</div>
 			<div class="row margin-top-10">

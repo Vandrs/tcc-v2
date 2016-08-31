@@ -22,7 +22,7 @@ class AssetLoader{
     private $cssToLoad = [];
     private $jsToLoad = [];
     
-    private function __construct() {
+    public function __construct() {
         $basePath = url('/');
         $this->appJsFilesSrc  = $basePath."/assets/js/app/src/";
         $this->appJsFilesMin  = $basePath."/assets/js/app/dist/";

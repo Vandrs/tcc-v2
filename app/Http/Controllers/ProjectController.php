@@ -44,7 +44,7 @@ class ProjectController extends Controller
 
     public function create(){
     	$categories = CategoryBusiness::getCategoriesForDropDown();
-        AssetLoader::register(['createProject.js'],['admin.css'],['FileUpload']);
+        AssetLoader::register(['createProject.js'],['admin.css'],['FileUpload','TinyMce']);
     	return view('project.create', [
     		'categories' => $categories,
     		'page_title' => 'Novo Projeto'
@@ -65,7 +65,7 @@ class ProjectController extends Controller
     public function edit($id){
         try{
             $project = Project::findOrFail($id);
-            AssetLoader::register(['editProject.js','deleteProject.js'],['admin.css'],['FileUpload']);
+            AssetLoader::register(['editProject.js','deleteProject.js'],['admin.css'],['FileUpload','TinyMce']);
             if(Gate::denies(EnumCapabilities::UPDATE_PROJECT, $project)){
                 return $this->notAllowed();
             }

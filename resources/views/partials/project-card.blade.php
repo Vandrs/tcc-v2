@@ -10,7 +10,7 @@
 		</div>
 	@endif
 	<h3><a href="{{$project->url}}">{{$project->title}}</a></h3>
-	<p class="text-justify">{{StringUtil::limitaCaracteres($project->description,200,"...")}}</p>
+	<p class="text-justify">{{StringUtil::limitaCaracteres(strip_tags($project->description),200,"...")}}</p>
 	<div class="evaluation">
 		@if($avgNote = ($project instanceof App\Models\DB\Project) ? $project->getAvgNote() : $project->avg_note)
 			<span class="note">
