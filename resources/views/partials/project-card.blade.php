@@ -25,7 +25,7 @@
 	@if(isset($showControls) && $showControls)
 	<div class="project-control margin-top-20 margin-bottom-10 text-right">
 		@can(Capabilities::MANAGE_PROJECT, $project)
-		<a href="{{route("admin.project.management.first",['id' => $project->id])}}" class="btn btn-default" data-toggle="tooltip" title="Gerenciar">
+		<a href="{{route('admin.project.management',['id' => $project->id])}}" class="btn btn-default" data-toggle="tooltip" title="Gerenciar">
 			<span class="glyphicon glyphicon-dashboard"></span>
 		</a>
 		@endcan

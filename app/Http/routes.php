@@ -46,7 +46,7 @@ Route::post('/projeto/avaliar/{projectId}',['as' => 'project.rate','uses' => 'Pr
 /*Gerenciamento Projeto*/
 Route::get('/project/gerenciar/{id}',['as' => 'admin.project.management', 'uses' => 'ProjectManagementController@index']);
 Route::get('/project/gerenciar/primeiro-acesso/{id}',['as' => 'admin.project.management.first', 'uses' => 'ProjectManagementController@firstTimeAccess']);
-Route::post('/project/gerenciar/criar-chaves/{id}',['as' => 'admin.project.management.keys', 'uses' => 'ProjectManagementController@assignKeys']);
+Route::post('/project/gerenciar/assign-board/{id}',['as' => 'admin.project.management.keys', 'uses' => 'ProjectManagementController@assignKeys']);
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);

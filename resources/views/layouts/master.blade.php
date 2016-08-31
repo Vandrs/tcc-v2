@@ -1,5 +1,4 @@
 @inject('assetLoader','App\Asset\AssetLoader')
-
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>

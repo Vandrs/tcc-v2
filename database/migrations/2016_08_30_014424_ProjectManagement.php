@@ -14,7 +14,6 @@ class ProjectManagement extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->string('trello_board_id', 100)->nullable()->default(null)->after('urls');
-            $table->string('trello_account', 100)->nullable()->default(null)->after('trello_board_id');
         });
     }
 
@@ -27,7 +26,6 @@ class ProjectManagement extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('trello_board_id');
-            $table->dropColumn('trello_account');
         });
     }
 }
