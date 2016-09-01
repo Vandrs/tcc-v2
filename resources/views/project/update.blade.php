@@ -5,7 +5,7 @@
 @section('content')
     {!!Form::model($project, ['route' => ['admin.project.update',$project->id], 'method' => 'post', 'files' => true])!!}
     <div class="row">
-        <div class="col-xs-12 box">
+        <div class="col-xs-12 ">
             @include('partials.view-errors')
             <div class="row">
                 <div class="col-xs-12">

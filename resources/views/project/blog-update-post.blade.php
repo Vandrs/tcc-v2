@@ -5,7 +5,7 @@
 @section('content')
 	{!!Form::model($post,['route' => ['admin.project.post.update', 'projectId' => $project->id, 'id' => $post->id] , 'method' => 'post'])!!}
 	<div class="row">
-		<div class="col-xs-12 box">
+		<div class="col-xs-12 ">
 			@include('partials.view-errors')
 			<div class="row margin-top-10">
 				<div class="col-xs-12 control-group {{$errors->has('title')?'has-error':''}}">

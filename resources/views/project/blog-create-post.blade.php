@@ -6,7 +6,7 @@
 	{!!Form::open( ['route' => ['admin.project.post.save', 'projectId' => $project->id] , 'method' => 'post'])!!}
 	{!!Form::token()!!}
 	<div class="row">
-		<div class="col-xs-12 box">
+		<div class="col-xs-12 ">
 			@include('partials.view-errors')
 			<div class="row margin-top-10">
 				<div class="col-xs-12 control-group {{$errors->has('title')?'has-error':''}}">

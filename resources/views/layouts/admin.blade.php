@@ -10,7 +10,7 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid well main-container">
             <div class="row">
                 <div class="col-xs-12">
                 @yield('breadcrumbs')
