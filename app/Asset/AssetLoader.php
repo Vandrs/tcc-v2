@@ -10,7 +10,7 @@ class AssetLoader{
     private $bundles = [];
     private $scripts = [];
     private $styles = [];
-    private $defaultBundles = ['Bootstrap','Jquery','App'];
+    private $defaultBundles = ['Bootstrap','Jquery','Material','App'];
     private $assetsBundles = [];
     private $excludeBundles = [];
     private $loaded = FALSE;

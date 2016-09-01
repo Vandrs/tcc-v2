@@ -195,6 +195,7 @@ function startsWith(str,param){
 }
 
 $(document).ready(function(){
+    $.material.init();
     $('[data-toggle="tooltip"]').tooltip();
 });
 

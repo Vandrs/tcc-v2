@@ -1,6 +1,6 @@
 
 body{
-	background-color: #F5F5F5;
+	background-color: #F2F2F2;
 }
 
 body { 
@@ -45,14 +45,6 @@ body {
 
 .margin-right-5{
     margin-right: 5px;
-}
-
-.navbar-inverse .navbar-brand a{
-    color: #9d9d9d;
-    text-decoration: none;
-}
-.navbar-inverse .navbar-brand a:hover{
-    color: #fff;
 }
 
 .box {

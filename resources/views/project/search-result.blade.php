@@ -1,6 +1,6 @@
-@extends('layouts.master')
-@section('body')
-    <div class="container">
+@extends('layouts.admin')
+@section('content')
+    
         <div class="row margin-top-30">
             <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form action="{{route('search')}}" method="GET" class="row">
@@ -39,5 +39,4 @@
                 {!! $projects->links() !!}
             </div>
         </div>
-    </div>
 @endsection
