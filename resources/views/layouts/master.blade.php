@@ -41,7 +41,11 @@
         @else
         {{Config::get('app.app_name')}}
         @endif
-        </title>        
+        </title>
+        
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+        
         @foreach ( $assetLoader::css() as $style )
         <link type="text/css" rel="stylesheet" href="{{$style}}"/>
         @endforeach
