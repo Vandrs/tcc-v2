@@ -47,6 +47,14 @@ body {
     margin-right: 5px;
 }
 
+.navbar-inverse .navbar-brand a{
+    color: #9d9d9d;
+    text-decoration: none;
+}
+.navbar-inverse .navbar-brand a:hover{
+    color: #fff;
+}
+
 .box {
 	background-color: #FFF;
 	padding-bottom: 20px;

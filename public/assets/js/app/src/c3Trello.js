@@ -50,3 +50,7 @@ C3Trello.createBoard = function(data, successCallback, errorCallback){
 	Trello.post('/boards/', data, successCallback, errorCallback);
 };
 
+C3Trello.getBoardLists = function(boardId, successCallback, errorCallback){
+	Trello.get('/boards/'+boardId+'/lists', {'cards':'open','filter':'open'} , successCallback, errorCallback);
+}
+

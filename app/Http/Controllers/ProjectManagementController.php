@@ -18,13 +18,22 @@ class ProjectManagementController extends Controller{
 	}
 
 	public function index($id){
-		
 		try{
 			$project = Project::findOrFail($id);
 			if(empty($project->trello_board_id)){
 				return redirect()->route("admin.project.management.first",['id' => $project->id]);
 			}
-			dd(['board_id' => $project->trello_board_id]);
+			AssetLoader::register(['c3Trello.js','managementLayout.js','projectManagement.js'],['admin.css'],['Trello']);
+			$data = [
+				'page_title'   => 'Gerenciamento',
+				'project' 	   => $project,
+				'js_variables' => [
+					'TRELLO_APP_NAME' 		    => Config::get('trello.app_name'),
+					'TRELLO_BOARD_ID'			=> $project->trello_board_id,
+					'PROJECT_NAME'				=> $project->title
+				]
+			];
+			return view('project.management',$data);
 		} catch(\Exception $e) {
 			$msg = Utils::getExceptionFullMessage($e);
 			Log::error($e);

@@ -168,6 +168,10 @@ class AssetLoader{
         $this->assetsBundles = $assetsBundles;
     }
 
+    function addAssetBundle($assetBundle){
+        array_push(self::$instance->assetsBundles,$assetBundle);   
+    }
+
     function setExcludeBundles($excludeBundles) {
         $this->excludeBundles = $excludeBundles;
     }    
