@@ -21,7 +21,8 @@ $(document).ready(function(){
 		language:translateDataTables(),
 		filter:false,
 		drawCallback: function( settings ) {
-    		$('[data-toggle="tooltip"]').tooltip();        
+    		$('[data-toggle="tooltip"]').tooltip();
+    		$.material.init();        
   		}
 	});
 

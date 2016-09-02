@@ -19,9 +19,11 @@
                 </div>
                 <div class="input-group col-xs-8">
                     <input name="q" type="text" value="{{$searchTerm}}" class="form-control" placeholder="Buscar por tema, assunto ou categoria">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Buscar <span class="glyphicon glyphicon-search"></span></button>
-                  </span>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-fab btn-info">
+                            <i class="material-icons">search</i>
+                        </button>
+                    </span>
                 </div>
             </form>
         </div>

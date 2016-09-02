@@ -63,9 +63,9 @@ class BlogController extends Controller
 							 ->addColumn('actions',function($post) use ($projectId){
 							 	$route = route('admin.project.post.edit',['project_id' => $projectId,'id' => $post->id]);
 							 	$deleteRoute = route('admin.project.post.delete',['project_id' => $projectId,'id' => $post->id]);
-							 	$actions = "<a href='".$route."' class='btn btn-default margin-right-5' data-toggle='tooltip' title='Editar Post'><span class='glyphicon glyphicon-edit'></span></a>";
-
-							 	$actions .= "<a href='".$deleteRoute."' class='btn btn-danger' title='Excluir post' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+							 	
+							 	$actions = "<a href='".$route."' class='btn btn-default btn-fab btn-fab-mini margin-right-5' data-toggle='tooltip' title='Editar Post'><i class='material-icons'>edit</i></a>";
+							 	$actions .= "&nbsp;&nbsp;<a href='".$deleteRoute."' class='btn btn-danger btn-fab btn-fab-mini' title='Excluir post' data-toggle='tooltip'><i class='material-icons'>delete</i></a>";
 
 							 	return $actions;
 							 })

@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 text-right">
-                    <button id="aceptTrello" class="btn btn-success">
+                    <button id="aceptTrello" class="btn btn-success btn-raised">
                         <span class="glyphicon glyphicon-thumbs-up"></span> Sim, gostaria de utilizar o Trello
                     </button>
                 </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnConfirmBoardSelection" data-route="{{route('admin.project.management.keys',['id' => $project->id])}}">
+                    <button type="button" class="btn btn-primary btn-raised" id="btnConfirmBoardSelection" data-route="{{route('admin.project.management.keys',['id' => $project->id])}}">
                         OK
                     </button>
                 </div>

@@ -24,13 +24,13 @@ ManagementLayout.buildList = function(list){
 ManagementLayout.buildCardInList = function(card){
 	var html = '<div class="panel panel-info card" data-card-id="'+card.id+'">'+
 			        '<div class="card-details">'+
-			            '<div class="panel-heading alert-info card-title">'+card.name+'</div>'+
+			            '<div class="panel-heading alert alert-info card-title">'+card.name+'</div>'+
 			            '<div class="panel-body card-title text-right">'+
-			            	'<button class="btn btn-default" data-toggle="tooltip" title="Editar">'+
-								'<span class="glyphicon glyphicon-edit"></span>'+
+			            	'<button class="btn btn-default btn-fab btn-fab-mini" data-toggle="tooltip" title="Editar">'+
+								'<i class="material-icons">edit</i>'+
 							'</button>&nbsp;'+
-							'<button class="btn btn-default" data-toggle="tooltip" title="Excluir">'+
-								'<span class="glyphicon glyphicon-trash"></span>'+
+							'<button class="btn btn-default btn-fab btn-fab-mini" data-toggle="tooltip" title="Excluir">'+
+								'<i class="material-icons">delete</i>'+
 							'</button>'+
 			            '</div>'+
 			        '</div>'+

@@ -19,8 +19,8 @@ $(document).ready(function(){
         done: function (e, data) {
             if(data.result.status){
                 appendPhoto(data.result.image);
+                $.material.init();
             } else {
-                console.log(data.result.msg);
                 addFeedBack('.photoFeedBack', data.result.msg, data.result.class_msg);
             }
         },
@@ -35,6 +35,7 @@ $(document).ready(function(){
         done:function(e,data){
             if(data.result.status){
                 appendFile(data.result.file);
+                $.material.init();
             } else {
                 addFeedBack('.fileFeedBack', data.result.msg, data.result.class_msg);
             }
@@ -43,14 +44,7 @@ $(document).ready(function(){
             addFeedBack('.fileFeedBack', GENERIC_ERROR_MSG, 'alert-danger');
         }
     });
-    $('#uploadImage').click(function(evento){
-        evento.preventDefault();
-        $('[name="image"]').click();
-    });
-    $("#uploadFile").click(function(evento){
-        evento.preventDefault();
-        $('[name="file"]').click();
-    });
+  
     $('body').on('change','.photo-name,.photo-cover',function(evento){
         evento.preventDefault();
         var photoContainer = $(this).parents('.photo-container:first');
@@ -70,6 +64,7 @@ $(document).ready(function(){
     $('body').on('click','.add-url',function(evento){
         evento.preventDefault();
         addUrl($(this),urlsIdx);
+        $.material.init();
         urlsIdx++;
     });
     $('body').on('click','.remove-url',function(evento){
@@ -144,12 +139,14 @@ function appendPhoto(image){
     var html = "<div class='col-xs-12 col-sm-6 col-md-4 margin-top-20 photo-container'>"+
                 "<img src='"+image.url+"' class='img-responsive'/>"+
                 "<input type='text' maxlength='50' value='' placeholder='Título da imagem' class='form-control photo-name margin-top-10' data-id='"+image.id+"'/>"+
-                "<div class='checkbox'>"+
+                "<div class='radio radio-primary'>"+
                     "<label>"+
                         "<input type='radio' name='cover' class='photo-cover' data-id='"+image.id+"' /> Foto de capa"+
+                        "<span class='circle'></span>"+
+                        "<span class='check'></span>"+
                     "</label>"+
                 "</div>"+
-                "<button class='remove-photo btn btn-danger full-size margin-top-10' data-id='"+image.id+"'>"+
+                "<button class='remove-photo btn btn-danger btn-raised full-size margin-top-10' data-id='"+image.id+"'>"+
                     "Excluir <span class='glyphicon glyphicon-trash'></span>"+
                 "</button>"+
                "</div>";
@@ -158,13 +155,17 @@ function appendPhoto(image){
 
 function appendFile(file){
     var html = '<div class="file-container" data-id="'+file.id+'">'+
-        '<div class="col-xs-10 col-md-11 margin-top-10">'+
-        '<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
-        '</div>'+
-        '<div class="col-xs-2 col-md-1 margin-top-10">'+
-        '<button type="button" class="btn btn-danger remove-file">'+
-        '<span class="glyphicon glyphicon-trash"></span>'+
-        '</button>'+
+        '<div class="col-xs-12 margin-top-10">'+
+            "<div class='form-group'>"+
+                "<div class='input-group'>"+
+                    '<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
+                    '<span class="input-group-btn">'+
+                        '<button type="button" class="btn btn-danger remove-file">'+
+                            '<i class="material-icons">delete</i>'+
+                        '</button>'+
+                    '</span>'+
+                '</div>'+
+            '</div>'+
         '</div>'+
         '</div>';
     $('.files-container').append(html);
@@ -177,21 +178,24 @@ function removeUrl(button){
 
 function addUrl(button, inputIdx){
     var html = "<div class='project-url'>" +
-        "<div class='col-xs-9 col-md-10 margin-top-10'>"+
-        "<div class='input-group'>"+
-        "<span class='input-group-addon'>http(s)://</span>"+
-        "<input type='text' class='form-control' name='urls[]' id='url_'"+inputIdx+"'>"+
-        "</div>"+
-        "</div>"+
-        "<div class='col-xs-3 col-md-2'>"+
-        "<button type='button' 'Adicionar' class='add-url btn btn-success margin-right-5 margin-top-10'>"+
-        "<span class='glyphicon glyphicon-plus'></span>"+
-        "</button>"+
-        "<button type='button' class='remove-url btn btn-danger margin-top-10'>"+
-        "<span class='glyphicon glyphicon-trash'></span>"+
-        "</button>"+
-        "</div>"+
-        "</div>";
+        "<div class='col-xs-12 margin-top-10'>"+
+        "<div class='form-group'>"+
+            "<div class='input-group'>"+
+                "<span class='input-group-addon'>http(s)://</span>"+
+                "<input type='text' class='form-control' name='urls[]' id='url_'"+inputIdx+"'>"+
+                '<span class="input-group-btn">'+
+                    '<button type="button" class="add-url btn btn-success btn-fab btn-fab-mini">'+
+                        '<i class="material-icons">add</i>'+
+                    '</button>'+
+                '</span>'+
+                '<span class="input-group-btn">'+
+                    "<button type='button' class='remove-url btn btn-danger btn-fab btn-fab-mini'>"+
+                        "<i class='material-icons'>delete</i>"+
+                    "</button>"+
+                "</span>"+
+            "</div>"+
+        '</div>'+
+        "</div>"
     $(button).parents('.project-urls:first').append(html);
 }
 
