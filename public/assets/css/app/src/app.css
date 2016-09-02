@@ -130,6 +130,6 @@ img.img-responsive.img-center{
 }
 
 .btn-follow.following{
-    color: #337ab7;
+    color: #337ab7 !important;
 }
 

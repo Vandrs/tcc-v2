@@ -25,23 +25,23 @@
 	@if(isset($showControls) && $showControls)
 	<div class="project-control margin-top-20 margin-bottom-10 text-right">
 		@can(Capabilities::MANAGE_PROJECT, $project)
-		<a href="{{route('admin.project.management',['id' => $project->id])}}" class="btn btn-default" data-toggle="tooltip" title="Gerenciar">
-			<span class="glyphicon glyphicon-dashboard"></span>
+		<a href="{{route('admin.project.management',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Gerenciar">
+			<i class="material-icons">dashboard</i>
 		</a>
 		@endcan
 		@can(Capabilities::MAKE_POST_PROJECT, $project)
-		<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-default" data-toggle="tooltip" title="Blog">
-			<span class="glyphicon glyphicon-pencil"></span>
+		<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Blog">
+			<i class="material-icons">description</i>
 		</a>
 		@endcan
 		@can(Capabilities::UPDATE_PROJECT, $project)
-		<a href="{{route('admin.project.edit',['id' => $project->id])}}" class="btn btn-default" data-toggle="tooltip" title="Editar">
-			<span class="glyphicon glyphicon-edit"></span>
+		<a href="{{route('admin.project.edit',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Editar">
+			<i class="material-icons">edit</i>
 		</a>
 		@endcan
 		@can(Capabilities::DELETE_PROJECT, $project)
-		<a href="{{route('admin.project.delete',['id' => $project->id])}}" class="btn btn-default delete-project" data-toggle="tooltip" title="Excluir">
-			<span class="glyphicon glyphicon-trash"></span>
+		<a href="{{route('admin.project.delete',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini delete-project" data-toggle="tooltip" title="Excluir">
+			<i class="material-icons">delete</i>
 		</a>
 		@endcan
 	</div>

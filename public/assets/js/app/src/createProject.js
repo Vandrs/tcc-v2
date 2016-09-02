@@ -29,6 +29,7 @@ $(document).ready(function(){
 				imageIndex++;
 				$('[name="image_files"]').val(JSON.stringify(tempImageObjs));
 				appendPhoto(data.result.file);
+				$.material.init();
         	} else {	
         		console.log(data.result.msg);
         		addFeedBack('.photoFeedBack', data.result.msg, data.result.class_msg);
@@ -51,6 +52,7 @@ $(document).ready(function(){
 				fileIndex++;
 				$('[name="files"]').val(JSON.stringify(tempFileObjs));
 				appendFile(data.result.file);
+				$.magerial.init();
 			} else {
 				addFeedBack('.fileFeedBack', data.result.msg, data.result.class_msg);
 			}
@@ -58,16 +60,6 @@ $(document).ready(function(){
 		error:function(e){
 			addFeedBack('.fileFeedBack', GENERIC_ERROR_MSG, 'alert-danger');
 		}
-	});
-
-    $("#uploadImage").click(function(evento){
-    	evento.preventDefault();
-    	$('[name="image"]').click();
-    });
-
-	$("#uploadFile").click(function(evento){
-		evento.preventDefault();
-		$('[name="file"]').click();
 	});
 
     $('body').on('keyup','.photo-name',function(){
@@ -114,6 +106,7 @@ $(document).ready(function(){
 		evento.preventDefault();
 		addUrl($(this),urlsIdx);
 		urlsIdx++;
+		$.material.init();
 	});
 
 	$('body').on('click','.remove-url',function(evento){
@@ -128,12 +121,14 @@ function appendPhoto(file){
 	var html = "<div class='col-xs-12 col-sm-6 col-md-4 margin-top-20'>";
 		html += 	"<img src='"+file.url+"' class='img-responsive'/>";
 		html += 	"<input type='text' maxlength='50' placeholder='Título da imagem' class='form-control photo-name margin-top-10' data-id='"+file.id+"'/>";
-		html += 	"<div class='checkbox'>";
+		html += 	"<div class='radio radio-primary'>";
     	html +=			"<label>"
       	html +=				"<input type='radio' name='cover' class='photo-cover' data-id='"+file.id+"' /> Foto de capa";
+    	html += 			"<span class='circle'></span>"
+    	html += 			"<span class='check'></span>"
     	html +=			"</label>"
   		html +=		"</div>";
-		html += 	"<button class='remove-photo btn btn-danger full-size margin-top-10' data-id='"+file.id+"'>";
+		html += 	"<button class='remove-photo btn btn-danger btn-raised full-size margin-top-10' data-id='"+file.id+"'>";
 		html +=			"Excluir <span class='glyphicon glyphicon-trash'></span>";
 		html += 	"</button>";
 	    html += "</div>";
@@ -141,14 +136,16 @@ function appendPhoto(file){
 }
 
 function appendFile(file){
-	var html = '<div class="file-container" data-id="'+file.id+'">'+
-					'<div class="col-xs-10 col-md-11 margin-top-10">'+
-						'<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
-					'</div>'+
-					'<div class="col-xs-2 col-md-1 margin-top-10">'+
-						'<button type="button" class="btn btn-danger remove-file">'+
-							'<span class="glyphicon glyphicon-trash"></span>'+
-						'</button>'+
+	var html = '<div class="col-xs-12 margin-top-10">'+
+					'<div class="file-container form-group" data-id="'+file.id+'">'+
+						'<div class="input-group">'+
+							'<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
+							'<span class="input-group-btn">'+
+								'<button type="button" class="btn btn-danger btn-fab btn-fab-mini remove-file">'+
+									'<i class="material-icons">delete</i>'+
+								'</button>'+
+							'</span>'+
+						'</div>'+
 					'</div>'+
 				'</div>';
 	$('.files-container').append(html);
@@ -236,19 +233,21 @@ function removeUrl(button){
 
 function addUrl(button, inputIdx){
 	var html = "<div class='project-url'>" +
-					"<div class='col-xs-9 col-md-10 margin-top-10'>"+
+					"<div class='col-xs-12 margin-top-10'>"+
 						"<div class='input-group'>"+
 							"<span class='input-group-addon'>http(s)://</span>"+
 							"<input type='text' class='form-control' name='urls[]' id='url_'"+inputIdx+"'>"+
+							"<span class='input-group-btn'>"+
+								"<button type='button' 'Adicionar' class='add-url btn btn-fab btn-fab-mini btn-success margin-top-10'>"+
+									"<i class='material-icons'>add</i>"+
+								"</button>"+
+							"</span>"+
+							"<span class='input-group-btn'>"+
+								"<button type='button' class='remove-url btn btn-fab btn-fab-mini btn-danger margin-top-10'>"+
+									"<i class='material-icons'>delete</i>"+
+								"</button>"+
+							"</span>"+
 						"</div>"+
-					"</div>"+
-					"<div class='col-xs-3 col-md-2'>"+
-						"<button type='button' 'Adicionar' class='add-url btn btn-success margin-right-5 margin-top-10'>"+
-							"<span class='glyphicon glyphicon-plus'></span>"+
-						"</button>"+
-						"<button type='button' class='remove-url btn btn-danger margin-top-10'>"+
-							"<span class='glyphicon glyphicon-trash'></span>"+
-						"</button>"+
 					"</div>"+
 				"</div>";
 	$(button).parents('.project-urls:first').append(html);

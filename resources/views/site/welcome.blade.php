@@ -7,13 +7,18 @@
     </div>
     <div class="row margin-top-20">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
-            <form action="{{route('search')}}" method="GET" class="inline">
-                <div class="input-group">
-                  <input name="q" type="text" required class="form-control" placeholder="Buscar por tema, assunto ou categoria">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Buscar <span class="glyphicon glyphicon-search"></span></button>
-                  </span>
-                </div>
+            <form action="{{route('search')}}" method="GET" class="bs-component">
+                <div class="form-group label-floating is-empty">
+		            <label class="control-label" for="q">Buscar por tema, assunto ou categoria</label>
+		            <div class="input-group">
+		              	<input type="text" id="q" name="q" required class="form-control">
+		              	<span class="input-group-btn">
+		                	<button type="submit" class="btn btn-fab btn-info">
+		                  		<i class="material-icons">search</i>
+		                	</button>
+		              	</span>
+		            </div>
+	          	</div>
             </form>
         </div>
     </div>
