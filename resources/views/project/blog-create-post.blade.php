@@ -27,7 +27,7 @@
 					<button type="submit" class="btn btn-primary btn-raised full-size-on-small">
 						<span class="glyphicon glyphicon-floppy-save"></span> Salvar
 					</button>
-					<a href="{{route('admin.project.posts.list',['projectId' => $project->id])}}" class="btn btn-default btn-raised full-size-on-small">Cancelar</a>
+					<a href="{{route('admin.project.posts',['projectId' => $project->id])}}" class="btn btn-default btn-raised full-size-on-small">Cancelar</a>
 				</div>
 			</div>
 		</div>

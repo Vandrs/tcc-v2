@@ -30,7 +30,7 @@
 		</a>
 		@endcan
 		@can(Capabilities::MAKE_POST_PROJECT, $project)
-		<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Blog">
+		<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Posts">
 			<i class="material-icons">description</i>
 		</a>
 		@endcan
