@@ -70,7 +70,9 @@ body {
     min-height: 200px !important;
 }
 
-
+#gallery{
+    max-height: 400px;
+}
 
 .project-card h3 a:hover{
 	text-decoration: none;
