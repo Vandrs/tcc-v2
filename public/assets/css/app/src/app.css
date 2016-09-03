@@ -66,6 +66,10 @@ body {
     background-color: #F2F2F2;
 }
 
+.project-image-cover {
+    min-height: 200px;
+}
+
 
 
 .project-card h3 a:hover{
