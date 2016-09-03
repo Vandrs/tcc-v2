@@ -60,6 +60,14 @@ body {
 	clear: both;
 }
 
+.project-image-cover{
+    height: 200px;
+    overflow: hidden;
+    background-color: #F2F2F2;
+}
+
+
+
 .project-card h3 a:hover{
 	text-decoration: none;
 	color: #337ab7
