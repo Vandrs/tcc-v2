@@ -24,19 +24,6 @@
                         <div class="project-description project-box">
                             {!!$project->description!!}
                         </div>
-                        @if( count($project->urls) || $project->files->count())
-                        <div class="project-extra">
-                            <h2>Sobre mais sobre o projeto</h2>
-                            <ul class="simple-list project-extra-items">
-                                @foreach($project->urls as $url)
-                                    <li><a href="{{UrlUtil::makeExternal($url)}}" target="_blank"><i class="glyphicon glyphicon-link"></i> {{$url}}</a></li>
-                                @endforeach
-                                @foreach($project->files as $file)
-                                    <li><a href="{{route('file.get',['id' => $file->file])}}"><i class="glyphicon glyphicon-file"></i> {{$file->title}}</a></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
                         @if($project->getPosts()->count())
                         <div class="updates-area">
                             <h2>Últimas atualizações</h2>
@@ -51,6 +38,19 @@
                                 </div>
                             </div>
                             @endforeach
+                        </div>
+                        @endif
+                        @if( count($project->urls) || $project->files->count())
+                        <div class="project-extra">
+                            <h2>Sobre mais sobre o projeto</h2>
+                            <ul class="simple-list project-extra-items">
+                                @foreach($project->urls as $url)
+                                    <li><a href="{{UrlUtil::makeExternal($url)}}" target="_blank"><i class="glyphicon glyphicon-link"></i> {{$url}}</a></li>
+                                @endforeach
+                                @foreach($project->files as $file)
+                                    <li><a href="{{route('file.get',['id' => $file->file])}}"><i class="glyphicon glyphicon-file"></i> {{$file->title}}</a></li>
+                                @endforeach
+                            </ul>
                         </div>
                         @endif
                         <div class="comments-area">
