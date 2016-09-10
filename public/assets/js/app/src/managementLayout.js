@@ -2,7 +2,6 @@ ManagementLayout = {};
 
 ManagementLayout.buildList = function(list){
 	var cardHtml = '';
-	console.log(list.cards);
 	if(list.cards && list.cards.length > 0){
 		$(list.cards).each(function(){
 			cardHtml += ManagementLayout.buildCardInList(this);

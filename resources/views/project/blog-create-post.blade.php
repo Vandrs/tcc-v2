@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('breadcrumbs')
 	{!!Breadcrumbs::render('admin.project.blog.post.create',$project)!!}
+	<div class="row margin-top-20">
+        <div class="col-xs-12">
+            @include('project.partials.project-navigation',['project' => $project])
+        </div>
+    </div>
 @endsection
 @section('content')
 	{!!Form::open( ['route' => ['admin.project.post.save', 'projectId' => $project->id] , 'method' => 'post'])!!}
