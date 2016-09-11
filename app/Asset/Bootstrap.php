@@ -3,7 +3,6 @@
 namespace App\Asset;
 
 use Config;
-use App\Utils\Utils;
 
 class Bootstrap extends AssetBundle{
     protected $priority = 2;

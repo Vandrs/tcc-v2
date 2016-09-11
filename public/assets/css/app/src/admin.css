@@ -101,6 +101,22 @@ table thead tr{
     padding: 8px 10px;
     position: relative;
     min-height: 18px;
+    padding-right: 40px;
+}
+
+.management-list-controls{
+    position: absolute;
+    right: 4px;
+    top: 15px;
+}
+
+.management-list-controls a{
+    cursor: pointer;
+    color: #a5a5a5;
+}
+
+.management-list-controls a:hover{
+    color: #585858;
 }
 
 .management-list-cards {
@@ -128,4 +144,12 @@ table thead tr{
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.management-list-bottom{
+    padding: 8px 10px;
+}
+
+.datepickers-container{
+    z-index: 99999;
 }

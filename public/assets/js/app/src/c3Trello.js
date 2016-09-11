@@ -52,5 +52,35 @@ C3Trello.createBoard = function(data, successCallback, errorCallback){
 
 C3Trello.getBoardLists = function(boardId, successCallback, errorCallback){
 	Trello.get('/boards/'+boardId+'/lists', {'cards':'open','filter':'open'} , successCallback, errorCallback);
-}
+};
 
+C3Trello.createList = function(data, successCallback, errorCallback){
+	Trello.post('/lists', data, successCallback, errorCallback);
+};
+
+C3Trello.updateList = function(id, data, successCallback, errorCallback){
+	Trello.put('/lists/'+id+'/name', data, successCallback, errorCallback);	
+};
+
+C3Trello.closeList = function(id, successCallback, errorCallback){
+	var data = {"value":true};
+	Trello.put('/lists/'+id+'/closed', data, successCallback, errorCallback);	
+};
+
+
+C3Trello.createCard = function(data, successCallback, errorCallback){
+	Trello.post('/cards', data, successCallback, errorCallback);	
+};
+
+C3Trello.getCard = function(id, successCallback, errorCallback){
+	Trello.get('/cards/'+id, {"fields":"closed,idList,idBoard,name,desc,due"}, successCallback, errorCallback);	
+};
+
+C3Trello.updateCard = function(id, data, successCallback, errorCallback){
+	Trello.put('/cards/'+id, data, successCallback, errorCallback);
+};
+
+C3Trello.closeCard = function(id, successCallback, errorCallback){
+	var data = {"value":true};
+	Trello.put('/cards/'+id+'/closed', data, successCallback, errorCallback);
+};

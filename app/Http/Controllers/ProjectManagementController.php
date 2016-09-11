@@ -23,7 +23,11 @@ class ProjectManagementController extends Controller{
 			if(empty($project->trello_board_id)){
 				return redirect()->route("admin.project.management.first",['id' => $project->id]);
 			}
-			AssetLoader::register(['c3Trello.js','managementLayout.js','projectManagement.js'],['admin.css'],['Trello']);
+			AssetLoader::register(
+				['c3Trello.js','managementLayout.js','projectManagement.js'],
+				['admin.css'],
+				['Trello','AirDatePicker']
+			);
 			$data = [
 				'page_title'   => 'Gerenciamento',
 				'project' 	   => $project,

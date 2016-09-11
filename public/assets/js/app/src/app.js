@@ -219,3 +219,8 @@ function showConfirmationModal(html,acceptCallBack,denyCallBack){
         $("#appConfirmModal").modal('hide');
     });
 }
+
+function dateFromStrBR(str){
+  var arr = str.split("/");
+  return new Date(arr[2],parseInt(arr[1])-1, arr[0]);
+}

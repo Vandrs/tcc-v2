@@ -1,8 +1,8 @@
 <div id="appConfirmModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header alert-info alert">
-                <h3><strong>Atenção</strong></h3>
+            <div class="modal-header">
+                <h4><strong>Atenção</strong></h4>
             </div>
             <div class="modal-body">
 
