@@ -26,7 +26,7 @@ class ProjectManagementController extends Controller{
 			AssetLoader::register(
 				['c3Trello.js','managementLayout.js','projectManagement.js'],
 				['admin.css'],
-				['Trello','AirDatePicker']
+				['Trello','AirDatePicker', 'JqueryUI']
 			);
 			$data = [
 				'page_title'   => 'Gerenciamento',

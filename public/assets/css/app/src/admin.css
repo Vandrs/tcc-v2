@@ -89,7 +89,6 @@ table thead tr{
     -ms-flex-direction: column;
     flex-direction: column;
     max-height: 100%;
-    position: relative;
     white-space: normal;
 }
 
@@ -128,8 +127,7 @@ table thead tr{
     overflow-x: hidden;
     margin: 0 4px;
     padding: 0 4px;
-    z-index: 1;
-    min-height: 0;
+    min-height: 10px;
 }
 
 .management-container{
@@ -139,11 +137,12 @@ table thead tr{
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 10px;
-    position: relative;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+}
+
+.ui-state-highlight{
+    min-height: 12px;
+    background-color: #434343;
+    border: none;
 }
 
 .management-list-bottom{
@@ -153,3 +152,4 @@ table thead tr{
 .datepickers-container{
     z-index: 99999;
 }
+

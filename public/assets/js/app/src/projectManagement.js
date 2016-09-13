@@ -86,6 +86,17 @@ $(window).load(function(){
 	}	
 });
 
+function initSortable(){
+	 $( ".management-list-cards" ).sortable({
+      	connectWith: ".management-list-cards",
+      	placeholder: "ui-state-highlight",
+      	zIndex: 999999,
+      	containment: "document"
+    });
+
+	 $(".management-container").sortable();
+}
+
 
 function initBoard(){
 	C3Trello.getBoardLists(
@@ -102,6 +113,7 @@ function getBoardLists(lists){
 		$(".management-container").append(listHtml);
 	});
 	$('[data-toggle="tooltip"]').tooltip();	
+	initSortable();
 }
 
 function managementConnectionFailed(){
