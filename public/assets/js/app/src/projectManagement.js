@@ -91,10 +91,30 @@ function initSortable(){
       	connectWith: ".management-list-cards",
       	placeholder: "ui-state-highlight",
       	zIndex: 999999,
-      	containment: "document"
+      	containment: "document",
+      	stop: function(event, ui){
+      		var idCard = $(ui.item).attr("data-card-id");
+      		var list   = $(ui.item).parents(".management-list:first");
+      		var idList = $(list).attr("data-list-id");
+      		C3Trello.updateCardList(idCard, idList);
+      		var ids = [];
+      		$(list).find(".card").each(function(){
+      			ids.push($(this).attr("data-card-id"));
+
+      		});
+      		C3Trello.orderCards(ids);
+      	}
     });
 
-	 $(".management-container").sortable();
+	$(".management-container").sortable({
+	 	stop: function(){
+	 		var ids = [];
+	 		$(".management-list").each(function(){
+	 			ids.push($(this).attr("data-list-id"));
+	 		});
+	 		C3Trello.orderLists(ids);
+	 	}
+	});
 }
 
 
