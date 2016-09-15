@@ -87,7 +87,20 @@ $(window).load(function(){
 });
 
 function initSortable(){
-	 $( ".management-list-cards" ).sortable({
+	initSortCards();
+	$(".management-container").sortable({
+	 	stop: function(){
+	 		var ids = [];
+	 		$(".management-list").each(function(){
+	 			ids.push($(this).attr("data-list-id"));
+	 		});
+	 		C3Trello.orderLists(ids);
+	 	}
+	});
+}
+
+function initSortCards(){
+	$( ".management-list-cards" ).sortable({
       	connectWith: ".management-list-cards",
       	placeholder: "ui-state-highlight",
       	zIndex: 999999,
@@ -105,18 +118,7 @@ function initSortable(){
       		C3Trello.orderCards(ids);
       	}
     });
-
-	$(".management-container").sortable({
-	 	stop: function(){
-	 		var ids = [];
-	 		$(".management-list").each(function(){
-	 			ids.push($(this).attr("data-list-id"));
-	 		});
-	 		C3Trello.orderLists(ids);
-	 	}
-	});
 }
-
 
 function initBoard(){
 	C3Trello.getBoardLists(
@@ -174,6 +176,7 @@ ModalList.save = function(boardId){
 				var listHtml = ManagementLayout.buildList(list);
 				$(".management-container").prepend(listHtml);
 				$(modal).modal("hide");
+				initSortCards();
 			},function(){
 				addFeedBack(".modalLisFeedbackArea","Ocorreu um erro ao tentar criar a Lista de Tarefas","alert-danger");
 			});
