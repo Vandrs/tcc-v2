@@ -1,0 +1,85 @@
+{
+	"id": {
+		"type": "integer"	
+	},
+	"name": {
+		"type":"string",
+		"analyzer":"brazilian"
+	},
+	"email": {
+		"type":"string",
+		"index":"not_analyzed"
+	},
+	"skill": {
+		"type":"string",
+		"analyzer":"brazilian"
+	},
+	"works":{
+		"properties":{
+			"id": {
+				"type": "integer"	
+			},
+			"title":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"company":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"description":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"order":{
+				"type": "integer"
+			},
+			"started_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"ended_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"created_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"updated_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			}
+		}
+	},
+	"graduations":{
+		"properties":{
+			"id": {
+				"type": "integer"	
+			},
+			"course":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"institution":{
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"order":{
+				"type": "integer"
+			},
+			"conclusion_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"created_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"updated_at":{
+				"type":"date",
+        		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			}
+		}
+	}
+}

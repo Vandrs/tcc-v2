@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjectNotesTable extends Migration
+class CreateGraduationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,16 @@ class CreateProjectNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_notes', function (Blueprint $table) {
+        Schema::create('graduations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('project_id')->unsigned();
-            $table->smallInteger('note')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->string('course',100);
+            $table->string('institution',100);
+            $table->dateTime('conclusion_at');
+            $table->integer('order')->default(1);
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +32,6 @@ class CreateProjectNotesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('project_notes');
+        Schema::drop('graduations');
     }
 }

@@ -6,6 +6,7 @@ use Elastica\Client;
 use Elastica\Index;
 use Config;
 use App\Models\Elastic\Models\ElasticProject;
+use App\Models\Elastic\Models\ElasticUser;
 use App\Models\Elastic\Models\ElasticModel;
 use Elastica\Type\Mapping;
 
@@ -45,10 +46,10 @@ class ElasticSearch{
 
 	private function getModels(){
 		return [
-			ElasticProject::class
+			ElasticProject::class,
+			ElasticUser::class
 		];
 	}
-
 
 	public function getElasticClient(){
 		return $this->client;

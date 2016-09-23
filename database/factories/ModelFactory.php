@@ -20,7 +20,7 @@ $factory->define(\App\Models\DB\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(\App\Models\DB\Project::class, function (Faker\Generator $faker){
+$factory->define(\App\Models\DB\Project::class, function (Faker\Generator $faker) {
     $categories = \App\Models\DB\Category::all();
     $categoryId = null;
     if($categories->count()){
@@ -32,4 +32,40 @@ $factory->define(\App\Models\DB\Project::class, function (Faker\Generator $faker
 		'description' => $faker->paragraph(20, true),
         'category_id' => $categoryId
 	];
+});
+
+$factory->define(\App\Models\DB\Work::class, function (Faker\Generator $faker) {
+
+    $today = new \DateTime();
+    $startDate = $faker->dateTimeThisDecade($today);
+    $endDate = $faker->dateTimeBetween($startDate,$today);
+
+    return [
+        'title'       => $faker->jobTitle, 
+        'company'     => $faker->company, 
+        'description' => $faker->paragraph(),
+        'order'       => 1,
+        'started_at'  => $startDate, 
+        'ended_at'    => $endDate
+    ];
+
+});
+
+$factory->define(\App\Models\DB\Graduation::class, function (Faker\Generator $faker) {
+    $cursos = [ 
+        "Direito","Análise e Desenvolvimento de Sistemas","Sistemas de Informação",
+        "Ciência da Computação","Gastronomia","Engenharia Civil", "Física", "Economia", 
+        "Biologia","História","Hotelaria"
+    ];
+    
+    $cursosCollection = new Illuminate\Support\Collection($cursos);
+    $curso = $cursosCollection->random(1);
+
+    return [
+        'course'        => $curso,
+        'institution'   => "Universidade ".$faker->company." ".$faker->state,
+        'conclusion_at' => $faker->dateTimeBetween('-5 years', '+5 years'),
+        'order'         => 1
+    ];
+
 });

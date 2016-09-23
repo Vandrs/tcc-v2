@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\DB\User;
 use App\Models\DB\Project;
+use App\Models\DB\Work;
+use App\Models\DB\Graduation;
 use App\Models\Business\MailBusiness;
 use App\Models\Business\ProjectEmailBusiness;
 use App\Jobs\SendEmailJob;
@@ -14,9 +16,9 @@ use Auth;
 class TesteController extends Controller
 {
     public function index(){
-        $project = Project::find(8);
-        $projectEmailBusiness = new ProjectEmailBusiness();
-        $projectEmailBusiness->feedNotificationEmail($project);
+        $data = factory(Graduation::class, 5)->make();
+        dd($data);
+        return 'TESTE';
     }
 
     public function usersLoginList(){
