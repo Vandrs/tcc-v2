@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\MakeDiffMatrix::class,
         \App\Console\Commands\ProjetcsToElastic::class,
-        \App\Console\Commands\MapElasticModel::class
+        \App\Console\Commands\MapElasticModel::class,
+        \App\Console\Commands\ExportUsersToElastic::class
     ];
 
     /**

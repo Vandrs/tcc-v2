@@ -10,6 +10,7 @@ class EnumProject{
 	CONST ROLE_MENTOR = 2;
 	CONST ROLE_CONTRIBUTOR = 3;
 	CONST ROLE_FOLLOWER = 4;
+	CONST ROLE_INVITED = 5;
 
 	private static function getRoleName($role){
 		$roles = self::getRoles();

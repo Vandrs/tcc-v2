@@ -10,15 +10,17 @@ use App\Models\DB\Work;
 use App\Models\DB\Graduation;
 use App\Models\Business\MailBusiness;
 use App\Models\Business\ProjectEmailBusiness;
+use App\Models\Business\ElasticUserBusiness;
+use App\Models\Business\ElasticExportBusiness;
+use App\Models\Elastic\Models\ElasticUser;
 use App\Jobs\SendEmailJob;
 use Auth;
 
 class TesteController extends Controller
 {
     public function index(){
-        $data = factory(Graduation::class, 5)->make();
-        dd($data);
-        return 'TESTE';
+        $user = ElasticUser::findById(19);
+        dd($user);
     }
 
     public function usersLoginList(){
