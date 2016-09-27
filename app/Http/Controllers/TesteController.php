@@ -20,7 +20,7 @@ class TesteController extends Controller
 {
     public function index(){
         $user = ElasticUser::findById(19);
-        dd($user);
+        dd($user->skills);
     }
 
     public function usersLoginList(){

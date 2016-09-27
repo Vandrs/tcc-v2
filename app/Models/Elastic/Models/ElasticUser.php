@@ -47,6 +47,10 @@ class ElasticUser extends ElasticModel {
 			}
 			$this->works->put($key, (object) $work);
 		}
+
+		if($this->skills){
+			$this->skills = json_decode($this->skills);
+		}
 	}
 }
 

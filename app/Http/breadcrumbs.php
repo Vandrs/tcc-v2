@@ -44,5 +44,7 @@ BreadCrumbs::register('admin.project.management', function($breadcrumbs, $projec
 	$breadcrumbs->push('Gerenciamento', route('admin.project.management', ['id' => $project->id]));
 });
 
-
-
+BreadCrumbs::register('admin.project.users', function($breadcrumbs, $project){
+	$breadcrumbs->parent('admin.project.update', $project);
+	$breadcrumbs->push('Gerenciamento de Usuários', route('admin.project.users', ['id' => $project->id]));
+});

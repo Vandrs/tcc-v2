@@ -48,6 +48,11 @@ Route::get('/project/gerenciar/{id}',['as' => 'admin.project.management', 'uses'
 Route::get('/project/gerenciar/primeiro-acesso/{id}',['as' => 'admin.project.management.first', 'uses' => 'ProjectManagementController@firstTimeAccess']);
 Route::post('/project/gerenciar/assign-board/{id}',['as' => 'admin.project.management.keys', 'uses' => 'ProjectManagementController@assignKeys']);
 
+/*Gerenciar Usuários Projeto*/
+Route::get('/project/gerenciar-usuarios/{id}',['as' => 'admin.project.users', 'uses' => 'ProjectMembersController@index']);
+Route::get('/project/listar-membros/{id}',['as' => 'admin.project.members', 'uses' => 'ProjectMembersController@listMembers']);
+
+
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
 Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);

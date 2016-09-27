@@ -2,7 +2,8 @@
 
 namespace App\Models\Enums;
 
-class EnumProject{
+class EnumProject
+{
 
 	CONST STATUS_ACTIVE = 1;
 	CONST STATUS_INACTIVE = 0;
@@ -12,7 +13,8 @@ class EnumProject{
 	CONST ROLE_FOLLOWER = 4;
 	CONST ROLE_INVITED = 5;
 
-	private static function getRoleName($role){
+	public static function getRoleName($role)
+	{
 		$roles = self::getRoles();
 		if(isset($roles[$role])){
 			return $roles[$role];
@@ -20,7 +22,8 @@ class EnumProject{
 		return '';
 	}
 
-	private static function getRoles(){
+	public static function getRoles()
+	{
 		return [
 			self::ROLE_OWNER  	   => 'Colaborador',
 			self::ROLE_MENTOR 	   => 'Mentor',

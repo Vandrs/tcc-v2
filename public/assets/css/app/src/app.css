@@ -44,7 +44,11 @@ body {
 }
 
 .margin-right-5{
-    margin-right: 5px;
+    margin-right: 5px !important;
+}
+
+.margin-right-10{
+    margin-right: 10px !important;   
 }
 
 .box {
@@ -147,3 +151,6 @@ img.img-responsive.img-center{
     color: #337ab7 !important;
 }
 
+.responsive-table-panel{
+    overflow-x: hidden;
+}

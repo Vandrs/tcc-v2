@@ -29,6 +29,11 @@
 			<i class="material-icons">dashboard</i>
 		</a>
 		@endcan
+		@can(Capabilities::MANAGE_PROJECT_USERS, $project)
+		<a href="{{route('admin.project.users',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Gerenciar Usuários">
+			<i class="material-icons">person</i>
+		</a>
+		@endcan
 		@can(Capabilities::MAKE_POST_PROJECT, $project)
 		<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Posts">
 			<i class="material-icons">description</i>

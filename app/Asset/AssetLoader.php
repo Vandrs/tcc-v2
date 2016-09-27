@@ -169,6 +169,10 @@ class AssetLoader{
     }
 
     function addAssetBundle($assetBundle){
+        if(empty(self::$instance)){
+            self::$instance = $this;
+            self::register();
+        }
         array_push(self::$instance->assetsBundles,$assetBundle);   
     }
 

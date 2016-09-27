@@ -1,21 +1,20 @@
 $(document).ready(function(){
-	var postsTable = $("#postsTable");
-	var dataTableRoute = $(postsTable).attr('data-list-route');
-	var dataTable = $(postsTable).dataTable({
+	var membersTable = $("#membersTable");
+	var listRoute = $(membersTable).attr('data-list-route');
+	var dataTable = $(membersTable).dataTable({
 		processing: true,
 		serverSide: true,
 		dom:dataTableScrollLayout,
 		ajax: {
-			url: dataTableRoute,
+			url: listRoute,
 			data: function(d){
 				
 			},
 		},
-		order: [[ 1, "desc" ]],
+		order: [[ 0, "ASC" ]],
 		columns:[
-			{data:'title', name:'posts.title'},
-			{data:'created_at', name:'posts.created_at'},
-			{data:'user_name', name:'users.name'},
+			{data:'name', name:'users.name'},
+			{data:'role', name:'user_projects.role'},
 			{data:'actions',name:'actions', orderable:false, searchable:false}
 		],
 		language:translateDataTables(),

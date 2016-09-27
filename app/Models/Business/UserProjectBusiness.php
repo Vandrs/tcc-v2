@@ -11,11 +11,15 @@ use Log;
 
 class UserProjectBusiness{
 
-	public function create(User $user, C3Project $project, $role){
+	const CREATOR = 1;	
+	const NON_CREATOR = 0;
+
+	public function create(User $user, C3Project $project, $role, $creator = 0){
 		return UserProject::create([
 			'user_id'	 => $user->id,
 			'project_id' => $project->id,
-			'role' 		 => $role
+			'role' 		 => $role,
+			'creator'	 => $creator
 		]);
 	}
 

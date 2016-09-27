@@ -37,7 +37,7 @@ class CrudProjectBusiness{
 		try{
 			$project = Project::create($data);
 			$userProjectBusiness = new UserProjectBusiness;
-			if(!$userProjectBusiness->create($user, $project, EnumProject::ROLE_OWNER)){
+			if(!$userProjectBusiness->create($user, $project, EnumProject::ROLE_OWNER, UserProjectBusiness::CREATOR)){
 				throw new \Exception('Erro ao relacionar projeto e usuário');
 			}
 			if($images){

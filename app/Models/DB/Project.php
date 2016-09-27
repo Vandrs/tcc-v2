@@ -74,7 +74,8 @@ class Project extends Model implements C3Project{
 		$baseQuery  = User::select([
                     	DB::raw('users.*'),
                     	DB::raw('user_projects.role'),
-                    	DB::raw('user_projects.id AS user_project_id')
+                    	DB::raw('user_projects.id AS user_project_id'),
+                    	DB::raw('user_projects.creator AS creator'),
                       ])		
                       ->join('user_projects','user_projects.user_id','=','users.id')
                       ->where('user_projects.project_id','=',$this->id);
