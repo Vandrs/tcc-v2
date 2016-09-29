@@ -39,9 +39,15 @@
             <div class="col-xs-12 margin-top-10">
                 <h2 class="form-section-title">Encontrar usuários</h2>
             </div>
+
+            <div class="col-xs-12">
+                <div class="searchUsersBackArea">
+                </div>
+            </div>
+
             <div class="col-xs-12">
                 <div class="row">
-                    <form id="searchUsers" action="#">
+                    <form id="searchUsers" action="{{route('users.search')}}">
                     <div class="col-xs-12 col-md-6">
                         <div class="row">
                             <div class="col-xs-12 margin-top-10">
@@ -62,8 +68,8 @@
                         <div class="row">
                             <div class="col-xs-12 margin-top-10">
                                 <div class="form-group label-floating">
-                                    <label for="works" class="control-label">Profissão/Cargos</label>
-                                    <input id="works" class="form-control" type="text" name="works" maxlength="100"/>
+                                    <label for="work" class="control-label">Profissão/Cargos</label>
+                                    <input id="work" class="form-control" type="text" name="work" maxlength="100"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-10">
@@ -75,7 +81,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 margin-top-10">
-                        <button type="submit" class="btn btn-primary btn-raised"><i class="material-icons">search</i>Buscar</button>
+                        <button type="submit" class="btn btn-primary btn-raised" id="submitUserSearch"><i class="material-icons">search</i>Buscar</button>
                     </div>
                     </form>
                 </div>

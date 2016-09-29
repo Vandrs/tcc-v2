@@ -10,7 +10,7 @@
 		"type":"string",
 		"index":"not_analyzed"
 	},
-	"skill": {
+	"skills": {
 		"type":"string",
 		"analyzer":"brazilian"
 	},
