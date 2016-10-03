@@ -5,8 +5,9 @@ namespace App\Models\Elastic\Models;
 use App\Models\Elastic\Models\ElasticModel;
 use Illuminate\Support\Collection;
 use App\Utils\DateUtil;
+use App\Models\Interfaces\C3User;
 
-class ElasticUser extends ElasticModel {
+class ElasticUser extends ElasticModel implements C3User{
 
 	private $type = 'user';
 	private $mappingFile = 'user.json';
@@ -41,9 +42,13 @@ class ElasticUser extends ElasticModel {
 		foreach($works as $key => $work){
 			if (isset($work['started_at']) && !empty($work['started_at'])){
 				$work['started_at'] = DateUtil::dateTimeInBrazil($work['started_at']);
+			} else {
+				$work['started_at'] = null;
 			}
 			if (isset($work['ended_at']) && !empty($work['ended_at'])){
 				$work['ended_at'] = DateUtil::dateTimeInBrazil($work['ended_at']);
+			} else {
+				$work['ended_at'] = null;
 			}
 			$this->works->put($key, (object) $work);
 		}
@@ -51,6 +56,31 @@ class ElasticUser extends ElasticModel {
 		if($this->skills){
 			$this->skills = json_decode($this->skills);
 		}
+	}
+
+	public function getCurrentOrLastWork()
+	{
+		if ($this->works->count() == 0) {
+			return null;
+		}
+
+		$currentWorks = $this->works->filter(function ($work) {
+			return is_null($work->ended_at) ? true : false;
+		});
+
+		if ($currentWorks->count()) {
+			return $currentWorks->sortBy("title")->first();
+		} else {
+			return $this->works->sortByDesc("ended_at")->first();
+		}
+	}
+
+	public function getCurrentOrLastGraduation()
+	{
+		if ($this->graduations->count() == 0) {
+			return null;
+		}
+		return $this->graduations->sortByDesc("ended_at")->first();
 	}
 }
 

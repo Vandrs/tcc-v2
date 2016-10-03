@@ -5,6 +5,7 @@ namespace App\Models\Elastic;
 use Auth;
 use Log;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Utils\Utils;
 use App\Models\Elastic\ElasticSearch;
 use App\Models\Elastic\Models\ElasticUser;
@@ -64,9 +65,10 @@ class ElasticSearchUser
 			$boolQuery->addMustNot($queryBuilder->query()->term(["id" => Auth::user()->id]));
 		}
 
-		$query->setQuery($boolQuery);
+		$query->setQuery($boolQuery)
+			  ->setFrom(Utils::calcFromIndex($page,$size))
+    		  ->setSize($size);
 
-		return $query->toArray();
 		return $this->doSearch($query,$page,$size);		
 	}
 
@@ -75,7 +77,7 @@ class ElasticSearchUser
 		try{
 			$this->search->setQuery($query);
 			$result = $this->search->search();
-			return $this->makePaginator($result,$page,$size);	
+			return $this->makePaginator($result, $page, $size);	
 		}catch(\Exception $e){
 			Log::error(Utils::getExceptionFullMessage($e));
 			return new Collection();
@@ -84,9 +86,9 @@ class ElasticSearchUser
 
 	private function makePaginator(ResultSet $result, $page, $size)
 	{
-		$projects = $this->parseUsers($result->getResults());
+		$users = $this->parseUsers($result->getResults());
 		$paginator = new LengthAwarePaginator(
-							$projects,
+							$users,
 							$result->getTotalHits(),
 							$size,
 							$page
@@ -98,9 +100,10 @@ class ElasticSearchUser
 	{
 		$users = [];
 		foreach($items as $item){
-			array_push($users,new ElasticUser($item->getDocument()->getData()));
+			$user = new ElasticUser($item->getDocument()->getData());
+			array_push($users, $user);
 		}
-		return $users;
+		return new Collection($users);
 	}
 
 	private function buildShouldTerms(QueryBuilder $queryBuilder, $fields, $term)

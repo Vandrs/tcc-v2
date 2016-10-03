@@ -8,9 +8,10 @@ use App\Models\DB\Projects;
 use App\Models\DB\Work;
 use App\Models\DB\Graduation;
 use App\Models\Enums\EnumProject;
+use App\Models\Interfaces\C3User;
 use DB;
 
-class User extends Authenticatable
+class User extends Authenticatable implements C3User
 {
 
     /**
@@ -71,5 +72,30 @@ class User extends Authenticatable
     public function works(){
       return $this->hasMany(Work::class);
     }
+
+    public function getCurrentOrLastWork()
+  {
+    if ($this->works->count() == 0) {
+      return null;
+    }
+
+    $currentWorks = $this->works->filter(function ($work) {
+      return is_null($work->ended_at) ? true : false;
+    });
+
+    if ($currentWorks->count()) {
+      return $currentWorks->sortBy("title")->first();
+    } else {
+      return $this->works->sortByDesc("ended_at")->first();
+    }
+  }
+
+  public function getCurrentOrLastGraduation()
+  {
+    if ($this->graduations->count() == 0) {
+      return null;
+    }
+    return $this->graduations->sortByDesc("ended_at")->first();
+  }
 
 }

@@ -29,13 +29,18 @@ $(document).ready(function(){
 		evento.preventDefault();
 		search();
 	});
+
+	$("body").on('click', ".pagination a", function(evento){
+		evento.preventDefault();
+		var url = BASE_URL+$(this).attr("href");
+		sendSearch({},url);
+	});
 });
 
 
 function search(){
 	var form = $("#searchUsers");
 	var data = extractFormData(form);
-	console.log(data);
 	if (validateSearch(data)) {
 		sendSearch(data,$(form).attr("action"));
 	} else {
@@ -64,7 +69,7 @@ function validateSearch(data){
 	return found;
 }
 
-function sendSearch(sendData,action){
+function sendSearch(sendData, action){
 	var feedBackArea = ".searchUsersBackArea";
 	$.ajax({
 		url: action,
@@ -72,12 +77,26 @@ function sendSearch(sendData,action){
 		type: "GET",
 		dataType: "json",
 		success: function(data){
-			console.log(data);
+			if (data.status) {
+				$(".users-search-result").html(data.html_users);
+				$(".users-search-pagination").html(data.html_paginator);
+				$("[data-toggle='tooltip']").tooltip();
+				$('html, body').animate({ 
+				   scrollTop: $(document).height()-$(window).height()}, 
+				   700, 
+				   "linear"
+				);
+
+			} else {
+				addFeedBack(feedBackArea, data.msg, data.class_msg);	
+			}
 		},
 		error: function(){
-			addFeedBack(feedBackArea, "Preencha pelo menos um dos campos para realizar a busca.", "alert-danger");
+			addFeedBack(feedBackArea, GENERIC_ERROR_MSG, "alert-danger");
 		},
 		beforeSend: function(){	
+			$(".users-search-result").html("");
+			$(".users-search-pagination").html("");
 			clearFeedBack(feedBackArea);
 		}
 	});

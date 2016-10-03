@@ -9,7 +9,9 @@ use App\Http\Requests;
 use App\Models\DB\User;
 use App\Models\Business\SlopeOne;
 use App\Asset\AssetLoader;
+use App\Utils\Utils;
 use Auth;
+use Log;
 
 class UserController extends Controller
 {
@@ -39,9 +41,30 @@ class UserController extends Controller
 
 	public function search(Request $request)
 	{
-		$searchUser = new ElasticSearchUser();
-		$users = $searchUser->searchUsers($request->all());
-		return json_encode($users);
-		dd($users);
+		try {
+			$searchUser = new ElasticSearchUser();
+			$page = $request->get("page",1);
+			$size = $request->get("size",12);
+			$usersPaginator = $searchUser->searchUsers($request->all(), $size, $page);
+			$usersPaginator->setPath($request->path());
+			foreach ($request->all() as $key => $value) {
+				$usersPaginator->appends($key, $value);
+			}
+			return $this->buildHtmlSearchData($usersPaginator);
+		} catch (\Exception $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+			return $this->ajaxUnexpectedError();
+		}
+	}
+
+	private function buildHtmlSearchData($paginator)
+	{
+		$paginatorHtml = $paginator->render();
+		$data = [
+			"status" 	 	 => 1, 
+			"html_users" 	 => view('user.users-project-list',['users' => $paginator->getCollection()])->render(),
+			"html_paginator" => is_string($paginatorHtml) ? $paginatorHtml : $paginatorHtml->__toString()
+		];
+		return $data;
 	}
 }
