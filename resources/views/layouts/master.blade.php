@@ -54,6 +54,7 @@
         <meta itemprop="isFamilyFriendly" content="true">
         @include('partials.menu-bar')        
         @yield('body')
+        @include('partials.modal-perfil')
         <script type="text/javascript">
         var BASE_URL = '{{url("/")}}/';
         var GENERIC_ERROR_MSG = '{{trans('custom_messages.unexpected_error')}}';

@@ -161,3 +161,37 @@ img.img-responsive.img-center{
 .responsive-table-panel{
     overflow-x: hidden;
 }
+
+.skills-area-items span.label{
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+#perfilModal .modal-body h1.h2{
+    margin-top: 0px;
+}
+
+/*User Profile*/
+.user-work-container .work-title,
+.user-work-container .work-description,
+.user-graduation-container .graduation-course {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.user-work-container .work-company{
+    text-align: left;
+    font-size: 12px;
+}
+
+.user-graduation-container .graduation-institution {
+    text-align: left;
+    font-size: 14px;
+}
+
+.user-work-container, .user-graduation-container{
+    padding-bottom: 10px;
+    border-bottom: solid 1px #F5F5F5;
+}

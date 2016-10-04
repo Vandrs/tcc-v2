@@ -17,7 +17,7 @@ class UserController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth')->except('view');
+		$this->middleware('auth')->except(['view','viewModal']);
 	}	
 
 	public function view($id)
@@ -27,6 +27,20 @@ class UserController extends Controller
     	$projects = $slopeOne->getPredictions($user);
     	$data = ['page_tile' => 'Predições', 'user' => $user, 'predictions' => $projects];
     	return view('user.view',$data);
+    }
+
+    public function viewModal(Request $request)
+    {
+    	if (!$request->ajax()) {
+    		return $this->notAllowed();
+    	}
+    	try {
+    		$user = User::findORFail($request->get('id'));
+    		return json_encode(["status" => 1, "html" => view('user.partial-public-profile',['user' => $user])->render()]);
+    	} catch (\Exception $e) {
+    		Log::error(Utils::getExceptionFullMessage($e));
+    		return $this->ajaxNotAllowed();
+    	}
     }
 
 	public function profile()

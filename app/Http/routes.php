@@ -71,6 +71,7 @@ Route::post('/file/delete/{projectId}',['as' => 'file.delete', 'uses' => 'FileCo
 
 /*Usuario*/
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
+Route::get('/usuarios/modal-perfil',['as' => 'user.view.modal', 'uses' => 'UserController@viewModal']);
 Route::get('/usuarios/meu-perfil',['as' => 'admin.user.profile', 'uses' => 'UserController@profile']);
 Route::get('/usuarios/busca',['as' => 'users.search', 'uses' => 'UserController@search']);
 

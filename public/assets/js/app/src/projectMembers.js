@@ -35,6 +35,13 @@ $(document).ready(function(){
 		var url = BASE_URL+$(this).attr("href");
 		sendSearch({},url);
 	});
+
+	$("body").on("click", ".view-modal-profile", function(evento){
+		evento.preventDefault();
+		var id = $(this).attr('data-user-id');
+		showModalProfile(id, ".searchUsersBackArea");
+	});
+
 });
 
 

@@ -224,3 +224,29 @@ function dateFromStrBR(str){
   var arr = str.split("/");
   return new Date(arr[2],parseInt(arr[1])-1, arr[0]);
 }
+
+function showModalProfile(id, feedbackArea){
+  var route = $("#perfilModal").attr("data-route");
+  $.ajax({
+    url:route+"?id="+id,
+    success:function(data){
+      if (data.status) {
+        $("#perfilModal").find(".modal-body").html(data.html);  
+        $("#perfilModal").modal({
+          backdrop: 'static'
+        });
+      } else {
+        addFeedBack(feedbackArea, data.msg, 'alert-danger');  
+      }
+    },
+    error:function(){
+      addFeedBack(feedbackArea, GENERIC_ERROR_MSG, 'alert-danger');
+    },
+    beforeSend:function(){
+      clearFeedBack(feedbackArea);
+      $("#perfilModal").find(".modal-body").html("");
+    },
+    type:"GET",
+    dataType:"json"
+  });
+}

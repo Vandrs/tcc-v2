@@ -31,7 +31,7 @@
 						<button class="btn btn-fab btn-fab-mini view-modal-profile" title="Ver Perfil" data-toggle="tooltip" data-user-id="{{$user->id}}">
 							<i class="material-icons">person</i>
 						</button>
-						<button class="btn btn-fab btn-fab-mini show-invite-modal" title="Convidar para o Projeto" data-toggle="tooltip">
+						<button class="btn btn-fab btn-fab-mini show-invite-modal" title="Convidar para o Projeto" data-user-id="{{$user->id}}" data-toggle="tooltip">
 							<i class="material-icons">check</i>
 						</button>
 					</div>
