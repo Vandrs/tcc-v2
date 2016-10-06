@@ -72,7 +72,7 @@ class ProjectMembersController extends Controller
 
     public function invite($id)
     {
-
+        
     }
 
     public function acceptInvitation($id)
