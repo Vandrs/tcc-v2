@@ -31,4 +31,12 @@ class EnumProject
 			self::ROLE_FOLLOWER    => 'Seguidor'
 		];
 	}
+
+	public static function getProjectInviteRoles()
+	{
+		return [
+			self::ROLE_CONTRIBUTOR => 'Colaborador',
+			self::ROLE_MENTOR 	   => 'Mentor',
+		];
+	}
 }

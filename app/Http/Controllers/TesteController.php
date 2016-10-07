@@ -22,7 +22,8 @@ class TesteController extends Controller
 {
     public function index()
     {
-        $project = Project::find(3);
+        $project = Project::find(22);
+        dd($project->getMembers());
         $user = User::find(10);
         $userProjectBusiness = new UserProjectBusiness();
         if ($userProject = $userProjectBusiness->invite($user, $project, EnumProject::ROLE_MENTOR)) {

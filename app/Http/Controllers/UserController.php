@@ -36,7 +36,7 @@ class UserController extends Controller
     	}
     	try {
     		$user = User::findORFail($request->get('id'));
-    		return json_encode(["status" => 1, "html" => view('user.partial-public-profile',['user' => $user])->render()]);
+    		return json_encode(["status" => 1, "html" => view('user.partial-public-profile',['user' => $user, 'showLink' => true])->render()]);
     	} catch (\Exception $e) {
     		Log::error(Utils::getExceptionFullMessage($e));
     		return $this->ajaxNotAllowed();

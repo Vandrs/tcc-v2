@@ -53,6 +53,17 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        $gate->define(EnumCapabilities::REMOVE_AND_MANAGE_PROJECT_PROFILES, function($user, C3Project $project) {
+            $exists = $project->getMembers()
+                              ->where('id', $user->id)
+                              ->where('role', EnumProject::ROLE_OWNER, false)
+                              ->first();
+            if($exists){
+                return true;
+            }
+            return false;
+        });
+
         $gate->define(EnumCapabilities::FOLLOW_PROJECT,function($user, C3Project $project){
             $isMember = $project->getMembers()
                                 ->where('id', $user->id)

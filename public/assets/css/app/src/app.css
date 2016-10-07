@@ -105,7 +105,7 @@ body {
 }
 
 .full-size{
-    width: 100%;
+    width: 100% !important;
 }
 
 .project-box{
@@ -194,4 +194,14 @@ img.img-responsive.img-center{
 .user-work-container, .user-graduation-container{
     padding-bottom: 10px;
     border-bottom: solid 1px #F5F5F5;
+}
+
+#membersTable .form-group {
+    width:100%; 
+    padding: 5px;
+    margin: 0px;
+}
+
+#membersTable .form-control.change-role{
+    width:100%;
 }

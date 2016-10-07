@@ -55,6 +55,10 @@ class User extends Authenticatable implements C3User
         return $this->baseQueryProjecs()->where('user_projects.role','=',EnumProject::ROLE_OWNER)->get();
     }
 
+    public function projectsAsMember(){
+        return $this->baseQueryProjecs()->whereIn('user_projects.role',[EnumProject::ROLE_OWNER,EnumProject::ROLE_CONTRIBUTOR,EnumProject::ROLE_MENTOR])->get();
+    }
+
     private function baseQueryProjecs(){
         return Project::select([
                             DB::raw('projects.*'),

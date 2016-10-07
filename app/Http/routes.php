@@ -51,6 +51,7 @@ Route::post('/project/gerenciar/assign-board/{id}',['as' => 'admin.project.manag
 /*Gerenciar Usuários Projeto*/
 Route::get('/project/gerenciar-usuarios/{id}',['as' => 'admin.project.users', 'uses' => 'ProjectMembersController@index']);
 Route::get('/project/listar-membros/{id}',['as' => 'admin.project.members', 'uses' => 'ProjectMembersController@listMembers']);
+Route::post('/project/invite/{id}',['as' => 'admin.project.invite', 'uses' => 'ProjectMembersController@invite']);
 
 
 /*Imagem*/

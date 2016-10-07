@@ -86,9 +86,11 @@ class ElasticSearchProject{
 		}
 		$boolQuery->addMust($queryBuilder->query()->term(["members.id" => $user->id]));
 		$boolQueryRole = $queryBuilder->query()->bool();
-		$boolQueryRole->addShould($queryBuilder->query()->match("members.role",EnumProject::ROLE_OWNER));
-		$boolQueryRole->addShould($queryBuilder->query()->match("members.role",EnumProject::ROLE_CONTRIBUTOR));
+		$boolQueryRole->addShould($queryBuilder->query()->term(["members.role" => EnumProject::ROLE_OWNER]));
+		$boolQueryRole->addShould($queryBuilder->query()->term(["members.role" => EnumProject::ROLE_CONTRIBUTOR]));
+		$boolQueryRole->addShould($queryBuilder->query()->term(["members.role" => EnumProject::ROLE_MENTOR]));
 		$boolQuery->addMust($boolQueryRole);
+
 		$query->setQuery($boolQuery)
 			  ->setFrom(Utils::calcFromIndex($page,$size))
 			  ->setSize($size);

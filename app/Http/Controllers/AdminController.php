@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function home(){
         $user = Auth::user();
-        $lastUpdatedProjects = $user->projectsAsOwner()->sortByDesc('updated_at')->take(4)->values();
+        $lastUpdatedProjects = $user->projectsAsMember()->sortByDesc('updated_at')->take(4)->values();
         $projectBusiness = new ProjectBusiness();
         $featuredProjects = $projectBusiness->getFeaturedProjectsForUser($user);
         AssetLoader::register(
