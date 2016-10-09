@@ -44,6 +44,7 @@ $(document).ready(function(){
 
 	$("body").on("click", ".show-invite-modal", function(evento){
 		evento.preventDefault();
+		clearFeedBack('.projectUsersBackArea');
 		var userId = $(this).attr('data-user-id');
 		var userName = $(this).attr('data-user-name');
 		$("#formInvite").find("[name='user_id']").val(userId);
@@ -58,6 +59,24 @@ $(document).ready(function(){
 		evento.preventDefault();
 		inviteProcess(dataTableMembers);
 	})
+
+	$("body").on("change", ".change-role", function(evento){
+		evento.preventDefault();
+		var userId = $(this).attr('data-user-id');
+		var roleId = $(this).find("option:selected").val();
+		changeRole(userId, roleId);
+	});
+
+	$("body").on("click", ".removeMember", function(evento){
+		evento.preventDefault();
+		var userId = $(this).attr('data-user-id');
+		var html = "Deseja mesmo realizar esta ação?";
+		function goRemove(){
+			removeMember(userId, dataTableMembers);	
+		}
+		showConfirmationModal(html,goRemove);
+		
+	});
 
 });
 
@@ -137,6 +156,7 @@ function inviteProcess(dataTableMembers){
 		data: formData,
 		success: function(data){
 			if(data.status){
+				addFeedBack(".projectUsersBackArea", data.msg, data.class_msg);
 				$("#modalInvite").modal("hide");
 				$('html, body').animate({scrollTop:0}, 700, "linear");
 				dataTableMembers.draw();
@@ -152,4 +172,58 @@ function inviteProcess(dataTableMembers){
 		},
 		dataType: "json"
 	});
+}
+
+function changeRole(userId, roleId){
+	var area = ".projectUsersBackArea";
+	var route = $("#membersTable").attr('data-role-route');
+	var postData = {
+		"user_id": userId,
+		"role_id": roleId,
+		"_token" : TOKEN
+	};
+	$.ajax({
+		url: route,
+		type: 'POST',
+		data: postData,
+		success: function(data){
+			addFeedBack(area, data.msg, data.class_msg);
+		},
+		error: function(){
+			addFeedBack(area, GENERIC_ERROR_MSG, 'alert-danger');
+		},
+		beforeSend: function(){
+			clearFeedBack(area);
+		},
+		dataType: 'json'
+	});
+
+}
+
+function removeMember(userId, table){
+	var area = ".projectUsersBackArea";
+	var route = $("#membersTable").attr('data-remove-route');
+	var postData = {
+		"user_id": userId,
+		"_token" : TOKEN
+	};
+	$.ajax({
+		url: route,
+		type: 'POST',
+		data: postData,
+		success: function(data){
+			addFeedBack(area, data.msg, data.class_msg);
+			if (data.status) {
+				table.draw();
+			}
+		},
+		error: function(){
+			addFeedBack(area, GENERIC_ERROR_MSG, 'alert-danger');
+		},
+		beforeSend: function(){
+			clearFeedBack(area);
+		},
+		dataType: 'json'
+	});
+
 }

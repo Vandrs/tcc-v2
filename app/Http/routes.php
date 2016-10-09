@@ -52,6 +52,8 @@ Route::post('/project/gerenciar/assign-board/{id}',['as' => 'admin.project.manag
 Route::get('/project/gerenciar-usuarios/{id}',['as' => 'admin.project.users', 'uses' => 'ProjectMembersController@index']);
 Route::get('/project/listar-membros/{id}',['as' => 'admin.project.members', 'uses' => 'ProjectMembersController@listMembers']);
 Route::post('/project/invite/{id}',['as' => 'admin.project.invite', 'uses' => 'ProjectMembersController@invite']);
+Route::post('/project/change-role/{id}',['as' => 'admin.project.change-role', 'uses' => 'ProjectMembersController@changeRole']);
+Route::post('/project/remove/{id}',['as' => 'admin.project.remove-member', 'uses' => 'ProjectMembersController@remove']);
 
 
 /*Imagem*/

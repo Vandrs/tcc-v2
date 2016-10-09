@@ -25,7 +25,10 @@
                 <h2 class="form-section-title">Membros do Projeto</h2>
             </div>
             <div class="col-xs-12 margin-top-10">
-                <table id="membersTable" class="table table-bordered table-striped" data-list-route="{{route('admin.project.members',['id' => $project->id])}}">
+                <table id="membersTable" class="table table-bordered table-striped" 
+                       data-list-route="{{route('admin.project.members',['id' => $project->id])}}" 
+                       data-role-route="{{route('admin.project.change-role',['id' => $project->id])}}"
+                       data-remove-route="{{route('admin.project.remove-member',['id' => $project->id])}}">
                     <thead>
                         <tr>
                             <th>Nome</th>
