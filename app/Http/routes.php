@@ -54,6 +54,10 @@ Route::get('/project/listar-membros/{id}',['as' => 'admin.project.members', 'use
 Route::post('/project/invite/{id}',['as' => 'admin.project.invite', 'uses' => 'ProjectMembersController@invite']);
 Route::post('/project/change-role/{id}',['as' => 'admin.project.change-role', 'uses' => 'ProjectMembersController@changeRole']);
 Route::post('/project/remove/{id}',['as' => 'admin.project.remove-member', 'uses' => 'ProjectMembersController@remove']);
+Route::post('/project/invite/accept/{id}',['as' => 'admin.project.invidation.accept', 'uses' => 'ProjectMembersController@acceptInvitation']);
+Route::post('/project/invite/deny/{id}',['as' => 'admin.project.invidation.deny', 'uses' => 'ProjectMembersController@denyInvitation']);
+Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembersController@invitations']);
+Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 
 
 /*Imagem*/
@@ -77,6 +81,7 @@ Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserControll
 Route::get('/usuarios/modal-perfil',['as' => 'user.view.modal', 'uses' => 'UserController@viewModal']);
 Route::get('/usuarios/meu-perfil',['as' => 'admin.user.profile', 'uses' => 'UserController@profile']);
 Route::get('/usuarios/busca',['as' => 'users.search', 'uses' => 'UserController@search']);
+Route::post('/usuarios/add/trello-id',['as' => 'users.add.trello-id', 'uses' => 'UserController@addTrelloId']);
 
 /*Teste*/
 Route::get('/teste','TesteController@index');

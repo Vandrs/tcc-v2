@@ -38,7 +38,7 @@ $(window).load(function(){
 			C3Trello.authorize(showModalBoardsCallBack,null);
 		} 
 	} else {
-		var msg = 'O gerenciamento de projetos ñão está disponível no momento.<br />Tente novamente mais tarde e se o erro persistir contate o administrador do sistema.';
+		var msg = 'O gerenciamento de projetos não está disponível no momento.<br />Tente novamente mais tarde e se o erro persistir contate o administrador do sistema.';
 		addFeedBack('.trelloBeedBackArea',msg,'alert-danger');
 	}
 });
@@ -63,6 +63,9 @@ function makeBoardsOptions(boards){
 }
 
 function showModalBoardsCallBack(){
+	if (NEED_TO_GET_ID) {
+		addTrelloUserId();
+	}
 	C3Trello.getUserBoards(showModalBoards);	
 }
 
@@ -94,3 +97,12 @@ function setBoardId(boardId, route, button){
 }
 
 
+function addTrelloUserId(){
+	C3Trello.getUserData(function(data){
+		var postData = {
+			'idMember': data.id,
+			'_token': TOKEN
+		}
+		$.post(SET_TRELLO_ID_ROUTE, postData);
+	});
+}

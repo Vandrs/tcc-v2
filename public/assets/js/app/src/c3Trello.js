@@ -108,3 +108,9 @@ C3Trello.closeCard = function(id, successCallback, errorCallback){
 	var data = {"value":true};
 	Trello.put('/cards/'+id+'/closed', data, successCallback, errorCallback);
 };
+
+C3Trello.getUserData = function(successCallback){
+	Trello.members.get('me').promise().then(function(data){
+		successCallback(data);
+	});
+}

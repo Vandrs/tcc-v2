@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Utils\Utils;
+use App\Utils\DateUtil;
 use App\Asset\AssetLoader;
 use App\Models\DB\Project;
 use App\Models\DB\User;
@@ -16,6 +17,7 @@ use App\Models\DB\UserProject;
 use App\Models\Enums\EnumProject;
 use App\Models\Enums\EnumCapabilities;
 use App\Models\Business\UserProjectBusiness;
+use App\Models\Business\CrudProjectBusiness;
 
 
 class ProjectMembersController extends Controller
@@ -23,7 +25,7 @@ class ProjectMembersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('projectManager')->except(['invite','acceptInvitation','denyInvitation']);
+        $this->middleware('projectManager')->except(['invite','acceptInvitation','denyInvitation', 'invitations', 'listInvitations']);
     }
 
     public function index($id)
@@ -107,15 +109,7 @@ class ProjectMembersController extends Controller
         }   
     }
 
-    public function acceptInvitation($id)
-    {
-
-    }
-
-    public function denyInvitation($id)
-    {
-
-    }
+    
 
     public function remove(Request $request, $id)
     {
@@ -128,6 +122,7 @@ class ProjectMembersController extends Controller
                     "msg"       => 'Usuário removido com sucesso.',
                     "class_msg" => 'alert-success'
                 ];
+                CrudProjectBusiness::dispathElasticJob($project);
             } else {
                 $result = [
                     "status"    => 0,
@@ -152,7 +147,9 @@ class ProjectMembersController extends Controller
                 $result = [
                     'status' => 1, 
                     'msg'    => 'Perfil alterado com sucesso.', 
-                    'class_msg' => 'alert-success'];
+                    'class_msg' => 'alert-success'
+                ];
+                CrudProjectBusiness::dispathElasticJob($project);
             } else {
                 $result = [
                     "status"    => 0, 
@@ -162,6 +159,101 @@ class ProjectMembersController extends Controller
             }
             return json_encode($result);
         } catch (\Exception $e) {
+            Log::error(Utils::getExceptionFullMessage($e));
+            return $this->ajaxUnexpectedError();
+        }
+    }
+
+    public function invitations()
+    {
+        $data = ['page_title' => 'Convites'];
+        AssetLoader::register(['projectInvitations.js'],['admin.css'],['DataTables']);
+        return view('user.invitations', $data);
+    }
+
+    public function listInvitations()
+    {
+        try {
+            $user = Auth::user();
+            $baseQuery = Project::select([
+                            DB::raw('projects.*'),
+                            DB::raw('user_projects.role'),
+                            DB::raw('user_projects.temp_role'),
+                            DB::raw('user_projects.created_at AS invitation_date'),
+                        ])
+                        ->join('user_projects', 'projects.id', '=', 'user_projects.project_id')
+                        ->where('user_projects.user_id', '=', $user->id)
+                        ->where('user_projects.role', '=', EnumProject::ROLE_INVITED);
+
+            return Datatables::of($baseQuery)
+                             ->editColumn('invitation_date',function($project){
+                                $date = DateUtil::dateTimeInBrazil($project->invitation_date);
+                                return $date->format('d/m/Y');
+                             })
+                             ->addColumn('message',function($project){
+                                $projectLink = "<a href='".$project->url."'>".$project->title."</a>";
+                                $profile = "<b>".EnumProject::getRoleName($project->temp_role)."</b>";
+                                $html = "Você foi convidade para partipar como ".$profile." do projeto ".$projectLink;
+                                return $html;
+                             })
+                             ->addcolumn('actions', function($project){ 
+                                $html = "<a data-toggle='tooltip' title='Aceitar Convite' href='".route('admin.project.invidation.accept',['id' => $project->id])."' class='accept btn btn-fab btn-fab-mini margin-right-5'><i class='material-icons'>done</i></a>";
+                                $html .= "<a data-toggle='tooltip' title='Rejeitar Convite' href='".route('admin.project.invidation.deny',['id' => $project->id])."' class='deny btn btn-fab btn-fab-mini'><i class='material-icons'>clear</i></a>";
+                                return $html;
+                             })
+                             ->make(true);
+        } catch (\Exception $e) {
+            Log::error(Utils::getExceptionFullMessage($e));
+            return $this->ajaxUnexpectedError();   
+        }
+    }
+
+    public function acceptInvitation($id)
+    {
+        try {
+            $project = Project::findOrFail($id);
+            $userProjectBusiness = new UserProjectBusiness();
+            if ($userProjectBusiness->acceptInvitation(Auth::user(), $project)) {
+                CrudProjectBusiness::dispathElasticJob($project);
+                $result = [
+                    "status"    => 1, 
+                    'msg'       => "Convite aceito com sucesso", 
+                    'class_msg' => 'alert-success'
+                ];
+            } else {
+                $result = [
+                    "status"    => 0, 
+                    'msg'       => implode("<br />", $userProjectBusiness->getValidator()->errors()->all()), 
+                    'class_msg' => 'alert-danger'
+                ];
+            }
+            return json_encode($result);
+        } catch (\Exception $e){
+            Log::error(Utils::getExceptionFullMessage($e));
+            return $this->ajaxUnexpectedError();
+        }
+    }
+
+    public function denyInvitation($id)
+    {
+        try {
+            $project = Project::findOrFail($id);
+            $userProjectBusiness = new UserProjectBusiness();
+             if ($userProjectBusiness->denyInvitation(Auth::user(), $project)) {
+                $result = [
+                    "status"    => 1, 
+                    'msg'       => "Convite recusado com sucesso", 
+                    'class_msg' => 'alert-success'
+                ];
+            } else {
+                $result = [
+                    "status"    => 0, 
+                    'msg'       => implode("<br />", $userProjectBusiness->getValidator()->errors()->all()), 
+                    'class_msg' => 'alert-danger'
+                ];
+            }
+            return json_encode($result);
+        } catch (\Exception $e){
             Log::error(Utils::getExceptionFullMessage($e));
             return $this->ajaxUnexpectedError();
         }

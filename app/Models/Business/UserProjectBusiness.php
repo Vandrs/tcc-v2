@@ -68,6 +68,36 @@ class UserProjectBusiness
 		}
 	}
 
+	public function acceptInvitation(User $user, C3Project $project)
+	{
+		$this->validator = Validator::make([], [], []);	
+		$userProject = UserProject::where("project_id", "=", $project->id)
+							 	  ->where("user_id", "=", $user->id)
+							 	  ->where("role", "=", EnumProject::ROLE_INVITED)
+							 	  ->first();
+		if ($userProject) {
+			return $userProject->update(['role' => $userProject->temp_role, 'temp_role' => null]);
+		} else {	
+			$this->validator->errors()->add('id', 'Projeto não encontrado.');
+			return false;
+		}
+	}
+
+	public function denyInvitation(User $user, C3Project $project) 
+	{
+		$this->validator = Validator::make([], [], []);	
+		$userProject = UserProject::where("project_id", "=", $project->id)
+							 	  ->where("user_id", "=", $user->id)
+							 	  ->where("role", "=", EnumProject::ROLE_INVITED)
+							 	  ->first();
+		if ($userProject) {
+			return $userProject->delete();
+		} else {	
+			$this->validator->errors()->add('id', 'Projeto não encontrado.');
+			return false;
+		}
+	}
+
 	public function changeRole(C3Project $project, $data){
 		$this->validator = Validator::make($data, $this->changeRoleValidation(), $this->messages());
 		if ($this->validator->fails()) {

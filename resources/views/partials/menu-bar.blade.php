@@ -16,8 +16,8 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
         <li><a href="{{route('admin.home')}}" title="Home"><i class="material-icons">home</i></a></li>
-        <li><a href="#" class="notifications" title="Notificações"><i class="material-icons">notifications</i></a></li>
-        <li><a href="{{route('admin.user.profile')}}" title="Perfil"><i class="material-icons">person</i></a></li>
+        <li><a href="{{route('project.invitations')}}" class="notifications" title="Convites"><i class="material-icons">public</i></a></li>
+        <li><a href="{{route('admin.user.profile')}}" title="Perfil"><i class="material-icons">person</i>({{Auth::user()->name}})</a></li>
         <li role="separator" class="divider"></li>
         <li><a href="{{route('test.logout')}}" title="Sair" class="margin-right-10"><i class="material-icons">exit_to_app</i></a></li>
         @else

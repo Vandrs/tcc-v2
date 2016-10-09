@@ -26,7 +26,7 @@ class ElasticUserBusiness
 
 	private function getBaseAttributes(User $user)
 	{
-		$excludeItems = ['password','remember_token'];
+		$excludeItems = ['password','remember_token', 'trello_token'];
 		$attributes = $user->getAttributes();
 		foreach ($excludeItems as $item) {
 			if (isset($attributes[$item])) {

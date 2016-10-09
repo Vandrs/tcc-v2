@@ -6,6 +6,11 @@
             </a>
         </li>
         <li>
+            <a href="{{route('project.invitations')}}">
+                <i class="glyphicon glyphicon-globe"></i> <span class="admin-menu-text">Convites</span>
+            </a>
+        </li>
+        <li>
             <a href="{{route('admin.project.create')}}">
                 <i class="glyphicon glyphicon-file"></i> <span class="admin-menu-text">Novo Projeto</span>
             </a>

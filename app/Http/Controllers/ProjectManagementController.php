@@ -10,6 +10,7 @@ use App\Models\DB\Project;
 use App\Models\Business\ProjectManagementBusiness;
 use Log;
 use Config;
+use Auth;
 
 class ProjectManagementController extends Controller{
 
@@ -32,9 +33,11 @@ class ProjectManagementController extends Controller{
 				'page_title'   => 'Gerenciamento',
 				'project' 	   => $project,
 				'js_variables' => [
-					'TRELLO_APP_NAME' 		    => Config::get('trello.app_name'),
-					'TRELLO_BOARD_ID'			=> $project->trello_board_id,
-					'PROJECT_NAME'				=> $project->title
+					'TRELLO_APP_NAME'  		=> Config::get('trello.app_name'),
+					'TRELLO_BOARD_ID'  		=> $project->trello_board_id,
+					'PROJECT_NAME'	   		=> $project->title,
+					'NEED_TO_GET_ID'   		=> empty(Auth::user()->trello_token),
+					'SET_TRELLO_ID_ROUTE'	=> route('users.add.trello-id')
 				]
 			];
 			return view('project.management',$data);
@@ -55,8 +58,10 @@ class ProjectManagementController extends Controller{
 				'page_title'   => 'Gerenciamento',
 				'project' 	   => $project,
 				'js_variables' => [
-					'TRELLO_APP_NAME' 		    => Config::get('trello.app_name'),
-					'PROJECT_NAME'				=> $project->title
+					'TRELLO_APP_NAME' 		=> Config::get('trello.app_name'),
+					'PROJECT_NAME'			=> $project->title,
+					'NEED_TO_GET_ID'		=> empty(Auth::user()->trello_token),
+					'SET_TRELLO_ID_ROUTE'	=> route('users.add.trello-id')
 				]
 			];
 			AssetLoader::register(['c3Trello.js','trelloProjectSetUp.js'],['admin.css'],['Trello']);

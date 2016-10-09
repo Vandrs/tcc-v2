@@ -20,7 +20,7 @@ class User extends Authenticatable implements C3User
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'skills', 'in_elastic'
+        'name', 'email', 'password', 'skills', 'in_elastic', 'trello_token'
     ];
 
     protected $casts = [

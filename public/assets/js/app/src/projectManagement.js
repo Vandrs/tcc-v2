@@ -129,6 +129,9 @@ function initBoard(){
 }
 
 function getBoardLists(lists){
+	if (NEED_TO_GET_ID) {
+		addTrelloUserId();
+	}
 	$(".management-container").html("");
 	$(lists).each(function(){
 		var listHtml = ManagementLayout.buildList(this);
@@ -141,6 +144,16 @@ function getBoardLists(lists){
 function managementConnectionFailed(){
 	var msg = 'O gerenciamento de projetos não está disponível no momento.<br />Tente novamente mais tarde e se o erro persistir contate o administrador do sistema.';
 	addFeedBack('.trelloBeedBackArea', msg, 'alert-danger');
+}
+
+function addTrelloUserId(){
+	C3Trello.getUserData(function(data){
+		var postData = {
+			'idMember': data.id,
+			'_token': TOKEN
+		}
+		$.post(SET_TRELLO_ID_ROUTE, postData);
+	});
 }
 
 /* INICIO MODAL LIST */

@@ -81,4 +81,19 @@ class UserController extends Controller
 		];
 		return $data;
 	}
+
+	public function addTrelloId(Request $request){
+		try {
+			$idMember = $request->get('idMember');
+			if ($idMember && Auth::user()->update(['trello_token' => $idMember])) {
+				$result = ['status' => 1, 'msg' => 'Registro alterado com sucesso', 'alert-success'];
+			} else {
+				$result = ['status' => 0, 'msg' => 'Falha ao tentar alterar o registro', 'class_msg' => 'alert-danger'];
+			}
+			return json_encode($result);
+		} catch (\Exception $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+			return $this->ajaxUnexpectedError();
+		}
+	}
 }
