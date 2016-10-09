@@ -15,10 +15,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
-        <li><a href="{{route('admin.home')}}">Home</a></li>
-        <li><a href="{{route('admin.user.profile')}}">{{Auth::user()->name}} (Perfil)</a></li>
+        <li><a href="{{route('admin.home')}}" title="Home"><i class="material-icons">home</i></a></li>
+        <li><a href="#" class="notifications" title="Notificações"><i class="material-icons">notifications</i></a></li>
+        <li><a href="{{route('admin.user.profile')}}" title="Perfil"><i class="material-icons">person</i></a></li>
         <li role="separator" class="divider"></li>
-        <li><a href="{{route('test.logout')}}">Logout</a></li>
+        <li><a href="{{route('test.logout')}}" title="Sair" class="margin-right-10"><i class="material-icons">exit_to_app</i></a></li>
         @else
         <li><a href="{{route('test.users')}}">Usuários</a></li>
         <li><a href="{{route('test.projects')}}">Projetos</a></li>
