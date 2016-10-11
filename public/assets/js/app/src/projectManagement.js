@@ -121,17 +121,18 @@ function initSortCards(){
 }
 
 function initBoard(){
+	if (NEED_TO_GET_ID) {
+		addTrelloUserId();
+	}
+	assignUsers();
 	C3Trello.getBoardLists(
 		C3Trello.currentBoardId(),
 		getBoardLists,
-		managementConnectionFailed
+		tryAssignUser
 	);
 }
 
 function getBoardLists(lists){
-	if (NEED_TO_GET_ID) {
-		addTrelloUserId();
-	}
 	$(".management-container").html("");
 	$(lists).each(function(){
 		var listHtml = ManagementLayout.buildList(this);
@@ -142,8 +143,77 @@ function getBoardLists(lists){
 }
 
 function managementConnectionFailed(){
-	var msg = 'O gerenciamento de projetos não está disponível no momento.<br />Tente novamente mais tarde e se o erro persistir contate o administrador do sistema.';
+	var msg = 'O gerenciamento de projetos não está disponível no momento.<br />Verifique com o administrador se grupo se mesmo já o adicionou como membre deste quadro no Trello<br />Tente novamente mais tarde e se o erro persistir contate o administrador do sistema.';
 	addFeedBack('.trelloBeedBackArea', msg, 'alert-danger');
+}
+
+function tryAssignUser(){
+	if (hasValue(ASSIGN_USERS)) {
+		var user = JSON.parse(ASSIGN_USERS);
+		user = user[0];
+		var postData = {"type":"normal"};
+		C3Trello.assignBoard(
+			TRELLO_BOARD_ID, 
+			user.trello_token, 
+			postData, 
+			tryGetBoardListAndAssignUserToProject, 
+			managementConnectionFailed
+		);
+	} else {
+		managementConnectionFailed();
+	}	
+}
+
+function assignUsers(){
+	if (IS_PROJECT_OWNER) {
+		if (hasValue(ASSIGN_USERS)) {
+			var users = JSON.parse(ASSIGN_USERS);
+			$(users).each(function(){
+				var postData = {"type":"normal"};
+				C3Trello.assignBoard(
+					TRELLO_BOARD_ID, 
+					this.trello_token, 
+					postData, 
+					boardAssigned(this.id),
+					function(){ console.log('User owner assign error');}
+				);
+			});
+		}
+	}
+}
+
+function tryGetBoardListAndAssignUserToProject(){
+	C3Trello.getBoardLists(
+		C3Trello.currentBoardId(),
+		function (lists) {
+			getBoardLists(lists);
+			var user = JSON.parse(ASSIGN_USERS);
+			boardAssigned(user.id);
+		},
+		managementConnectionFailed
+	);
+}
+
+function boardAssigned(userId){
+	var postData = {'user_id':userId, "_token":TOKEN};
+	$.ajax({
+		url: ASSIGN_BOARD_ROUTE,
+		data: postData,
+		type: 'POST', 
+		success: function (data){
+			console.log(data);
+			if (data.status) {
+				var users = JSON.parse(ASSIGN_USERS);users
+				var names = [];
+				$(users).each(function(){
+					names.push(this.name);
+				});
+				var msg = "Novos usuários adicionados a área de gerenciamento dd Projeto: "+names.join(', ');
+				addFeedBack('.trelloBeedBackArea', msg, 'alert-success');
+			}
+		},
+		dataType: 'json'
+	});
 }
 
 function addTrelloUserId(){

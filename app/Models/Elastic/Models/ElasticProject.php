@@ -109,4 +109,8 @@ class ElasticProject extends ElasticModel implements C3Project{
 		return $this->getMembers()->where('id', $user->id, false)->first();
 	}
 
+	public function isOwner($user){
+		return $this->getMembers()->where('id', $user->id, false)->where('role', EnumProject::ROLE_OWNER, false)->first();
+	}
+
 }

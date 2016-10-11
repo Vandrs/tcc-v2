@@ -23,14 +23,8 @@ class TesteController extends Controller
     public function index()
     {
         $project = Project::find(22);
-        dd($project->getMembers());
-        $user = User::find(10);
-        $userProjectBusiness = new UserProjectBusiness();
-        if ($userProject = $userProjectBusiness->invite($user, $project, EnumProject::ROLE_MENTOR)) {
-            dd("PASSOU");
-        }
-        dd($userProjectBusiness->getValidator()->errors()->all());
-
+        $user = User::find(16);
+        dd($project->isOwner($user));
     }
 
     public function usersLoginList()

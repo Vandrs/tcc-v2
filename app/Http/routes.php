@@ -56,6 +56,7 @@ Route::post('/project/change-role/{id}',['as' => 'admin.project.change-role', 'u
 Route::post('/project/remove/{id}',['as' => 'admin.project.remove-member', 'uses' => 'ProjectMembersController@remove']);
 Route::post('/project/invite/accept/{id}',['as' => 'admin.project.invidation.accept', 'uses' => 'ProjectMembersController@acceptInvitation']);
 Route::post('/project/invite/deny/{id}',['as' => 'admin.project.invidation.deny', 'uses' => 'ProjectMembersController@denyInvitation']);
+Route::post('/project/board/assigned/{id}', ['as' => 'admin.project.board-assigned', 'uses' => 'ProjectMembersController@userAssignedBoard']);
 Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembersController@invitations']);
 Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 

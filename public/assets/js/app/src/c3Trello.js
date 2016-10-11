@@ -114,3 +114,7 @@ C3Trello.getUserData = function(successCallback){
 		successCallback(data);
 	});
 }
+
+C3Trello.assignBoard = function(idBoard, idMember, data, successCallback, errorCallback){
+	Trello.put('/boards/'+idBoard+'/members/'+idMember, data, successCallback, errorCallback);
+}

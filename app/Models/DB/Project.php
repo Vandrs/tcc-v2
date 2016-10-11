@@ -105,6 +105,10 @@ class Project extends Model implements C3Project{
 		return $this->getMembers()->where('id',$user->id,false)->first();
 	}
 
+	public function isOwner($user){
+		return $this->getMembers()->where('id', $user->id, false)->where('role', EnumProject::ROLE_OWNER, false)->first();
+	}
+
 	public function getUrlAttribute($value = null){
 		$path = StringUtil::toUrl($this->title."-".$this->id);
 		return route('site.project.view',['path' => $path]);

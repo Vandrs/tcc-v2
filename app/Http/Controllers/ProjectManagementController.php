@@ -8,6 +8,7 @@ use App\Utils\StringUtil;
 use App\Asset\AssetLoader;
 use App\Models\DB\Project;
 use App\Models\Business\ProjectManagementBusiness;
+use App\Models\Business\UserProjectBusiness;
 use Log;
 use Config;
 use Auth;
@@ -24,11 +25,22 @@ class ProjectManagementController extends Controller{
 			if(empty($project->trello_board_id)){
 				return redirect()->route("admin.project.management.first",['id' => $project->id]);
 			}
+
+			$userProjectBusiness = new UserProjectBusiness();
+
 			AssetLoader::register(
 				['c3Trello.js','managementLayout.js','projectManagement.js'],
 				['admin.css'],
 				['Trello','AirDatePicker', 'JqueryUI']
 			);
+
+			$assignUsers = $userProjectBusiness->getUsersToAssignBoard($project);
+			if ($assignUsers->count()) {
+				$idAssignUsers = $assignUsers->toJson();
+			} else {
+				$idAssignUsers = '';
+			}
+
 			$data = [
 				'page_title'   => 'Gerenciamento',
 				'project' 	   => $project,
@@ -37,9 +49,13 @@ class ProjectManagementController extends Controller{
 					'TRELLO_BOARD_ID'  		=> $project->trello_board_id,
 					'PROJECT_NAME'	   		=> $project->title,
 					'NEED_TO_GET_ID'   		=> empty(Auth::user()->trello_token),
-					'SET_TRELLO_ID_ROUTE'	=> route('users.add.trello-id')
+					'SET_TRELLO_ID_ROUTE'	=> route('users.add.trello-id'),
+					'ASSIGN_USERS'          => $idAssignUsers,
+					'ASSIGN_BOARD_ROUTE'	=> route('admin.project.board-assigned', ['id' => $project->id]),
+					'IS_PROJECT_OWNER'		=> $project->isOwner(Auth::user()) ? 1 : ''
 				]
 			];
+
 			return view('project.management',$data);
 		} catch(\Exception $e) {
 			$msg = Utils::getExceptionFullMessage($e);
@@ -96,5 +112,7 @@ class ProjectManagementController extends Controller{
 			return $this->ajaxUnexpectedError(null,$msg);
 		}
 	}
+
+
 
 }

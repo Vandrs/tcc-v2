@@ -25,7 +25,7 @@ class ProjectMembersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('projectManager')->except(['invite','acceptInvitation','denyInvitation', 'invitations', 'listInvitations']);
+        $this->middleware('projectManager')->except(['invite','acceptInvitation','denyInvitation', 'invitations', 'listInvitations', 'userAssignedBoard']);
     }
 
     public function index($id)
@@ -243,6 +243,32 @@ class ProjectMembersController extends Controller
                 $result = [
                     "status"    => 1, 
                     'msg'       => "Convite recusado com sucesso", 
+                    'class_msg' => 'alert-success'
+                ];
+            } else {
+                $result = [
+                    "status"    => 0, 
+                    'msg'       => implode("<br />", $userProjectBusiness->getValidator()->errors()->all()), 
+                    'class_msg' => 'alert-danger'
+                ];
+            }
+            return json_encode($result);
+        } catch (\Exception $e){
+            Log::error(Utils::getExceptionFullMessage($e));
+            return $this->ajaxUnexpectedError();
+        }
+    }
+
+    public function userAssignedBoard(Request $request, $id)
+    {
+        try {
+            $project = Project::findOrFail($id);
+            $userId = $request->input('user_id');
+            $userProjectBusiness = new UserProjectBusiness();
+             if ($userProjectBusiness->boardAssigned($project, $userId)) {
+                $result = [
+                    "status"    => 1, 
+                    'msg'       => "Registro alterado com sucesso", 
                     'class_msg' => 'alert-success'
                 ];
             } else {

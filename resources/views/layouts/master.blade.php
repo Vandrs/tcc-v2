@@ -61,7 +61,7 @@
         var TOKEN = '{{csrf_token()}}';
         @if(isset($js_variables) && count($js_variables))
         @foreach($js_variables as $key => $val)
-        var {{$key}} = '{{$val}}'
+        var {{$key}} = '{!!$val!!}'
         @endforeach                
         @endif
         </script>
