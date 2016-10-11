@@ -68,5 +68,8 @@
         @foreach ( $assetLoader::js() as $script )
         <script type="text/javascript" src="{{$script}}"></script>    
         @endforeach
+        @if(isset($showAddThis) && $showAddThis)
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57fc511eedc18a77"></script>
+        @endif
     </body>
 </html>

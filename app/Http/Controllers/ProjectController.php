@@ -39,7 +39,12 @@ class ProjectController extends Controller
             [],
             ["LightGallery","StarRating"]
         );
-    	return view('project.view',['project' => $project, 'disqus_page_url' => $request->url(), 'discus_page_id' => 'project-'.$id]);
+    	return view('project.view',[
+            'project'         => $project, 
+            'disqus_page_url' => $request->url(), 
+            'discus_page_id'  => 'project-'.$id,
+            'showAddThis'     => true
+        ]);
     }
 
     public function create(){

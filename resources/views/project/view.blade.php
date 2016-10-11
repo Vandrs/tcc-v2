@@ -108,6 +108,14 @@
                         </div>
                         <div class="row margin-top-10">
                             <div class="col-xs-12 project-section-label">
+                                Compartilhar
+                            </div>
+                            <div class="col-xs-12 margin-top-10">
+                                <div class="addthis_inline_share_toolbox"></div>
+                            </div>
+                        </div>
+                        <div class="row margin-top-10">
+                            <div class="col-xs-12 project-section-label">
                                 Membros
                             </div>
                             <div class="col-xs-12 margin-top-10">
