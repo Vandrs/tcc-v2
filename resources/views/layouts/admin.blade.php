@@ -16,7 +16,7 @@
                 @yield('breadcrumbs')
                 </div>
             </div>
-            <div class="row">
+            <div class="row {{isset($titleRowClass) ? $titleRowClass : ''}}">
                 @if(isset($page_title))
                 <div class="col-xs-12">
                     <h1>{{$page_title}}</h1>

@@ -26,14 +26,16 @@
         <meta name="description" content="{{$page_description}}">
         @endif
         @if(isset($og_data))
+        <meta property="fb:app_id" content="1074886019192932" />
         <meta property="og:title" content="{{$og_data['title']}}  | {{Config::get('app.app_name')}}" />
         <meta property="og:description" content="{{$og_data['description']}}" />
         <meta property="og:site_name" content="{{$og_data['site_name']}}" />
         <meta property="og:type" content="{{$og_data['type']}}" />
         <meta property="og:locale" content="{{$og_data['locale']}}"/>
         <meta property="og:url" content="{{$og_data['url']}}" />
-        <meta property="og:image" content="{{$og_data['image']}}" />
-        <meta property="fb:app_id" content="1035171313211088" />
+        @if(isset($og_data['image']) && $og_data['image'])
+            <meta property="og:image" content="{{$og_data['image']}}" />
+        @endif
         @endif
         <title>
         @if(isset($page_title))
@@ -49,6 +51,28 @@
         @foreach ( $assetLoader::css() as $style )
         <link type="text/css" rel="stylesheet" href="{{$style}}"/>
         @endforeach
+
+        @if(Util::isProduction())
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-85608089-2', 'auto');
+          ga('send', 'pageview');
+        </script>
+        @else
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-85608089-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+        @endif
     </head>
     <body {{isset($bodyDocumentClass)?"class=".$bodyDocumentClass:""}} itemscope itemtype="http://schema.org/WebPage">
         <meta itemprop="isFamilyFriendly" content="true">
@@ -69,6 +93,10 @@
         <script type="text/javascript" src="{{$script}}"></script>    
         @endforeach
         @if(isset($showAddThis) && $showAddThis)
+            <script type="text/javascript">
+                var addthis_config = addthis_config||{};
+                    addthis_config.data_track_clickback = false;
+            </script>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57fc511eedc18a77"></script>
         @endif
     </body>

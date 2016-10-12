@@ -1,10 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-        <div class="row margin-top-10">
-            <div class="col-xs-12 text-center">
-                    <h1>Encontrar Projetos</h1>
-            </div>
-        </div>
         <div class="row margin-top-20">
             <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form action="{{route('search')}}" method="GET" class="row">

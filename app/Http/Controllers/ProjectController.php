@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Asset\AssetLoader;
 use App\Http\Requests;
 use App\Utils\Utils;
+use App\Utils\StringUtil;
 use App\Utils\UrlUtil;
 use App\Models\DB\Project;
 use App\Models\DB\Category;
@@ -19,6 +20,7 @@ use App\Models\Elastic\Models\ElasticProject;
 use Gate;
 use Log;
 use Auth;
+use Config;
 
 class ProjectController extends Controller
 {
@@ -39,11 +41,35 @@ class ProjectController extends Controller
             [],
             ["LightGallery","StarRating"]
         );
+
+        $description = $project->description ? StringUtil::limitaCaracteres(strip_tags($project->description), 160, '...') : '';
+        $coverImage =  $project->images->sortByDesc(function($image){return $image->cover;})->first();
+        if ($coverImage) {
+            $imageUrl = $coverImage->getImageUrl();
+        } else {
+            $imageUrl = '';
+        }
+
+        $ogData = [
+            'title'       => $project->title,
+            'description' => $description,
+            'site_name'   => Config::get('app.app_name'),
+            'type'        => 'website',
+            'locale'      => 'pt_BR',
+            'url'         => $project->url,
+            'image'       => $imageUrl
+        ];
+
     	return view('project.view',[
-            'project'         => $project, 
-            'disqus_page_url' => $request->url(), 
-            'discus_page_id'  => 'project-'.$id,
-            'showAddThis'     => true
+            'page_title'       => $project->title,
+            'titleRowClass'    => 'text-center',
+            'page_description' => $description,
+            'canonical'        => $project->url,
+            'project'          => $project, 
+            'disqus_page_url'  => $project->url, 
+            'discus_page_id'   => 'project-'.$id,
+            'showAddThis'      => true,
+            'og_data'          => $ogData
         ]);
     }
 

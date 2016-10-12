@@ -11,6 +11,7 @@ use App\Models\DB\Category;
 use Illuminate\Http\Response;
 use App\Asset\AssetLoader;
 use Auth;
+use Config;
 
 class SiteController extends Controller
 {
@@ -23,7 +24,24 @@ class SiteController extends Controller
     	$business = new ProjectBusiness();
     	$projects = $business->getFeaturedProjects($user);
         AssetLoader::register(['projectRating.js'],[],['StarRating']);
-    	return view('site.welcome',['projects' => $projects]);
+        $ogData = [
+            'title'       => trans('pages.home.title'),
+            'description' => trans('pages.home.description'),
+            'site_name'   => Config::get('app.app_name'),
+            'type'        => 'website',
+            'locale'      => 'pt_BR',
+            'url'         => Config::get('app.url'),
+            'image'       => ''
+        ];
+        $data = [
+            'page_description'  => trans('pages.home.description'),
+            'page_keywords'     => trans('pages.home.keywords'),
+            'og_data'           => $ogData,
+            'canonical'         => Config::get('app.url'),
+            'projects'          => $projects,
+        ];
+
+    	return view('site.welcome',$data);
     }
 
     public function search(Request $request){	
@@ -53,11 +71,27 @@ class SiteController extends Controller
     	$projects->setPath(route('search'));
         $categories = Category::orderBy('name','ASC')->get();
         AssetLoader::register(['projectRating.js'],[],['StarRating']);
+        $ogData = [
+            'title'       => trans('pages.search.title'),
+            'description' => trans('pages.search.description'),
+            'site_name'   => Config::get('app.app_name'),
+            'type'        => 'website',
+            'locale'      => 'pt_BR',
+            'url'         => route('search'),
+            'image'       => ''
+        ];
     	return view('project.search-result', [
                         'projects'           => $projects, 
                         'searchTerm'         => $q,
                         'selectedCategoryId' => $categoryid,
-                        'categories'         => $categories
+                        'categories'         => $categories,
+                        'page_description'   => trans('pages.search.description'),
+                        'page_keywords'      => trans('pages.search.keywords'),
+                        'page_title'         => trans('pages.search.title'),
+                        'titleRowClass'      => 'text-center',
+                        'og_data'            => $ogData,
+                        'canonical'           => route('search'),
+                        'noIndex'            => true
                     ]);
     }
 

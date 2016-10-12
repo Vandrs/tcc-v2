@@ -2,11 +2,6 @@
 @inject('projectFollower','App\Models\Business\ProjectFollowerBusiness')
 @section('content')
 	<div class="project-container">
-        <div class="row margin-top-20">
-            <div class="col-xs-12 text-center">
-                <h1>{{$project->title}}</h1>
-            </div>
-        </div>
         <div class="row margin-top-10">
             <div class="col-xs-12 ">
                 <div class="row">
