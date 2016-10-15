@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Models\Business\ProjectBusiness;
 use App\Models\Elastic\ElasticSearchProject;
 use App\Models\DB\Category;
@@ -15,8 +13,9 @@ use Config;
 
 class SiteController extends Controller
 {
-    public function home(){
-    	if(Auth::check()){
+    public function home(Request $request){
+
+        if(Auth::check()){
     		$user = Auth::user();
     	} else {
     		$user = null;
@@ -97,5 +96,16 @@ class SiteController extends Controller
 
     public function page404(){
         return response(view('errors.404')->render(), Response::HTTP_NOT_FOUND);
+    }
+
+    public function error(Request $request)
+    {
+        $data = [
+            'page_title'    => 'Ooops ocorreu um erro inesperado!!!',
+            'titleRowClass' => 'text-left',
+            'noIndex'       => true,
+            'msg'           => $request->session()->get('msg', null)
+        ];
+        return response(view('errors.error',$data)->render(), Response::HTTP_BAD_REQUEST);
     }
 }

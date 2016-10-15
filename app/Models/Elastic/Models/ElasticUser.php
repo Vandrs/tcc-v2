@@ -12,7 +12,7 @@ class ElasticUser extends ElasticModel implements C3User{
 	private $type = 'user';
 	private $mappingFile = 'user.json';
 
-	protected $fillable = ['id','name','email','skills','created_at','graduations','works','created_at'];
+	protected $fillable = ['id','name','email','skills','created_at','graduations','works','created_at', 'gender', 'birth_date', 'photo'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
@@ -26,6 +26,11 @@ class ElasticUser extends ElasticModel implements C3User{
 		$updatedAt = $this->updated_at;
 		if(!empty($updatedAt) && !is_object($updatedAt)){
 			$this->updated_at = DateUtil::dateTimeInBrazil($updatedAt);
+		}
+
+		$birthDate = $this->birth_date;
+		if ($birthDate) {
+			$this->birth_date = DateUtil::dateTimeInBrazil($birthDate);
 		}
 
 		$graduations = $this->graduations;

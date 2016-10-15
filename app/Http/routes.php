@@ -15,6 +15,11 @@
 Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);
 Route::get('/busca',['as' => 'search', 'uses' => 'SiteController@search']);
 Route::get('/pagina-nao-encontrada',['as' => 'site.404', 'uses' => 'SiteController@page404']);
+Route::get('/erro',['as' => 'site.error', 'uses' => 'SiteController@error']);
+
+/*Logins*/
+Route::get('/login/fb',['as' => 'login.fb', 'uses' => 'SocialAuthController@fbLogin']);
+Route::get('/login/fb/callback',['as' => 'login.fb.callback', 'uses' => 'SocialAuthController@fbLoginCallback']);
 
 /*Admin*/
 Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);
@@ -60,7 +65,6 @@ Route::post('/project/board/assigned/{id}', ['as' => 'admin.project.board-assign
 Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembersController@invitations']);
 Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 
-
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
 Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);
@@ -82,7 +86,9 @@ Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserControll
 Route::get('/usuarios/modal-perfil',['as' => 'user.view.modal', 'uses' => 'UserController@viewModal']);
 Route::get('/usuarios/meu-perfil',['as' => 'admin.user.profile', 'uses' => 'UserController@profile']);
 Route::get('/usuarios/busca',['as' => 'users.search', 'uses' => 'UserController@search']);
+Route::get('/cadastro',['as' => 'user.create', 'uses' => 'UserController@create']);
 Route::post('/usuarios/add/trello-id',['as' => 'users.add.trello-id', 'uses' => 'UserController@addTrelloId']);
+Route::post('/usuario/cadastrar',['as' => 'user.save', 'uses' => 'UserController@save']);
 
 /*Teste*/
 Route::get('/teste','TesteController@index');

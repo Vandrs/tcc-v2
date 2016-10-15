@@ -153,3 +153,9 @@ table thead tr{
     z-index: 99999;
 }
 
+.works-container .row.work.box,
+.graduations-container .row.graduation.box{
+    margin: 5px;
+    padding-bottom: 50px;
+    box-shadow: 0 1px 3px silver;
+}

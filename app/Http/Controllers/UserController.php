@@ -17,8 +17,24 @@ class UserController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth')->except(['view','viewModal']);
+		$this->middleware('auth')->except(['view','viewModal','create', 'save']);
 	}	
+
+
+	public function create(Request $request)
+	{
+		$user = $request->session()->get('user', null);
+		if (empty($user)) {
+			$user = old('user', null);
+		}
+		AssetLoader::register(['createUser.js'],['admin.css'], ['AirDatePicker']);
+		return view('user.create',['user' => $user]);
+	}
+
+	public function save(Request $request)
+	{
+		dd($request->all());
+	}
 
 	public function view($id)
 	{

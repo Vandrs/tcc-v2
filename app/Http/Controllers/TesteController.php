@@ -22,9 +22,10 @@ class TesteController extends Controller
 {
     public function index()
     {
-        $project = Project::find(22);
-        $user = User::find(16);
-        dd($project->isOwner($user));
+        
+
+        $str = htmlentities('http%3A%2F%2Fdev.c3-projetos.com%2Flogin%2Ffb%2Fcallback');
+        return $str;
     }
 
     public function usersLoginList()

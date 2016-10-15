@@ -11,8 +11,19 @@
 		"index":"not_analyzed"
 	},
 	"skills": {
+		"type":"string"
+	},
+	"gender": {
 		"type":"string",
-		"analyzer":"brazilian"
+		"index":"not_analyzed"
+	},
+	"photo": {
+		"type":"string",
+		"index":"not_analyzed"
+	},
+	"birth_date":{
+		"type":"date",
+		"format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
 	},
 	"works":{
 		"properties":{

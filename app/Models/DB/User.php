@@ -20,11 +20,16 @@ class User extends Authenticatable implements C3User
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'skills', 'in_elastic', 'trello_token'
+        'name', 'email', 'password', 'skills', 'in_elastic', 'trello_token', 
+        'social_id', 'social_driver', 'gender', 'birth_date', 'photo'
     ];
 
     protected $casts = [
       'skills' => 'array'
+    ];
+
+    protected $dates = [
+      'created_at', 'updated_at', 'birth_date'
     ];
 
     /**
@@ -33,7 +38,7 @@ class User extends Authenticatable implements C3User
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'social_id', 'social_driver'
     ];
 
     protected static function boot(){

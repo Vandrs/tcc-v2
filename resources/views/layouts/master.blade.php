@@ -26,7 +26,7 @@
         <meta name="description" content="{{$page_description}}">
         @endif
         @if(isset($og_data))
-        <meta property="fb:app_id" content="1074886019192932" />
+        <meta property="fb:app_id" content="config('services.facebook.client_id')" />
         <meta property="og:title" content="{{$og_data['title']}}  | {{Config::get('app.app_name')}}" />
         <meta property="og:description" content="{{$og_data['description']}}" />
         <meta property="og:site_name" content="{{$og_data['site_name']}}" />
@@ -96,6 +96,7 @@
             <script type="text/javascript">
                 var addthis_config = addthis_config||{};
                     addthis_config.data_track_clickback = false;
+                    addthis_config.data_track_addressbar = false;
             </script>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57fc511eedc18a77"></script>
         @endif
