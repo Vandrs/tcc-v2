@@ -6,6 +6,7 @@
                 <h1>Novo cadastro</h1>
         </div>
     </div>
+    @include('partials.view-errors')
     <form id="frmUser" method="POST" action="{{route('user.save')}}">
         {{csrf_field()}}
     <div class="row">
@@ -27,6 +28,26 @@
             </div>
         </div>
     </div>
+    @if(isset($user['social_id']) && $user['social_id'])
+        <input type="hidden" name="User[social_id]" value="{{$user['social_id']}}"/>
+        <input type="hidden" name="User[social_driver]" value="{{$user['social_driver']}}"/>
+    @else
+    <div class="row"> 
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group {{$errors->has('password')?'has-error':''}}">
+                <label class="control-label" for="password">Senha*</label>
+                <input type="password" id="password" name='User[password]' class="form-control" value="{{isset($user['password']) ? $user['password'] : null}}"/>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group {{$errors->has('password')?'has-error':''}}">
+                <label class="control-label" for="password_confirmation">Confirmar Senha*</label>
+                <input type="password" id="password_confirmation" name='User[password_confirmation]' class="form-control" value="{{isset($user['password_confirmation']) ? $user['password_confirmation'] : null}}"/>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-xs-12 col-md-6">
             <div class="form-group {{$errors->has('gender')?'has-error':''}}">
@@ -42,7 +63,12 @@
         <div class="col-xs-12 col-md-6">
             <div class="form-group {{$errors->has('birth_date')?'has-error':''}}">
                 <label class="control-label" for="birth_date">Data de nascimento*</label>
-                <input type="text" id="birth_date" name='User[birth_date]' class="form-control date" value="{{isset($user['birth_date']) ? $user['birth_date'] : null}}"/>
+                <div class="input-group">
+                <input type="text" id="birth_date" name='User[birth_date]' class="form-control date " value="{{isset($user['birth_date']) ? $user['birth_date'] : null}}"/>
+                <span class='input-group-btn'>
+                    <button class="btn btn-fab-mini btn-fab showDatePicker"><i class="material-icons">event</i></button>
+                </span>
+                </div>
             </div>
         </div>
     </div>
@@ -50,7 +76,7 @@
         <div class="col-xs-12">
             <div class="form-group {{$errors->has('skills')?'has-error':''}}">
                 <label for="skills" class="control-label">Habilidades (valores separados por ,)</label>
-                <textarea id="skills" class="form-control" name="User[skills]"></textarea>
+                <textarea id="skills" class="form-control" name="User[skills]">{{isset($user['skills']) ? $user['skills'] : "" }}</textarea>
             </div>
         </div>
     </div>
@@ -61,10 +87,9 @@
         <div class="col-xs-12 works-container">
             @if(isset($user['works']) && $user['works'])
                 @foreach($user['works'] as $key => $work)
-                    <div class="row work box">
+                    <div class="row work box" data-idx="{{$key}}">
                         <div class="col-xs-12 text-right margin-top-10">
                             <button data-toggle="tooltip" type="button" class="btn btn-fab btn-fab-mini btn-raised btn-danger remove-work margin-right-5" title="Remover"><i class="material-icons">delete</i></button>
-                            <button data-toggle="tooltip" type="button" class="btn btn-fab btn-fab-mini btn-raised order-work" title="Ordenar"><i class="material-icons">swap_vert</i></button>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group">
@@ -87,13 +112,23 @@
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group">
                                 <label for="work_started_at_{{$key}}" class="control-label">Inicio*</label>
-                                <input class="form-control date" type="text" name="User[works][{{$key}}][started_at]" id="work_started_at_{{$key}}" value="{{isset($work['started_at']) ? $work['started_at'] : "" }}"/>
+                                <div class="input-group">
+                                    <input class="form-control date " type="text" name="User[works][{{$key}}][started_at]" id="work_started_at_{{$key}}" value="{{isset($work['started_at']) ? $work['started_at'] : "" }}"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>
+                                    </span>                
+                                </div>                
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group">
                                 <label for="work_ended_at_{{$key}}" class="control-label">Fim* (Não preencher se for o emprego atual)</label>
-                                <input class="form-control date" type="text" name="User[works][{{$key}}][ended_at]" id="work_ended_at_{{$key}}" value="{{isset($work['ended_at']) ? $work['ended_at'] : "" }}"/>        
+                                <div class="input-group">
+                                    <input class="form-control date " type="text" name="User[works][{{$key}}][ended_at]" id="work_ended_at_{{$key}}" value="{{isset($work['ended_at']) ? $work['ended_at'] : "" }}"/>        
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>                        
                     </div>
@@ -108,10 +143,9 @@
         <div class="col-xs-12 graduations-container">
             @if(isset($user['graduations']) && $user['graduations'])
                 @foreach($user['graduations'] as $key =>  $graduation)
-                <div class="row graduation box">
+                <div class="row graduation box" data-idx="{{$key}}">
                     <div class="col-xs-12 text-right margin-top-10">
                         <button data-toggle="tooltip" type="button" class="btn btn-fab btn-fab-mini btn-raised btn-danger remove-graduation btn-danger" title="Remover"><i class="material-icons">delete</i></button>
-                        <button data-toggle="tooltip" type="button" class="btn btn-fab btn-fab-mini btn-raised order-graduation" title="Ordenar"><i class="material-icons">swap_vert</i></button>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -128,7 +162,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label" for="grad_conclusion_at_{{$key}}">Data de Conclusão*</label>
-                            <input class="form-control date" type="text" name="User[graduations][{{$key}}][conclusion_at]" id="grad_conclusion_at_{{$key}}" value="{{isset($graduation['conclusion_at']) ? $graduation['conclusion_at'] : ""}}"/>
+                            <div class="input-group">
+                                <input class="form-control date " type="text" name="User[graduations][{{$key}}][conclusion_at]" id="grad_conclusion_at_{{$key}}" value="{{isset($graduation['conclusion_at']) ? $graduation['conclusion_at'] : ""}}"/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

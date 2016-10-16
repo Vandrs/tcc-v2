@@ -68,4 +68,8 @@ class DateUtil{
         }
         return $interval;
     }
+
+    public static function strBrDateToDateTime($strDate, $withTime = true){
+       return  DateUtil::dateTimeInBrazil(DateUtil::strBrDateToDbDate($strDate, $withTime));
+    }
 }

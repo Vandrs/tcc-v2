@@ -24,7 +24,7 @@ class SocialLoginBusiness
 			"email" 		=> isset($userData['email']) ? $userData['email'] : null,
 			"skills" 		=> "",
 			"gender" 		=> $userData['gender'] == 'male' ? EnumUser::MALE : EnumUser::FEMALE,
-			"bitrh_date" 	=> null,
+			"birth_date" 	=> null,
 			"photo"			=> $fbUser->getAvatar(),
 			"social_id" 	=> $userData['id'],
 			"social_driver" => EnumSocialLogin::FACEBOOK

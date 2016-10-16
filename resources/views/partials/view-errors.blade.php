@@ -5,7 +5,7 @@
 			<button type="button" data-dismiss="alert" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<ul class="alert-messages">
 			@foreach($errors->all() as $error)
-				<li>{{$error}}</li>
+				<li>{!!$error!!}</li>
 			@endforeach	
 			</ul>
 		</div>

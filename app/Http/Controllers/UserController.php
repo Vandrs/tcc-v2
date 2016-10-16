@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\DB\User;
 use App\Models\Business\SlopeOne;
+use App\Models\Business\CrudUserBusiness;
 use App\Asset\AssetLoader;
 use App\Utils\Utils;
 use Auth;
@@ -25,15 +26,21 @@ class UserController extends Controller
 	{
 		$user = $request->session()->get('user', null);
 		if (empty($user)) {
-			$user = old('user', null);
+			$user = old('User', null);
 		}
-		AssetLoader::register(['createUser.js'],['admin.css'], ['AirDatePicker']);
+		AssetLoader::register(['createUser.js'],['admin.css'], ['AirDatePicker', 'JqueryUI']);
 		return view('user.create',['user' => $user]);
 	}
 
 	public function save(Request $request)
 	{
-		dd($request->all());
+		$crudBusiness = new CrudUserBusiness();
+		if ($user = $crudBusiness->create($request->get('User'))) {
+			Auth::login($user);
+			return redirect()->route('admin.home');
+		} else {
+			return back()->withErrors($crudBusiness->getValidator())->withInput();
+		}
 	}
 
 	public function view($id)
