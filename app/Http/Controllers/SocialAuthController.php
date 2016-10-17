@@ -16,8 +16,20 @@ class SocialAuthController extends Controller
 {
 	public function fbLogin()
     {
+        if (Auth::check()) {
+            return redirect()->route('admin.home');
+        }
         $scope = ['email', 'public_profile', 'user_work_history', 'user_education_history'];
         return Socialite::driver('facebook')->scopes($scope)->redirect();
+    }
+
+    public function gpLogin()
+    {
+        if (Auth::check()) {
+            return redirect()->route('admin.home');
+        }
+        $scope = ['email', 'profile',];
+        return Socialite::driver('google')->scopes($scope)->redirect();
     }
 
     public function fbLoginCallback(Request $request)
@@ -37,6 +49,29 @@ class SocialAuthController extends Controller
         } catch (\Exception $e) {
             Log::error(Utils::getExceptionFullMessage($e));
             $request->session()->flash('msg','No momento não é possível realizar a conexão com o Facebook.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
+            $route = route('site.error');
+            return redirect()->route('site.error');
+        }
+    }
+
+    public function gpLoginCallback(Request $request)
+    {
+        try {
+            $gpUser = Socialite::driver('google')->user();
+            $socialLoginBusiness = new SocialLoginBusiness();
+            if ($user = $socialLoginBusiness->findUserByIdAndProvider($gpUser->id, EnumSocialLogin::GOOGLE_PLUS)) {
+                $user->update(['photo' => $gpUser->getAvatar()]);
+                return $this->login($user);
+            }  else {
+                $data = $socialLoginBusiness->parseGPData($gpUser);
+                dd($data);
+                $request->session()->flash('user', $data);
+                return redirect()->route('user.create');
+                
+            }
+        } catch (\Exception $e) {
+            Log::error(Utils::getExceptionFullMessage($e));
+            $request->session()->flash('msg','No momento não é possível realizar a conexão com o Google+.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
             $route = route('site.error');
             return redirect()->route('site.error');
         }

@@ -20,6 +20,8 @@ Route::get('/erro',['as' => 'site.error', 'uses' => 'SiteController@error']);
 /*Logins*/
 Route::get('/login/fb',['as' => 'login.fb', 'uses' => 'SocialAuthController@fbLogin']);
 Route::get('/login/fb/callback',['as' => 'login.fb.callback', 'uses' => 'SocialAuthController@fbLoginCallback']);
+Route::get('/login/gp',['as' => 'login.gp', 'uses' => 'SocialAuthController@gpLogin']);
+Route::get('/login/gp/callback',['as' => 'login.gp.callback', 'uses' => 'SocialAuthController@gpLoginCallback']);
 
 /*Admin*/
 Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);

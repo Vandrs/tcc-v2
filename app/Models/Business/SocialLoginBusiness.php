@@ -72,5 +72,27 @@ class SocialLoginBusiness
 			}
 		}
 		return $graduations;
+	}
+
+	public function parseGPData($gpUser)
+	{
+		if (isset($gpUser->user['gender'])) {
+			$gender = ($gpUser->user['gender'] == 'male') ? EnumUser::MALE : EnumUser::FEMALE;
+		} else {
+			$gender = null;
+		}
+
+		$user = [
+			"name" 			=> $gpUser->getName(),
+			"email" 		=> $gpUser->getEmail(),
+			"skills" 		=> "",
+			"gender" 		=> $gender,
+			"birth_date" 	=> null,
+			"photo"			=> $gpUser->getAvatar(),
+			"social_id" 	=> $gpUser->getId(),
+			"social_driver" => EnumSocialLogin::GOOGLE_PLUS
+		];	 
+
+		return $user;
 	}	
 }

@@ -6,5 +6,5 @@ class EnumSocialLogin
 {
 	const FACEBOOK 	 = 'FB';
 	const LINKEDIN 	 = 'LL';
-	const GOOGLEPLUS = 'GP';
+	const GOOGLE_PLUS = 'GP';
 }
