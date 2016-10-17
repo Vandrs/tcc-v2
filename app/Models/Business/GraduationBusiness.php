@@ -21,6 +21,16 @@ class GraduationBusiness
 		return Graduation::create($data);
 	}
 
+	public function update(Graduation $graduation, $data) 
+	{
+		$this->validator = Validator::make($data, $this->rules(), $this->messages());
+		if ($this->validator->fails()) {
+			return false;
+		}
+		$this->prepareData($data);
+		return $graduation->update($data);	
+	}
+
 	public function prepareData(&$data)
 	{
 		if (isset($data['conclusion_at']) && is_string($data['conclusion_at']) && $data['conclusion_at']) {

@@ -28,7 +28,7 @@ class UserController extends Controller
 		if (empty($user)) {
 			$user = old('User', null);
 		}
-		AssetLoader::register(['createUser.js'],['admin.css'], ['AirDatePicker', 'JqueryUI']);
+		AssetLoader::register(['createUser.js'],['admin.css'], ['AirDatePicker']);
 		return view('user.create',['user' => $user]);
 	}
 
@@ -69,11 +69,22 @@ class UserController extends Controller
 	public function profile()
 	{
 		$user = Auth::user();
-		$slopeOne = new SlopeOne();
-		$projects = $slopeOne->getPredictions($user);
-		$data = ['page_tile' => 'Predições', 'user' => $user, 'predictions' => $projects];
-        AssetLoader::register([],['admin.css']);
+		$data = ['page_title' => 'Atualizar Perfil', 'user' => $user];
+        AssetLoader::register(['updateUser.js'],['admin.css'], ['AirDatePicker']);
 		return view('user.profile',$data);
+	}
+
+	public function updateProfile(Request $request)
+	{
+		$user = Auth::user();
+		$userBusiness = new CrudUserBusiness();
+		if ($userBusiness->update($user, $request->except('_token'))) {
+			$request->session()->flash('msg', 'Perfil alterado com sucesso!');		
+			$request->session()->flash('class_msg', 'alert-success');
+			return redirect()->route('admin.user.profile');
+		} else {
+			return back()->withErrors($userBusiness->getValidator())->withInput();
+		}
 	}
 
 	public function search(Request $request)

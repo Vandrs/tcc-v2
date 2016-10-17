@@ -27,6 +27,7 @@ class SocialAuthController extends Controller
             $fbUser = Socialite::driver('facebook')->fields($fields)->user();
             $socialLoginBusiness = new SocialLoginBusiness();
             if ($user = $socialLoginBusiness->findUserByIdAndProvider($fbUser->user['id'], EnumSocialLogin::FACEBOOK)) {
+                $user->update(['photo' => $fbUser->getAvatar()]);
                 return $this->login($user);
             }  else {
                 $data = $socialLoginBusiness->parseFBData($fbUser);

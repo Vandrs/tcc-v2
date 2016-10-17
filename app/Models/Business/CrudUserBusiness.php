@@ -8,12 +8,20 @@ use Hash;
 use Log;
 use App\Utils\DateUtil;
 use App\Utils\Utils;
+use App\Jobs\SendUserToElastic;
+use App\Models\Enums\EnumQueues;
 use App\Models\DB\User;
+use App\Models\DB\Work;
+use App\Models\DB\Graduation;
 use App\Models\Business\WorkBusiness;
 use App\Models\Business\GraduationBusiness;
+use App\Models\Business\ElasticExportBusiness;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class CrudUserBusiness 
 {
+
+	use DispatchesJobs;
 
 	private $validator;
 
@@ -38,6 +46,7 @@ class CrudUserBusiness
 		}
 
 		try {
+
 			DB::beginTransaction();
 			$this->prepareData($userData);
 
@@ -76,7 +85,10 @@ class CrudUserBusiness
 				}
 			}
 
+			$this->exportUser($user);
+
 			DB::commit();
+
 			return $user;
 		} catch (\Exception $e) {
 			DB::rollback();
@@ -84,6 +96,100 @@ class CrudUserBusiness
 			return false;
 		}
 
+	}
+
+	public function update(User $user, $userData)
+	{
+		$works = null;
+		$graduations = null;
+
+		if (isset($userData['works'])) {
+			$works = $userData['works'];
+			unset($userData['works']);
+		}
+
+		if (isset($userData['graduations'])) {
+			$graduations = $userData['graduations'];
+			unset($userData['graduations']);
+		}
+
+		$this->validator = Validator::make($userData, $this->updateRules($user), $this->messages());
+		if ($this->validator->fails()) {
+			return false;
+		}
+
+		try {
+			DB::beginTransaction();
+
+			$this->prepareData($userData);
+
+			$user->update($userData);
+
+			if ($works) {
+				$workBusiness = new WorkBusiness();
+				$idxWorks = 0;
+				foreach ($works as $workData) {
+					$idxWorks++;
+					$workDB = null;
+					$workData['order'] = $idxWorks;
+					$workData['user_id'] = $user->id;
+					if (isset($workData['id'])) {
+						$workDB = Work::where('id', '=',$workData['id'])
+									  ->where('user_id', '=', $user->id)
+									  ->firstOrFail();
+						unset($workData['id']);
+						if (!$workBusiness->update($workDB, $workData)) {
+							$this->validator->errors()->add('id', '<b>Informações Profissionais:</b>');
+							$workValidator = $workBusiness->getValidator();
+							$this->validator->errors()->merge($workValidator->errors());
+							throw new \Exception('Work validation error');
+						}
+					} else if (!$workDB = $workBusiness->create($workData))  {
+						$this->validator->errors()->add('id', '<b>Informações Profissionais:</b>');
+						$workValidator = $workBusiness->getValidator();
+						$this->validator->errors()->merge($workValidator->errors());
+						throw new \Exception('Work validation error');
+					}
+				}
+			}
+
+			if ($graduations) {
+				$graduationBusiness = new GraduationBusiness();
+				$idxGraduation = 0;
+				foreach ($graduations as $graduationData) {
+					$idxGraduation++;
+					$graduationData['order'] = $idxGraduation;
+					$graduationData['user_id'] = $user->id;
+					if (isset($graduationData['id'])) {
+						$graduationDB = Graduation::where('id','=',$graduationData['id'])
+												  ->where('user_id','=',$user->id)
+												  ->firstOrFail();
+						unset($graduationData['id']);
+						if (!$graduationBusiness->update($graduationDB, $graduationData)) {
+							$this->validator->errors()->add('id', '<b>Informações Acadêmicas:</b>');
+							$graduationValidator = $graduationBusiness->getValidator();
+							$this->validator->errors()->merge($graduationValidator->errors());		
+							throw new \Exception('Graduation valdiation error');
+						}
+					} else if (!$graduationDB = $graduationBusiness->create($graduationData)) {
+						$this->validator->errors()->add('id', '<b>Informações Acadêmicas:</b>');
+						$graduationValidator = $graduationBusiness->getValidator();
+						$this->validator->errors()->merge($graduationValidator->errors());
+						throw new \Exception('Graduation valdiation error');
+					}
+				}
+			}
+
+			$this->exportUser($user);
+
+			DB::commit();
+
+			return true;
+		} catch (\Exception $e) {
+			DB::rollback();
+			Log::error(Utils::getExceptionFullMessage($e));
+			return false;
+		}
 	}
 
 	private function prepareData(&$data)
@@ -102,7 +208,11 @@ class CrudUserBusiness
 			foreach ($arrSkills as $skill) {
 				array_push($sanatinzeds, trim($skill));
 			}
-			$data['skills'] = $sanatinzeds;
+			if (count($sanatinzeds)) {
+				$data['skills'] = $sanatinzeds;
+			} else {
+				unset($data['skills']);
+			}
 		} 
 	}	
 
@@ -114,6 +224,16 @@ class CrudUserBusiness
 			"gender" 		=> 'required',
 			"birth_date" 	=> 'required|date_format:d/m/Y',
 			"password"		=> 'required_without:social_id|confirmed'
+		];
+	}
+
+	public function updateRules($user)
+	{
+		return [
+			"name" 			=> 'required',
+			"email" 		=> 'required|email|unique:users,email,'.$user->id,
+			"gender" 		=> 'required',
+			"birth_date" 	=> 'required|date_format:d/m/Y',
 		];
 	}
 
@@ -137,4 +257,19 @@ class CrudUserBusiness
 	{
 		return $this->validator;
 	}
+
+	private function dispathJob(User $user){
+		$job = new SendUserToElastic($user);
+		$this->dispatch($job->onQueue(EnumQueues::ELASTICSEARCH));
+	}
+
+	public static function dispathElasticJob(User $user){
+		(new self())->dispathJob($user);
+	}
+
+	public function exportUser(User $user){
+		$elasticExport = new ElasticExportBusiness();
+		$elasticExport->exportUser($user);
+	}
+
 }

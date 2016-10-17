@@ -85,10 +85,17 @@ Route::post('/file/delete/{projectId}',['as' => 'file.delete', 'uses' => 'FileCo
 Route::get('/usuarios/perfil/{id}',['as' => 'user.view', 'uses' => 'UserController@view']);
 Route::get('/usuarios/modal-perfil',['as' => 'user.view.modal', 'uses' => 'UserController@viewModal']);
 Route::get('/usuarios/meu-perfil',['as' => 'admin.user.profile', 'uses' => 'UserController@profile']);
+Route::post('/usuarios/atualizar-perfil',['as' => 'admin.user.update.profile', 'uses' => 'UserController@updateProfile']);
 Route::get('/usuarios/busca',['as' => 'users.search', 'uses' => 'UserController@search']);
 Route::get('/cadastro',['as' => 'user.create', 'uses' => 'UserController@create']);
 Route::post('/usuarios/add/trello-id',['as' => 'users.add.trello-id', 'uses' => 'UserController@addTrelloId']);
 Route::post('/usuario/cadastrar',['as' => 'user.save', 'uses' => 'UserController@save']);
+
+/*Curso */
+Route::post('/graduation/delete', ['as' => 'graduation.delete', 'uses' => 'GraduationController@delete']);
+
+/*Profissão*/
+Route::post('/work/delete',['as' => 'work.delete', 'uses' => 'WorkController@delete']);
 
 /*Teste*/
 Route::get('/teste','TesteController@index');

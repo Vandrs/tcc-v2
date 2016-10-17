@@ -3,7 +3,7 @@
 @section('content')
     <div class="row margin-top-10">
         <div class="col-xs-12 text-left">
-                <h1>Novo cadastro</h1>
+                <h1>Atualizar Perfil</h1>
         </div>
     </div>
     @include('partials.view-errors')

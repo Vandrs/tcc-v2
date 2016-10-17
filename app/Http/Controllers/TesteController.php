@@ -13,6 +13,7 @@ use App\Models\Business\ProjectEmailBusiness;
 use App\Models\Business\ElasticUserBusiness;
 use App\Models\Business\ElasticExportBusiness;
 use App\Models\Business\UserProjectBusiness;
+use App\Models\Business\CrudUserBusiness;
 use App\Models\Enums\EnumProject;
 use App\Models\Elastic\Models\ElasticUser;
 use App\Jobs\SendEmailJob;
@@ -22,10 +23,6 @@ class TesteController extends Controller
 {
     public function index()
     {
-        
-
-        $str = htmlentities('http%3A%2F%2Fdev.c3-projetos.com%2Flogin%2Ffb%2Fcallback');
-        return $str;
     }
 
     public function usersLoginList()

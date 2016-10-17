@@ -19,6 +19,16 @@ class WorkBusiness{
 		return Work::create($data);
 	}
 
+	public function update(Work $work, $data)
+	{
+		$this->validator = Validator::make($data, $this->rules(), $this->messages());
+		if ($this->validator->fails()){
+			return false;
+		}
+		$this->parseDates($data);
+		return $work->update($data);
+	}
+
 	private function parseDates(&$data)
 	{
 		if (isset($data['started_at']) && is_string($data['started_at']) && $data['started_at']) {

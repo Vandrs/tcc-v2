@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$(".date").datepicker({
 		"language":"pt-BR",
 		"autoClose":true
@@ -9,12 +8,24 @@ $(document).ready(function(){
 
 	$('body').on('click', '.remove-graduation', function(evento){
 		evento.preventDefault();
-		$(this).parents('.row.graduation:first').remove();
+		var row = $(this).parents('.row.graduation:first');
+		var id = $(row).attr('data-id');
+		if (hasValue(id)) {
+			removeGraduation(row, id);
+		} else {
+			$(row).remove();	
+		}
 	});
 
 	$('body').on('click', '.remove-work', function(evento){
 		evento.preventDefault();
-		$(this).parents('.row.work:first').remove();
+		var row = $(this).parents('.row.work:first');
+		var id = $(row).attr('data-id');
+		if (hasValue(id)) {
+			removeWork(row, id);
+		} else {
+			$(row).remove();	
+		}
 	});
 
 	$('body').on('click', '.addWork', function(evento){
@@ -76,7 +87,6 @@ function getGraduationTplNextIdx(){
 	}
 }
 
-
 function workTpl(idx){
 	var html = '<div class="row work box" data-idx="'+idx+'">'+
                         '<div class="col-xs-12 text-right margin-top-10">'+
@@ -85,13 +95,13 @@ function workTpl(idx){
                         '<div class="col-xs-12 col-md-6">'+
                             '<div class="form-group">'+
                                 '<label for="work_title_'+idx+'" class="control-label">Cargo*</label>'+
-                                '<input class="form-control" type="text" name="User[works]['+idx+'][title]" id="work_title_'+idx+'" value=""/>'+
+                                '<input class="form-control" type="text" name="works['+idx+'][title]" id="work_title_'+idx+'" value=""/>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-xs-12 col-md-6">'+
                             '<div class="form-group">'+
                                 '<label for="work_company_'+idx+'" class="control-label">Empresa*</label>'+
-                                '<input class="form-control" type="text" name="User[works]['+idx+'][company]" id="work_company_'+idx+'" value=""/>'+
+                                '<input class="form-control" type="text" name="works['+idx+'][company]" id="work_company_'+idx+'" value=""/>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-xs-12">'+
@@ -103,13 +113,23 @@ function workTpl(idx){
                         '<div class="col-xs-12 col-md-6">'+
                             '<div class="form-group">'+
                                 '<label for="work_started_at_'+idx+'" class="control-label">Inicio*</label>'+
-                                '<input class="form-control date" type="text" name="User[works]['+idx+'][started_at]" id="work_started_at_'+idx+'" value=""/>'+
+                                '<div class="input-group">'+
+                                	'<input class="form-control date" type="text" name="works['+idx+'][started_at]" id="work_started_at_'+idx+'" value=""/>'+
+	                                '<span class="input-group-btn">'+
+		                            		'<button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>'+
+		                            '</span>'+
+	                            '</div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-xs-12 col-md-6">'+
                             '<div class="form-group">'+
                                 '<label for="work_ended_at_'+idx+'" class="control-label">Fim* (Não preencher se for o emprego atual)</label>'+
-                                '<input class="form-control date" type="text" name="User[works]['+idx+'][ended_at]" id="work_ended_at_'+idx+'" value=""/>'+
+                              	'<div class="input-group">'+
+	                               	'<input class="form-control date" type="text" name="works['+idx+'][ended_at]" id="work_ended_at_'+idx+'" value=""/>'+
+	                               	'<span class="input-group-btn">'+
+	                                        '<button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>'+
+	                                '</span>'+
+                                '</div>'+
                             '</div>'+
                         '</div>'+
                     '</div>';
@@ -124,21 +144,74 @@ function graduationTpl(idx){
 			        '<div class="col-md-4">'+
 			            '<div class="form-group">'+
 			                '<label class="control-label" for="grad_course_'+idx+'">Curso*</label>'+
-			                '<input class="form-control" type="text" name="User[graduations]['+idx+'][course]" id="grad_course_'+idx+'" value=""/>'+
+			                '<input class="form-control" type="text" name="graduations['+idx+'][course]" id="grad_course_'+idx+'" value=""/>'+
 			            '</div>'+
 			        '</div>'+
 			        '<div class="col-md-4">'+
 			            '<div class="form-group">'+
 			                '<label class="control-label" for="grad_institution_'+idx+'">Instituição de Ensino*</label>'+
-			                '<input class="form-control" type="text" name="User[graduations]['+idx+'][institution]" id="grad_institution_'+idx+'" value=""/>'+
+			                '<input class="form-control" type="text" name="graduations['+idx+'][institution]" id="grad_institution_'+idx+'" value=""/>'+
 			            '</div>'+
 			        '</div>'+
 			        '<div class="col-md-4">'+
 			            '<div class="form-group">'+
 			                '<label class="control-label" for="grad_conclusion_at_'+idx+'">Data de Conclusão*</label>'+
-			                '<input class="form-control date" type="text" name="User[graduations]['+idx+'][conclusion_at]" id="grad_conclusion_at_'+idx+'" value=""/>'+
+			            	'<div class="input-group">'+
+			                	'<input class="form-control date" type="text" name="graduations['+idx+'][conclusion_at]" id="grad_conclusion_at_'+idx+'" value=""/>'+
+			            		'<span class="input-group-btn">'+
+                                        '<button class="btn btn-fab btn-fab-mini showDatePicker"><i class="material-icons">event</i></button>'+
+                                '</span>'+
+			            	'</div>'+
 			            '</div>'+
 			        '</div>'+
 			    '</div>';
 	return html;
+}
+
+function removeGraduation(row, id) {
+	var postData = {"id":id, "_token":TOKEN};
+	var route = $("#frmUser").attr('data-delete-graduation-route');
+	$.ajax({
+		url: route,
+		type: 'POST',
+		data: postData,
+		success:function(data){
+			if (data.status) {
+				$(row).remove();
+			} else {
+				addFeedBack(".profileFeedBack",data.msg,data.class_msg);
+			}
+		},
+		error:function(){
+			addFeedBack(".profileFeedBack",GENERIC_ERROR_MSG,'alert-danger');
+		},
+		beforeSend:function(){
+			clearFeedBack(".profileFeedBack");
+		},
+		dataType:'json'
+	});
+}
+
+function removeWork(row, id){
+	var postData = {"id":id, "_token":TOKEN};
+	var route = $("#frmUser").attr('data-delete-work-route');
+	$.ajax({
+		url: route,
+		type: 'POST',
+		data: postData,
+		success:function(data){
+			if (data.status) {
+				$(row).remove();
+			} else {
+				addFeedBack(".profileFeedBack",data.msg,data.class_msg);
+			}
+		},
+		error:function(){
+			addFeedBack(".profileFeedBack",GENERIC_ERROR_MSG,'alert-danger');
+		},
+		beforeSend:function(){
+			clearFeedBack(".profileFeedBack");
+		},
+		dataType:'json'
+	});
 }
