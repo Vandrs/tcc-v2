@@ -32,6 +32,14 @@ class SocialAuthController extends Controller
         return Socialite::driver('google')->scopes($scope)->redirect();
     }
 
+    public function linkedinLogin()
+    {
+        if (Auth::check()) {
+            return redirect()->route('admin.home');
+        }   
+        return Socialite::driver('linkedin')->redirect();
+    }
+
     public function fbLoginCallback(Request $request)
     {
         try {
@@ -64,14 +72,33 @@ class SocialAuthController extends Controller
                 return $this->login($user);
             }  else {
                 $data = $socialLoginBusiness->parseGPData($gpUser);
-                dd($data);
                 $request->session()->flash('user', $data);
                 return redirect()->route('user.create');
-                
             }
         } catch (\Exception $e) {
             Log::error(Utils::getExceptionFullMessage($e));
             $request->session()->flash('msg','No momento não é possível realizar a conexão com o Google+.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
+            $route = route('site.error');
+            return redirect()->route('site.error');
+        }
+    }
+
+    public function linkedinLoginCallback(Request $request)
+    {
+        try {
+            $linkedinUser = Socialite::driver('linkedin')->user();
+            $socialLoginBusiness = new SocialLoginBusiness();
+            if ($user = $socialLoginBusiness->findUserByIdAndProvider($linkedinUser->id, EnumSocialLogin::LINKEDIN)) {
+                $user->update(['photo' => $linkedinUser->getAvatar()]);
+                return $this->login($user);
+            } else {
+                $data = $socialLoginBusiness->parseLinkedinData($linkedinUser);
+                $request->session()->flash('user', $data);
+                return redirect()->route('user.create');
+            }
+        } catch (\Exception $e) {
+            Log::error(Utils::getExceptionFullMessage($e));
+            $request->session()->flash('msg','No momento não é possível realizar a conexão com o LinkedIn.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
             $route = route('site.error');
             return redirect()->route('site.error');
         }

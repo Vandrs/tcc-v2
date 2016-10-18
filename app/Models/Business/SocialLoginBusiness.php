@@ -93,6 +93,69 @@ class SocialLoginBusiness
 			"social_driver" => EnumSocialLogin::GOOGLE_PLUS
 		];	 
 
+		if (isset($gpUser->user['organizations'])) {
+			$user['graduations'] = $this->parseGPGraduation($gpUser->user['organizations']);
+			$user['works'] = $this->parseGPWorks($gpUser->user['organizations']);
+		} else {
+			$user['graduations'] = [];
+			$user['works'] = [];
+		}
+		
 		return $user;
+	}
+
+	public function parseGPGraduation($organizations)
+	{	$required = ["title", "name", "endDate"];
+		$graduations = [];
+		foreach ($organizations as $organizationData) {
+			if ($organizationData['type'] == 'school') {
+				$keys = array_keys($organizationData);
+				if (count(array_intersect($keys, $required)) == count($required)) {
+					array_push($graduations, [
+						'course' => $organizationData['title'],
+						'institution' => $organizationData['name'],
+						'conclusion_at' => '01/12/'. $organizationData["endDate"]
+					]);
+				}
+			}
+		}
+		return $graduations;
+	}
+
+	public function parseGPWorks($organizations)
+	{
+		$required = ["title","name","startDate"];
+		$works = [];
+		foreach ($organizations as $organizationData) {
+			if ($organizationData['type'] == 'work') {
+				$keys = array_keys($organizationData);
+				if (count(array_intersect($keys, $required)) == count($required)) {
+					array_push($works, [
+						"title" => $organizationData['title'],
+						"company" => $organizationData['name'],
+						"description" => isset($organizationData['description']) ? $organizationData['description'] : "",
+						"started_at" => "01/01/".$organizationData['startDate'],
+						"ended_at" => isset($organizationData['endDate']) ? "01/01/".$organizationData['endDate'] : null
+					]);
+				}
+			}
+		}
+		return $works;
 	}	
+
+	public function parseLinkedinData($linkedinUser){
+		$user = [
+			"name" 			=> $linkedinUser->getName(),
+			"email" 		=> $linkedinUser->getEmail(),
+			"skills" 		=> null,
+			"gender" 		=> null,
+			"birth_date" 	=> null,
+			"photo"			=> $linkedinUser->getAvatar(),
+			"social_id" 	=> $linkedinUser->getId(),
+			"social_driver" => EnumSocialLogin::LINKEDIN,
+			"works"			=> [],
+			"graduations"   => []
+		];
+		return $user;
+	}
 }

@@ -281,3 +281,8 @@ html { height: 100%;}
 .container-fluid.well.main-container{
   background-color: #FFFFFF;
 }
+
+.panel-login .panel-heading{
+    background-color: #3f51b5;
+    font-weight: bold;
+}

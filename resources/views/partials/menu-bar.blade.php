@@ -19,10 +19,9 @@
         <li><a href="{{route('project.invitations')}}" class="notifications" title="Convites"><i class="material-icons">public</i></a></li>
         <li><a href="{{route('admin.user.profile')}}" title="Perfil"><i class="material-icons">person</i>({{Auth::user()->name}})</a></li>
         <li role="separator" class="divider"></li>
-        <li><a href="{{route('test.logout')}}" title="Sair" class="margin-right-10"><i class="material-icons">exit_to_app</i></a></li>
+        <li><a href="{{url('/logout')}}" title="Sair" class="margin-right-10"><i class="material-icons">exit_to_app</i></a></li>
         @else
-        <li><a href="{{route('test.users')}}">Usuários</a></li>
-        <li><a href="{{route('test.projects')}}">Projetos</a></li>
+        <li><a href="#"><i class="material-icons">account_box</i> Login</a></li>
         @endif
       </ul>
     </div>

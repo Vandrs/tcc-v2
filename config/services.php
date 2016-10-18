@@ -45,6 +45,11 @@ return [
         'client_id' => env('GOOGLE_PLUS_APP_ID'),
         'client_secret' => env('GOOGLE_PLUS_SECRET'),
         'redirect' => env('GOOGLE_PLUS_REDIRECT')
-    ]
+    ],
 
+    'linkedin' => [
+        'client_id' => env('LINKEDIN_APP_ID'),
+        'client_secret' => env('LINKEDIN_SECRET'),
+        'redirect' => env('LINKEDIN_REDIRECT')
+    ]
 ];

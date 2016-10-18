@@ -11,6 +11,9 @@
 |
 */
 
+/*Admin*/
+Route::get('/home', ['as' => 'admin.home', 'uses' => 'AdminController@home'] );
+
 /*Site*/
 Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);
 Route::get('/busca',['as' => 'search', 'uses' => 'SiteController@search']);
@@ -19,12 +22,13 @@ Route::get('/erro',['as' => 'site.error', 'uses' => 'SiteController@error']);
 
 /*Logins*/
 Route::get('/login/fb',['as' => 'login.fb', 'uses' => 'SocialAuthController@fbLogin']);
-Route::get('/login/fb/callback',['as' => 'login.fb.callback', 'uses' => 'SocialAuthController@fbLoginCallback']);
 Route::get('/login/gp',['as' => 'login.gp', 'uses' => 'SocialAuthController@gpLogin']);
+Route::get('/login/linkedin',['as' => 'login.linkedin', 'uses' => 'SocialAuthController@linkedinLogin']);
+Route::get('/login/fb/callback',['as' => 'login.fb.callback', 'uses' => 'SocialAuthController@fbLoginCallback']);
 Route::get('/login/gp/callback',['as' => 'login.gp.callback', 'uses' => 'SocialAuthController@gpLoginCallback']);
+Route::get('/login/linkedin/callback',['as' => 'login.linkedin.callback', 'uses' => 'SocialAuthController@linkedinLoginCallback']);
 
-/*Admin*/
-Route::get('/home',['as' => 'admin.home', 'uses' => 'AdminController@home']);
+
 
 /*Projeto*/
 Route::get('/meus-projetos',['as' => 'admin.user.projects', 'uses' => 'ProjectController@userProjects']);
@@ -105,3 +109,5 @@ Route::get('/teste/login/{id}',['as' => 'test.login', 'uses' => 'TesteController
 Route::get('/teste/logout',['as' => 'test.logout', 'uses' => 'TesteController@logout']);
 Route::get('/teste/lista/login',['as' => 'test.users', 'uses' => 'TesteController@usersLoginList']);
 Route::get('/teste/lista/projetos',['as' => 'test.projects', 'uses' => 'TesteController@projectsList']);
+
+Route::auth();

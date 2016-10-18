@@ -8,7 +8,7 @@ return [
 	],
 	'search' => [
 		'title' 	  => 'Encontrar Projetos',
-		'description' => 'A Plataforma C3 Projetos é uma platamforma colaborativa que auxilia seus usuários na divulgação, elaboração e validação de seus projetos e ideias',
+		'description' => 'O C3 Projetos é uma plataforma colaborativa que auxilia seus usuários na divulgação, elaboração e validação de seus projetos e ideias.',
 		'keywords' 	  => 'Gerenciamento de Projetos, Projetos Colaborativos, Desenvolvimento e Validação de Projetos'	
 	]
 ];

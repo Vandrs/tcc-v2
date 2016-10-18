@@ -66,7 +66,7 @@ class WorkBusiness{
 			'title.required'      	 => 'Informe o Cargo',
 			'company.required'    	 => 'Informe a Empresa',
 			'started_at.required' 	 => 'Informe a Data de Início',
-			'started_at.date_format' => 'Data de Início de conter um formato válido',
+			'started_at.date_format' => 'Data de Início deve conter um formato válido',
 			'ended_at.date_format'   => 'Data Fim deve conter um formato válido'
 		];
 	}
