@@ -100,5 +100,83 @@
             </script>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57fc511eedc18a77"></script>
         @endif
+        <div class="modal fade bs-example-modal-sm" id="modalLogin" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Login</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="{{route('login.fb')}}" class="btn btn-social-login btn-facebook">Entrar com Facebook</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="{{route('login.gp')}}" class="btn btn-social-login btn-google">Entrar com Google+</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="{{route('login.linkedin')}}" class="btn btn-social-login btn-linkedin">Entrar com Linked In</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                    OU
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form action="{{url('/login')}}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="control-label">E-Mail</label>
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <label for="password" class="control-label">Senha</label>
+                                        <input id="password" type="password" class="form-control" name="password">
+                                        @if ($errors->has('password'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>                                    
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="remember"> Lembrar
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 text-left">
+                                        <button type="submit" class="btn btn-primary btn-raised submit">
+                                            <i class="material-icons">account_box</i> Entrar
+                                        </button>
+                                        <a href="{{ url('/password/reset') }}">Esqueceu a senha?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

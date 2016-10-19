@@ -28,8 +28,6 @@ Route::get('/login/fb/callback',['as' => 'login.fb.callback', 'uses' => 'SocialA
 Route::get('/login/gp/callback',['as' => 'login.gp.callback', 'uses' => 'SocialAuthController@gpLoginCallback']);
 Route::get('/login/linkedin/callback',['as' => 'login.linkedin.callback', 'uses' => 'SocialAuthController@linkedinLoginCallback']);
 
-
-
 /*Projeto*/
 Route::get('/meus-projetos',['as' => 'admin.user.projects', 'uses' => 'ProjectController@userProjects']);
 Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectController@create']);

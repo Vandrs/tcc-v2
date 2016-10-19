@@ -205,3 +205,44 @@ img.img-responsive.img-center{
 #membersTable .form-control.change-role{
     width:100%;
 }
+
+#modalLogin  a.btn-social-login {
+    width: 100%;
+    text-align: left;
+    border: solid 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-repeat: no-repeat;
+    color: #FFF;
+    font-weight: bold;
+    background-position-x: 5px;
+    background-position-y: 5px;
+    padding-left: 50px;
+}
+
+#modalLogin  a.btn-facebook{
+    background-color: #28498c;
+    background-image: url('/assets/images/fb-icon.png');
+}
+
+#modalLogin  a.btn-google{
+    background-color: #db4437;
+    background-image: url('/assets/images/google-plus-icon.png');
+}
+
+#modalLogin  a.btn-linkedin{
+    background-color: #2672af;
+    background-image: url('/assets/images/linkedIn-icon.png');
+}
+
+#modalLogin .form-group{
+    margin-top: 0px;
+}
+
+#modalLogin .control-label{
+    margin-top: 2px;
+}
+
+#modalLogin .btn.submit{
+    width: 100%;
+}

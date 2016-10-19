@@ -197,6 +197,11 @@ function startsWith(str,param){
 $(document).ready(function(){
     $.material.init();
     $('[data-toggle="tooltip"]').tooltip();
+    $(".showLogin").click(function(evento){
+      evento.preventDefault();
+      $("#modalLogin").modal({"backdrop":"static"});
+    });
+    
 });
 
 function showConfirmationModal(html,acceptCallBack,denyCallBack){

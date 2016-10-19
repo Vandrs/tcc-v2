@@ -21,7 +21,7 @@
         <li role="separator" class="divider"></li>
         <li><a href="{{url('/logout')}}" title="Sair" class="margin-right-10"><i class="material-icons">exit_to_app</i></a></li>
         @else
-        <li><a href="#"><i class="material-icons">account_box</i> Login</a></li>
+        <li><a href="#" class="showLogin"><i class="material-icons">account_box</i> Login</a></li>
         @endif
       </ul>
     </div>
