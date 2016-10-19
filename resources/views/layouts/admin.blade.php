@@ -29,6 +29,15 @@
     <!-- /#page-content-wrapper -->
 
 </div>
+<div class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                C3 - Projetos, todos os direitos reservados | <a href="{{route('site.termos')}}">Termos de Uso e Politica de Privacidade</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /#wrapper -->
 @include('partials.confirm-modal')
 @endsection

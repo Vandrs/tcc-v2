@@ -13,6 +13,7 @@
 
 /*Admin*/
 Route::get('/home', ['as' => 'admin.home', 'uses' => 'AdminController@home'] );
+Route::get('/termos-e-polica-de-privacidade', ['as' => 'site.termos', 'uses' => 'SiteController@termos'] );
 
 /*Site*/
 Route::get('/',['as' => 'home', 'uses' => 'SiteController@home']);

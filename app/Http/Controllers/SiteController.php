@@ -108,4 +108,12 @@ class SiteController extends Controller
         ];
         return response(view('errors.error',$data)->render(), Response::HTTP_BAD_REQUEST);
     }
+
+    public function termos(){
+        $data = [
+            'page_title'    => 'Termos de Uso e Políticas de Privacidade',
+            'noIndex'       => true
+        ];
+        return view('site.termos',$data);
+    }
 }
