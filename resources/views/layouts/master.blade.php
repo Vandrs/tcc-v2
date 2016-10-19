@@ -26,7 +26,7 @@
         <meta name="description" content="{{$page_description}}">
         @endif
         @if(isset($og_data))
-        <meta property="fb:app_id" content="config('services.facebook.client_id')" />
+        <meta property="fb:app_id" content="{{config('services.facebook.client_id')}}" />
         <meta property="og:title" content="{{$og_data['title']}}  | {{Config::get('app.app_name')}}" />
         <meta property="og:description" content="{{$og_data['description']}}" />
         <meta property="og:site_name" content="{{$og_data['site_name']}}" />
@@ -35,6 +35,8 @@
         <meta property="og:url" content="{{$og_data['url']}}" />
         @if(isset($og_data['image']) && $og_data['image'])
             <meta property="og:image" content="{{$og_data['image']}}" />
+        @else
+            <meta property="og:image" content="{{url('/assets/images/c3-projetos.png')}}" />    
         @endif
         @endif
         <title>
