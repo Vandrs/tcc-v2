@@ -43,12 +43,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'           => \App\Http\Middleware\Authenticate::class,
-        'auth.basic'     => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can'            => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest'          => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle'       => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'postManager'    => \App\Http\Middleware\PostManager::class,
-        'projectManager' => \App\Http\Middleware\ProjectManager::class,
+        'auth'                  => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'            => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'                   => \Illuminate\Foundation\Http\Middleware\Authorize::class,
+        'guest'                 => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'              => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'postManager'           => \App\Http\Middleware\PostManager::class,
+        'projectManager'        => \App\Http\Middleware\ProjectManager::class,
+        'makeProjectValidation' => \App\Http\Middleware\MakeProjectValidation::class
     ];
 }

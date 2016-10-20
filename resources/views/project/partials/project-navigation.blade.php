@@ -12,12 +12,17 @@
 @endcan
 
 @can(Capabilities::MAKE_POST_PROJECT, $project)
-<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-success btn-raised" data-toggle="tooltip" title="Posts do Projeto">
+<a href="{{route("admin.project.posts",['projectId' => $project->id])}}" class="btn btn-danger btn-raised" data-toggle="tooltip" title="Posts do Projeto">
 	<i class="material-icons">description</i> Posts 
 </a>
 @endcan
 @can(Capabilities::UPDATE_PROJECT, $project)
-<a href="{{route('admin.project.edit',['id' => $project->id])}}" class="btn btn-primary btn-raised" data-toggle="tooltip" title="Editar Projeto">
+<a href="{{route('admin.project.edit',['id' => $project->id])}}" class="btn btn-primary btn-raised" data-toggle="tooltip" title="Validações">
 	<i class="material-icons">edit</i> Editar
+</a>
+@endcan
+@can(Capabilities::MAKE_PROJECT_VALIDATION, $project)
+<a href="{{route('admin.project.validations',['id' => $project->id])}}" class="btn btn-success btn-raised" data-toggle="tooltip" title="Validação do Projeto">
+	<i class="material-icons">check</i> Validação
 </a>
 @endcan

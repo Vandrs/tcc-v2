@@ -28,7 +28,7 @@ class BlogController extends Controller
 	public function posts(Request $request, $projectId){
 		try{
 			$project = Project::findOrFail($projectId);
-			$page_title = $project->title.": Lista de Posts";
+			$page_title = "Lista de Posts";
 			AssetLoader::register(['projectPosts.js'],['admin.css'],['DataTables']);
 			return view('project.blog-posts',['project' => $project, 'page_title' => $page_title]);
 		} catch(\Exception $e){

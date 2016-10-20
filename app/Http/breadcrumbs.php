@@ -53,3 +53,14 @@ BreadCrumbs::register('admin.project.users', function($breadcrumbs, $project){
 	$breadcrumbs->parent('admin.project.update', $project);
 	$breadcrumbs->push('Gerenciamento de Usuários', route('admin.project.users', ['id' => $project->id]));
 });
+
+BreadCrumbs::register('admin.project.validations', function($breadcrumbs, $project){
+	$breadcrumbs->parent('admin.project.update', $project);
+	$breadcrumbs->push('Validações do Projeto', route('admin.project.validations', ['id' => $project->id]));
+});
+
+BreadCrumbs::register('admin.project.validations.create', function($breadcrumbs, $project){
+	$breadcrumbs->parent('admin.project.validations', $project);
+	$breadcrumbs->push('Nova Validação', route('admin.project.validations.create', ['id' => $project->id]));
+});
+

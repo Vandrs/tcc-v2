@@ -13,5 +13,6 @@ class EnumCapabilities
     const MANAGE_PROJECT	   				 = 'manage-project';
     CONST MANAGE_PROJECT_USERS 				 = 'manage-project-users';
     CONST PROJECT_OWNER		   				 = 'project-owner'; 
-    const REMOVE_AND_MANAGE_PROJECT_PROFILES = 'remove-manage-project-profiles';
+    CONST REMOVE_AND_MANAGE_PROJECT_PROFILES = 'remove-manage-project-profiles';
+    CONST MAKE_PROJECT_VALIDATION			 = 'make-validations';
 }

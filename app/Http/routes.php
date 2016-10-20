@@ -70,6 +70,12 @@ Route::post('/project/board/assigned/{id}', ['as' => 'admin.project.board-assign
 Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembersController@invitations']);
 Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 
+/*Validação Project*/
+Route::get('/project/validations/{id}',['as' => 'admin.project.validations', 'uses' => 'ProjectValidationController@index']);
+Route::get('/project/validations/create/{id}',['as' => 'admin.project.validations.create', 'uses' => 'ProjectValidationController@create']);
+Route::post('/project/validations/save/{id}',['as' => 'admin.project.validations.save', 'uses' => 'ProjectValidationController@save']);
+
+
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);
 Route::get('/image/temp/{file}',['as' => 'image.temp-file', 'uses' => 'ImageController@tempFile']);

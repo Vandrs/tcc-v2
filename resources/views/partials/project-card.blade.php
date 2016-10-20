@@ -44,6 +44,11 @@
 			<i class="material-icons">edit</i>
 		</a>
 		@endcan
+		@can(Capabilities::MAKE_PROJECT_VALIDATION, $project)
+		<a href="{{route('admin.project.validations',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini" data-toggle="tooltip" title="Validação">
+			<i class="material-icons">check</i>
+		</a>
+		@endcan
 		@can(Capabilities::DELETE_PROJECT, $project)
 		<a href="{{route('admin.project.delete',['id' => $project->id])}}" class="btn btn-fab btn-fab-mini delete-project" data-toggle="tooltip" title="Excluir">
 			<i class="material-icons">delete</i>

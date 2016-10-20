@@ -97,6 +97,17 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        $gate->define(EnumCapabilities::MAKE_PROJECT_VALIDATION, function($user, C3Project $project){
+            $exists = $project->getMembers()
+                              ->where('id', $user->id)
+                              ->whereIn('role',[EnumProject::ROLE_OWNER, EnumProject::ROLE_CONTRIBUTOR], false)
+                              ->first();
+            if($exists){
+                return true;
+            }
+            return false;
+        });
+
         $gate->define(EnumCapabilities::MANAGE_PROJECT_USERS, function($user, C3Project $project){
             $exists = $project->getMembers()
                               ->where('id', $user->id)

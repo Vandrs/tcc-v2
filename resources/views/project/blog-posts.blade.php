@@ -14,7 +14,7 @@
 			<div class="row margin-top-10">
 				<div class="col-xs-12 margin-top-10">
 					<a href="{{route('admin.project.post.create',['projectId' => $project->id])}}" class="btn btn-success btn-raised">
-						<span class="glyphicon glyphicon-plus-sign"></span> Novo post
+						<span class="glyphicon glyphicon-plus-sign"></span> Novo Post
 					</a>
 				</div>
 			</div>
