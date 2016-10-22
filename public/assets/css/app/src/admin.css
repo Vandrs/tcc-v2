@@ -164,3 +164,7 @@ input.disabled{
     pointer-events: none;
     tab-index: -1;
 }
+
+#tableValidations .action-header{
+    width: 200px !important;
+}

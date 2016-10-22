@@ -72,4 +72,18 @@ class DateUtil{
     public static function strBrDateToDateTime($strDate, $withTime = true){
        return  DateUtil::dateTimeInBrazil(DateUtil::strBrDateToDbDate($strDate, $withTime));
     }
+
+    public static function betweenDates(\DateTime $start, \DateTime  $end, $needle = 'now')
+    {
+        if ($needle == 'now') {
+            $needle =   DateUtil::dateTimeInBrazil();
+        }
+        $startTime = $start->getTimestamp();
+        $neddleTime = $needle->getTimestamp();
+        $endTime = $end->getTimestamp();
+        if ($startTime <= $neddleTime && $neddleTime <= $endTime) {
+            return true;
+        }
+        return false;
+    }
 }

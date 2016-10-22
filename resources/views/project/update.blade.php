@@ -172,10 +172,10 @@
             <div class="row margin-top-10">
                 <div class="col-xs-12 text-right">
                     <button type="submit" class="btn btn-primary btn-raised full-size-on-small">
-                        <span class="glyphicon glyphicon-floppy-save"></span> Salvar
+                        <i class="material-icons">save</i> Salvar
                     </button>
                     <a href="{{route('admin.project.delete',['id' => $project->id])}}" class="btn btn-danger btn-raised delete-project full-size-on-small">
-                        <i class="glyphicon glyphicon-trash"></i> Excluir
+                        <i class="material-icons">delete</i> Excluir
                     </a>
                     <a href="{{route('admin.user.projects')}}" class="btn btn-default btn-raised full-size-on-small">Cancelar</a>
                 </div>

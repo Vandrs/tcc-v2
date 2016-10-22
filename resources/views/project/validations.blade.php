@@ -16,4 +16,20 @@
         </div>
     </div>
     @include('partials.view-errors')
+    <div class="row margin-top-20">
+        <div class="col-xs-12">
+            <table data-list-route="{{route('admin.project.validations.list',['id' => $project->id])}}" id="tableValidations" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Início</th>
+                        <th>Término</th>
+                        <th class="action-header">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection

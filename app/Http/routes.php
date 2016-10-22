@@ -71,10 +71,15 @@ Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembers
 Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 
 /*Validação Project*/
-Route::get('/project/validations/{id}',['as' => 'admin.project.validations', 'uses' => 'ProjectValidationController@index']);
-Route::get('/project/validations/create/{id}',['as' => 'admin.project.validations.create', 'uses' => 'ProjectValidationController@create']);
+Route::get('/projeto/validacoes/{id}',['as' => 'admin.project.validations', 'uses' => 'ProjectValidationController@index']);
+Route::get('/projeto/validacao/nova/{id}',['as' => 'admin.project.validations.create', 'uses' => 'ProjectValidationController@create']);
+Route::get('/project/validations/list/{id}',['as' => 'admin.project.validations.list', 'uses' => 'ProjectValidationController@list']);
 Route::post('/project/validations/save/{id}',['as' => 'admin.project.validations.save', 'uses' => 'ProjectValidationController@save']);
-
+Route::get('/projeto/validacao/editar/{id}/{validationId}',['as' => 'admin.project.validations.edit', 'uses' => 'ProjectValidationController@edit']);
+Route::post('/project/validations/update/{id}/{validationId}',['as' => 'admin.project.validations.update', 'uses' => 'ProjectValidationController@update']);
+Route::get('/project/validations/delete/{id}/{validationId}',['as' => 'admin.project.validations.delete', 'uses' => 'ProjectValidationController@delete']);
+Route::post('/project/validations/question/delete/{id}/{validationId}',['as' => 'admin.project.validations.question.delete', 'uses' => 'ProjectValidationController@deleteQuestion']);
+Route::get('/projeto/{path}/validacao/{validation_path}',['as' => 'site.project.validation', 'uses' => 'ProjectValidationController@view']);
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);

@@ -154,5 +154,28 @@
 				}
 			}
 		}
+	},
+	"validations":{
+		"properties":{
+			"id": {
+				"type":"integer"
+			},
+			"title": {
+				"type":"string",
+				"analyzer":"brazilian"
+			},
+			"url": {
+				"type":"string",
+				"index":"not_analyzed"
+			},
+			"started_at": {
+				"type":"date",
+		        "format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			},
+			"ended_at": {
+				"type":"date",
+		        "format":"epoch_millis||yyyy-MM-dd HH:mm:ss"
+			}
+		}
 	}
 }

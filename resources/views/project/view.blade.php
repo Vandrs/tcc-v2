@@ -109,7 +109,25 @@
                                 <div class="addthis_inline_share_toolbox"></div>
                             </div>
                         </div>
-                        <div class="row margin-top-10">
+                        <div class="row margin-top-20">
+                            <div class="col-xs-12 project-section-label">
+                                Validações
+                            </div>
+                            @if($project->validations->count())
+                            <div class="col-xs-12 margin-top-10">
+                                @foreach($project->currentValidations() as $validation)
+                                    <div margin-top-10>
+                                        <a href="{{$validation->url}}">{{$validation->title}}</a> <i class="material-icons">check</i>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="col-xs-12 margin-top-10">
+                                Nenhuma validação disponível no momento.
+                            </div>
+                            @endif
+                        </div>
+                        <div class="row margin-top-20">
                             <div class="col-xs-12 project-section-label">
                                 Membros
                             </div>

@@ -16,7 +16,7 @@ class ElasticProject extends ElasticModel implements C3Project{
 	private $type = 'project';
 	Private $mappingFile = 'project.json';
 
-	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'url', 'avg_note', 'total_notes', 'images', 'files', 'members', 'followers', 'posts', 'created_at', 'updated_at'];
+	protected $fillable = ['id', 'title', 'category_id','description', 'category', 'urls', 'url', 'avg_note', 'total_notes', 'images', 'files', 'members', 'followers', 'posts', 'created_at', 'updated_at', 'validations'];
 
 	public function __construct($attributes = null){
 		parent::__construct($attributes, $this->type, $this->mappingFile);
@@ -81,6 +81,21 @@ class ElasticProject extends ElasticModel implements C3Project{
 			}
 		}
 
+		$validations = $this->validations;
+		$this->validations = new Collection();
+		if(!empty($validations)){
+			foreach ($validations as $key => $validation) {
+				if (isset($validation['started_at']) && $validation['started_at']) {
+					$validation['started_at'] = DateUtil::strBrDateToDateTime($validation['started_at']);
+				}
+				if (isset($validation['ended_at']) && $validation['ended_at']) {
+					$validation['ended_at'] = DateUtil::strBrDateToDateTime($validation['ended_at']);
+				}
+				$this->validations->put($key, (object)$validation);
+			}
+		}
+		
+
 	}
 
 	public function imageCoverOrFirst(){
@@ -105,6 +120,10 @@ class ElasticProject extends ElasticModel implements C3Project{
 		return $this->posts;
 	}
 
+	public function validations(){
+		return $this->validations;
+	}
+
 	public function isMember($user){
 		return $this->getMembers()->where('id', $user->id, false)->first();
 	}
@@ -113,4 +132,9 @@ class ElasticProject extends ElasticModel implements C3Project{
 		return $this->getMembers()->where('id', $user->id, false)->where('role', EnumProject::ROLE_OWNER, false)->first();
 	}
 
+	public function currentValidations(){
+		return $this->validations->filter(function($validation){
+			return DateUtil::betweenDates($validation->started_at, $validation->ended_at);
+		});
+	}
 }

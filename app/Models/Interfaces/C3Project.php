@@ -9,4 +9,5 @@ Interface C3Project
     public function getFollowers();
     public function getPosts();
     public function isMember($user);
+    public function validations();
 }

@@ -14,7 +14,22 @@ $(document).ready(function(){
 	$('body').on('click','.deleteQuestion',function(evento){
 		evento.preventDefault();
 		var question = $(this).parents('.question:first');
-		removeQuestion(question);
+		var idx = $(question).attr('data-idx');
+		var questionId = $(question).find("[name='question["+idx+"][id]']").val();
+		if (hasValue(questionId)) {
+			deleteQuestion(questionId, question)
+		} else {
+			removeQuestion(question);
+		}
+	});
+	$("body").on('click', '.deleteValidation', function(evento){
+		evento.preventDefault();
+		var url = $(this).attr('href');
+		var html = "Deseja mesmo excluir este Questionário?<br />Esta ação não poderá ser desfeita.";
+		function deleteProject(){
+            window.location = url;
+        }
+        showConfirmationModal(html,deleteProject);
 	});
 });
 
@@ -51,4 +66,32 @@ function getIdx(){
 		var maxVal = Math.max.apply(Math, arrIdx);	
 		return (maxVal+1);
 	}
+}
+
+function deleteQuestion(id, question){
+	var route = $('#addQuestion').attr('data-delete-route');
+	var area = $('.questionFeedbackArea');
+	var postData = {
+		'question_id':id,
+		'_token':TOKEN
+	};
+	$.ajax({
+		url: route,
+		type: 'POST',
+		data: postData,
+		success: function(data){
+			if (data.status) {
+				removeQuestion(question);
+			} else {
+				addFeedBack(area, data.msg, data.class_msg);		
+			}
+		},
+		error: function(){
+			addFeedBack(area, GENERIC_ERROR_MSG, 'alert-danger');
+		},
+		beforeSend: function(){
+			clearFeedBack(area);
+		},
+		dataType: 'json'
+	});
 }

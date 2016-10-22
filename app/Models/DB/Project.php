@@ -10,6 +10,7 @@ use App\Models\DB\User;
 use App\Models\DB\Image;
 use App\Models\DB\File;
 use App\Models\DB\Post;
+use App\Models\DB\ProjectValidation;
 use App\Models\Enums\EnumProject;
 use App\Models\Interfaces\C3Project;
 use App\Utils\StringUtil;
@@ -107,6 +108,10 @@ class Project extends Model implements C3Project{
 
 	public function isOwner($user){
 		return $this->getMembers()->where('id', $user->id, false)->where('role', EnumProject::ROLE_OWNER, false)->first();
+	}
+
+	public function validations(){
+		return $this->hasMany(ProjectValidation::class)->orderBy('started_at','ASC');
 	}
 
 	public function getUrlAttribute($value = null){

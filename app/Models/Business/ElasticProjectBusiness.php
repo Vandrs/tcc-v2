@@ -30,6 +30,7 @@ class ElasticProjectBusiness{
 		$data["members"] = self::instance()->parseMembers($project);
 		$data["followers"] = self::instance()->parseFollowers($project);
 		$data["posts"] = self::instance()->parsePosts($project);
+		$data["validations"] = self::instance()->parseValidations($project);
 		return $data;
 	}
 
@@ -123,6 +124,21 @@ class ElasticProjectBusiness{
 			]);
 		});
 		return $posts;
+	}
+
+	private function parseValidations(Project $project)
+	{
+		$validations = [];
+		$project->validations->each(function($validation) use (&$validations){
+			array_push($validations, [
+				"id" 		 => $validation->id,
+				"title" 	 => $validation->title,
+				"url" 		 => $validation->url,
+				"started_at" => $validation->started_at->format('Y-m-d H:i:s'),
+				"ended_at"   => $validation->ended_at->format('Y-m-d H:i:s'),
+			]);
+		});	
+		return $validations;
 	}
 
 }
