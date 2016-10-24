@@ -57,7 +57,6 @@ class SocialAuthController extends Controller
         } catch (\Exception $e) {
             Log::error(Utils::getExceptionFullMessage($e));
             $request->session()->flash('msg','No momento não é possível realizar a conexão com o Facebook.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
-            $route = route('site.error');
             return redirect()->route('site.error');
         }
     }
@@ -78,7 +77,6 @@ class SocialAuthController extends Controller
         } catch (\Exception $e) {
             Log::error(Utils::getExceptionFullMessage($e));
             $request->session()->flash('msg','No momento não é possível realizar a conexão com o Google+.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
-            $route = route('site.error');
             return redirect()->route('site.error');
         }
     }
@@ -99,7 +97,6 @@ class SocialAuthController extends Controller
         } catch (\Exception $e) {
             Log::error(Utils::getExceptionFullMessage($e));
             $request->session()->flash('msg','No momento não é possível realizar a conexão com o LinkedIn.<br/>Tente novamente mais tarde se se o erro persistir entre em contato com o administrador do sistema.');
-            $route = route('site.error');
             return redirect()->route('site.error');
         }
     }

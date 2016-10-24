@@ -8,6 +8,12 @@ $(document).ready(function(){
 		}
 		followProcess(route,this);
 	});
+
+	$("body").on("click", ".viewModalProfile", function(evento){
+		evento.preventDefault();
+		var id = $(this).attr('data-id');
+		showModalProfile(id, ".searchUsersBackArea");
+	});
 });
 
 
@@ -38,3 +44,4 @@ function followProcess(route, btn){
 		"dataType":"json"
 	});
 }
+

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\DB\Project;
 use App\Models\DB\Question;
 use App\Utils\StringUtil;
+use App\Utils\DateUtil;
 
 class ProjectValidation extends Model
 {
@@ -31,5 +32,10 @@ class ProjectValidation extends Model
 		$projectPath = StringUtil::toUrl($this->project->title."-".$this->project->id);
 		$validationPath = StringUtil::toUrl($this->title."-".$this->id);
 		return route('site.project.validation',['path' => $projectPath, 'validation_path' => $validationPath]);
+	}
+
+	public function isInValidationPeriod()
+	{
+		return DateUtil::betweenDates($this->started_at, $this->ended_at);
 	}
 }

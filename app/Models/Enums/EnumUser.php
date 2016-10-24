@@ -10,8 +10,8 @@ class EnumUser
 	public static function getGenderLabels()
 	{
 		return [
-			self::MALE 	 => 'Masculino',
-			self::FEMALE => 'Feminino'
+			self::FEMALE => 'Feminino',
+			self::MALE 	 => 'Masculino'
 		];
 	}
 

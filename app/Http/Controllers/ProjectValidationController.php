@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Log;
+use Auth;
 use App\Utils\Utils;
 use App\Utils\UrlUtil;
 use App\Models\DB\Project;
@@ -12,6 +13,7 @@ use App\Models\DB\ProjectValidation;
 use App\Models\DB\Question;
 use App\Models\Business\ProjectValidationBusiness;
 use App\Models\Business\CrudProjectBusiness;
+use App\Models\Business\ValidationBusiness;
 use App\Asset\AssetLoader;
 use Yajra\Datatables\Datatables;
 use Illuminate\Database\ModelNotFoundException;
@@ -22,8 +24,8 @@ class ProjectValidationController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth')->except('view');
-		$this->middleware('makeProjectValidation')->except('view');
+		$this->middleware('auth')->except(['view','saveUserValidation']);
+		$this->middleware('makeProjectValidation')->except(['view','saveUserValidation']);
 	}	
 
 	public function index($id)
@@ -61,7 +63,9 @@ class ProjectValidationController extends Controller
 							 ->addColumn('actions', function($projectValidation) use ($project) {
 							 	$deleteRoute = route('admin.project.validations.delete',['id' => $project->id, 'validationId' => $projectValidation->id]);
 							 	$editRoute = route('admin.project.validations.edit',['id' => $project->id, 'validationId' => $projectValidation->id]);
+							 	$reportRoute = route('admin.project.validations.reports',['id' => $project->id, 'validationId' => $projectValidation->id]);
 							 	$html  = '<a href="'.$editRoute.'" class="btn btn-fab btn-fab-mini margin-right-5" title="Editar" data-toggle="tooltip"><i class="material-icons">edit</i></a>';
+								$html .= '<a href="'.$reportRoute.'" class="btn btn-fab btn-fab-mini margin-right-5" title="Relatório" data-toggle="tooltip"><i class="material-icons">assessment</i></a>';
 							 	$html .= '<a href="'.$deleteRoute.'" class="btn btn-fab btn-fab-mini deleteValidation" title="Excluir" data-toggle="tooltip"><i class="material-icons">delete</i></a>';
 								return $html;							 	
 							 })
@@ -72,13 +76,70 @@ class ProjectValidationController extends Controller
 		}
 	}
 
-	public function view($path, $validation_path)
+	public function view(Request $request, $path, $validation_path)
+	{	
+		try {
+			$id = UrlUtil::getIdByUrlPath($path);
+			$validationId = UrlUtil::getIdByUrlPath($validation_path);
+        	$project = Project::findOrFail($id);
+        	$projectValidation = ProjectValidation::withTrashed()
+        										  ->where('id', '=', $validationId)
+        										  ->firstOrFail();
+        	if ($projectValidation->trashed()) {
+        		return $this->notFound();
+        	}
+        	if (!$projectValidation->isInValidationPeriod()) {
+        		$request->session()->flash('msg','O Questionário solicitado não se encontra em período de validação');
+            	return redirect()->route('site.error');
+        	}
+
+        	if (Auth::check()) {
+        		$user = Auth::user();
+        	} else {
+        		$user =  null;
+        	}
+
+        	$data = [
+        		'noIndex' 			=> true,
+        		'page_title'    	=> 'Questionário de Validação: '.$project->title,
+            	'titleRowClass' 	=> 'text-center',
+            	'canonical'         => $projectValidation->url,
+            	'project'           => $project,
+            	'projectValidation' => $projectValidation,
+            	'user'				=> $user
+        	];
+        	
+        	AssetLoader::register(['listValidation.js'],['admin.css'],['DataTables']);
+        	return view('project.validation-process',$data);
+		} catch (\ModelNotFoundException $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+			return $this->notFound();
+		} catch (\Exception $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+			$request->session()->flash('msg',trans('custom_messages.unexpected_error'));
+            return redirect()->route('site.error');
+		}
+	}
+
+	public function saveUserValidation(Request $request, $validationId)
 	{
-		$id = UrlUtil::getIdByUrlPath($path);
-		$validationId = UrlUtil::getIdByUrlPath($validation_path);
-        $project = Project::findOrFail($id);
-        $projectValidation = ProjectValidation::findOrFail($validationId);
-        dd($projectValidation);
+
+		try {
+			$projectValidation = ProjectValidation::withTrashed()
+												  ->where('id', '=', $validationId)
+												  ->firstOrFail();
+			$validationBusiness = new ValidationBusiness();
+			if ($validation = $validationBusiness->create($projectValidation, $request->except('_token'))) {
+				$request->session()->flash('msg', 'Obrigado por realizar a validação do projeto. A sua opinião é muito importante para que possamos dar continuidade ao trabalho que vem sendo realizado!');
+				$request->session()->flash('class_msg','alert-success');
+				return redirect()->to($projectValidation->project->url);
+			} else {
+				return back()->withErrors($validationBusiness->getValidator())->withInput();
+			}
+		} catch (\Exception $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+			return $this->unexpectedError();
+		}
 	}
 
 	public function create($id)

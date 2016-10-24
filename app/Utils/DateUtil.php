@@ -86,4 +86,11 @@ class DateUtil{
         }
         return false;
     }
+
+    public static function calcAge(\DateTime $date)
+    {
+        $now = self::dateTimeInBrazil();
+        $interval = $now->diff($date);
+        return $interval->y;
+    }
 }

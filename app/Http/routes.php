@@ -70,7 +70,7 @@ Route::post('/project/board/assigned/{id}', ['as' => 'admin.project.board-assign
 Route::get('/convites',['as' => 'project.invitations', 'uses' => 'ProjectMembersController@invitations']);
 Route::get('/convites/lista',['as' => 'project.invitations.list', 'uses' => 'ProjectMembersController@listInvitations']);
 
-/*Validação Project*/
+/*Validação Projeto*/
 Route::get('/projeto/validacoes/{id}',['as' => 'admin.project.validations', 'uses' => 'ProjectValidationController@index']);
 Route::get('/projeto/validacao/nova/{id}',['as' => 'admin.project.validations.create', 'uses' => 'ProjectValidationController@create']);
 Route::get('/project/validations/list/{id}',['as' => 'admin.project.validations.list', 'uses' => 'ProjectValidationController@list']);
@@ -80,6 +80,13 @@ Route::post('/project/validations/update/{id}/{validationId}',['as' => 'admin.pr
 Route::get('/project/validations/delete/{id}/{validationId}',['as' => 'admin.project.validations.delete', 'uses' => 'ProjectValidationController@delete']);
 Route::post('/project/validations/question/delete/{id}/{validationId}',['as' => 'admin.project.validations.question.delete', 'uses' => 'ProjectValidationController@deleteQuestion']);
 Route::get('/projeto/{path}/validacao/{validation_path}',['as' => 'site.project.validation', 'uses' => 'ProjectValidationController@view']);
+Route::post('/project/validation/user/save/{validationId}', ['as' => 'site.validation.save', 'uses' => 'ProjectValidationController@saveUserValidation']);
+
+/*Relatório Validação Projeto*/
+Route::get('/project/validations/reports/{id}/{validationId}',['as' => 'admin.project.validations.reports', 'uses' => 'ValidationReportsController@index']);
+Route::get('/project/validations/reports/{id}/{validationId}/report',['as' => 'admin.project.validations.reports.get', 'uses' => 'ValidationReportsController@getReport']);
+Route::get('/project/validations/reports/{id}/{validationId}/suggestion',['as' => 'admin.project.validations.reports.suggestion', 'uses' => 'ValidationReportsController@listSuggestions']);
+
 
 /*Imagem*/
 Route::post('/image/temp-upload',['as' => 'image.temp-upload', 'uses' => 'ImageController@tempUpload']);

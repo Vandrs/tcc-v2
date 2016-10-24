@@ -42,7 +42,7 @@ class Controller extends BaseController
         $request = request();
         $request->session()->flash('msg', $msg);
         $request->session()->flash('class_msg', 'alert-danger');
-        return back();
+        return back()->withInput();
     }
 
     public function ajaxUnexpectedError($msg = null, $except = null){

@@ -34,7 +34,7 @@ class ProjectController extends Controller
             $id = UrlUtil::getIdByUrlPath($path);
             $project = ElasticProject::findById($id);
         } catch(ModelNotFoundException $e){
-            $this->notFound();
+            return $this->notFound();
         }
         AssetLoader::register(
             ["projectPage.js","projectRating.js","viewProject.js","disqus.js"],

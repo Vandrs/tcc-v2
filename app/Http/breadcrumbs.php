@@ -68,3 +68,9 @@ BreadCrumbs::register('admin.project.validations.edit', function($breadcrumbs, $
 	$breadcrumbs->parent('admin.project.validations', $project);
 	$breadcrumbs->push('Editar Validação', route('admin.project.validations.edit', ['id' => $project->id, 'validationId' => $validation->id]));
 });
+
+BreadCrumbs::register('admin.project.validations.reports', function($breadcrumbs, $project, $validation){
+	$breadcrumbs->parent('admin.project.validations', $project);
+	$breadcrumbs->push('Relatório: '.$validation->title, route('admin.project.validations.reports', ['id' => $project->id, 'validationId' => $validation->id]));
+});
+

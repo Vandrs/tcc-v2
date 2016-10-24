@@ -4,6 +4,7 @@
 	<div class="project-container">
         <div class="row margin-top-10">
             <div class="col-xs-12 ">
+                @include('partials.view-errors')
                 <div class="row">
                     <div class="col-xs-12 col-md-8 margin-top-10">
                         @if($project->images->count())
@@ -113,7 +114,7 @@
                             <div class="col-xs-12 project-section-label">
                                 Validações
                             </div>
-                            @if($project->validations->count())
+                            @if($project->currentValidations()->count())
                             <div class="col-xs-12 margin-top-10">
                                 @foreach($project->currentValidations() as $validation)
                                     <div margin-top-10>
@@ -134,7 +135,7 @@
                             <div class="col-xs-12 margin-top-10">
                                 <ul class="simple-list project-members">
                                     @foreach($project->members as $member)
-                                        <li><a href="{{route('user.view',['id' => $member->id])}}">{{$member->name}}</a></li>
+                                        <li><a href="#" class="viewModalProfile" data-id="{{$member->id}}">{{$member->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

@@ -253,3 +253,12 @@ img.img-responsive.img-center{
     line-height: 60px;
     font-weight: bold;
 }
+
+.questionTitle{
+    font-size: 20px
+}
+
+.form-group label.questionLabel{
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
