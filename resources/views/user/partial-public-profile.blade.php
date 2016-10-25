@@ -1,10 +1,6 @@
 <div class="row user-profile-area">
 	<div class="col-xs-12 personal-info-area margin-top-10">
-		@if(isset($showLink) && $showLink)
-		<h1 class="h2"><a href="{{route("user.view",['id' => $user->id])}}">{{$user->name}}</a></h1>
-		@else
 		<h1 class="h2">{{$user->name}}</h1>
-		@endif
 	</div>
 
 	@if(count($user->skills))
