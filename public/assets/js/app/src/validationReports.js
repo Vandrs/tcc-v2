@@ -19,9 +19,22 @@ $(document).ready(function(){
   		}
 	});
 
+	refreshReports();
+
+	$("#gender").change(function(){
+		refreshReports();
+	});	
+
+	$("body").on('change',"#min_age, #max_age", function(){
+		refreshReports();
+	});
+
+});
+
+function refreshReports() {
 	buildGeneralReport();
 	buildQuestionsReport();
-});
+}
 
 
 function buildGeneralReport(){
@@ -45,22 +58,25 @@ function buildGeneralReport(){
 
 function buildQuestionsReport(){
 	$(".questionReport").each(function(){
-		var pieChartArea = $(this).find(".percentual");
-		var barChartArea = $(this).find(".quantity");
-		var sendData = getFormData();
-		sendData.question_id = $(this).attr('data-question-id');
-		$.ajax({
-			url: REPORT_ROUTE,
-			type: "GET",
-			data: sendData,
-			success: function(data){
-				if (data.status) {
-					buildBarsReport(barChartArea, data.labels, data.data);
-					buildPieReport(pieChartArea, data.labels, data.data);
-				}
-			},
-		dataType: 'json'
-	});
+		var elemento = this;
+		setTimeout(function(){
+			var pieChartArea = $(elemento).find(".percentual");
+			var barChartArea = $(elemento).find(".quantity");
+			var sendData = getFormData();
+			sendData.question_id = $(elemento).attr('data-question-id');
+			$.ajax({
+				url: REPORT_ROUTE,
+				type: "GET",
+				data: $.param(sendData),
+				success: function(data){
+					if (data.status) {
+						buildBarsReport(barChartArea, data.labels, data.data);
+						buildPieReport(pieChartArea, data.labels, data.data);
+					}
+				},
+				dataType: 'json'
+			});
+		}, 500);
 	});
 }
 
@@ -154,9 +170,9 @@ function buildPieReport(ctx, labels, data){
 function getFormData(){
 	var formData = { "_token": TOKEN };
 	var form = $("#filterForm");
-	var gender = $("#filterForm").find("#gender").find("option:selected").val();
-	var minAge = $("#filterForm").find("#min_age").val()
-	var maxAge = $("#filterForm").find("#max_age").val()
+	var gender = $(form).find("#gender").find("option:selected").val();
+	var minAge = $(form).find("#min_age").val();
+	var maxAge = $(form).find("#max_age").val();
 	if (hasValue(gender)) {
 		formData.gender = gender;
 	}
@@ -164,7 +180,7 @@ function getFormData(){
 		formData.min_age = minAge;
 	}
 	if (hasValue(maxAge)) {
-		formData.max_age = max_age;
+		formData.max_age = maxAge;
 	}
 	return formData;
 }
