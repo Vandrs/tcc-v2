@@ -23,12 +23,15 @@ class ProjectFollowerBusiness{
 	public static function follow(User $user, C3Project $project){
 		$userProjectBuiness = new UserProjectBusiness();
 		$userProject = $userProjectBuiness->create($user, $project, EnumProject::ROLE_FOLLOWER);
+		CrudProjectBusiness:dispathElasticJob($project);
 		return $userProject;
 	}
 
 	public static function unfollow(User $user, C3Project $project){
 		$userProjectBuiness = new UserProjectBusiness();
-		return $userProjectBuiness->delete($user, $project);
+		$deleteResponse = $userProjectBuiness->delete($user, $project);
+		CrudProjectBusiness:dispathElasticJob($project);
+		return $deleteResponse;
 	}
 
 	public static function isUserFollowingProject(User $user, C3Project $project){

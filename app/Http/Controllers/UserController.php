@@ -24,6 +24,9 @@ class UserController extends Controller
 
 	public function create(Request $request)
 	{
+		if (Auth::check()) {
+			return redirect()->route('admin.home');
+		}
 		$user = $request->session()->get('user', null);
 		if (empty($user)) {
 			$user = old('User', null);

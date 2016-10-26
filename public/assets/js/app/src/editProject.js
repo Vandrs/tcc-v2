@@ -160,7 +160,7 @@ function appendFile(file){
                 "<div class='input-group'>"+
                     '<input type="text" value="'+file.title+'" class="form-control" readonly/>'+
                     '<span class="input-group-btn">'+
-                        '<button type="button" class="btn btn-danger remove-file">'+
+                        '<button type="button" class="btn btn-danger btn-fab btn-fab-mini remove-file">'+
                             '<i class="material-icons">delete</i>'+
                         '</button>'+
                     '</span>'+

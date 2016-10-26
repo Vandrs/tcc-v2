@@ -46,7 +46,6 @@ class CrudUserBusiness
 		}
 
 		try {
-
 			DB::beginTransaction();
 			$this->prepareData($userData);
 

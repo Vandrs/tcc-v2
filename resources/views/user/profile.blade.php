@@ -4,6 +4,8 @@
     {!!Breadcrumbs::render('admin.user.profile', Auth::user())!!}
 @endsection
 @section('content')
+    <form action="#" id="photoForm" method="post" enctype="multipart/form-data">
+    </form>
     @include('partials.view-errors')
     <div class="row">
         <div class="col-xs-12 profileFeedBack">
@@ -19,16 +21,46 @@
         </div>
     </div>
     <div class="row"> 
-        <div class="col-xs-12 col-md-6">
-            <div class="form-group {{$errors->has('name')?'has-error':''}}">
-                <label class="control-label" for="name">Nome*</label>
-                <input type="text" id="name" name='name' class="form-control" value="{{Util::coalesce(old('name'),$user->name)}}"/>
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                        <label class="control-label" for="name">Nome*</label>
+                        <input type="text" id="name" name='name' class="form-control" value="{{Util::coalesce(old('name'),$user->name)}}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group {{$errors->has('email')?'has-error':''}}">
+                        <label class="control-label" for="email">Email*</label>
+                        <input type="text" id="email" name='email' class="form-control" value="{{Util::coalesce(old('email'),$user->email)}}"/>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6">
-            <div class="form-group {{$errors->has('email')?'has-error':''}}">
-                <label class="control-label" for="email">Email*</label>
-                <input type="text" id="email" name='email' class="form-control" value="{{Util::coalesce(old('email'),$user->email)}}"/>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" for="email">Foto</label>
+                        <div class="profile-image-area">
+                        @if(Util::coalesce(old('photo'), $user->photo))
+                        <img id='photoProfile' src="{{Util::coalesce(old('photo'), $user->photo)}}"/>
+                        @endif
+                        </div>
+                        <div class="userPhotoControls margin-top-10">
+                            <button type="button" class="btn btn-fab btn-fab-mini addPhoto margin-right-5" data-toggle="tooltip" title="Adicionar Foto">
+                                <i class="material-icons">panorama</i>
+                            </button>
+                            <button type="button" class="btn btn-fab btn-danger btn-fab-mini removePhoto" data-toggle="tooltip" title="Remover Foto">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </div>
+                        <input type="file" class="form-control hidden" placeholder="Selecionar imagens" id="imageUpload" data-upload-route="{{route('image.upload')}}"/>
+                        <input type="hidden" name="photo" value="{{Util::coalesce(old('photo'), $user->photo)}}"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

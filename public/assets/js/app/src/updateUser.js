@@ -57,6 +57,38 @@ $(document).ready(function(){
 		$(this).parents(".input-group:first").find('.date').datepicker().data('datepicker').show();
 	});
 
+	$('body').on('change','#imageUpload',function(){
+		var uploadButton = this;
+		if(this.files.length){
+			var validFiles = []; 
+			var errors = [];
+			var fileValidator = getFileValidator();
+			var currentFile = this.files[0];
+			if(!fileValidator.extension(currentFile,['.png','.jpg','.jpeg'])){
+				errors.push(currentFile.name+": extensão inválida. Permitido apenas (png, jpg, jpeg)");
+			} else if(!fileValidator.size(this.files[0],10)){
+				errors.push(currentFile+": tamanho máximo permitido 10MB");
+			} else {
+				var form = $('#photoForm')[0]; 
+				var formData = new FormData(form);
+				formData.append('image', currentFile);
+				formData.append('_token', TOKEN);
+				simpleUpload(formData, $(uploadButton).attr('data-upload-route'));	
+			}
+		}
+	});
+
+	$(".addPhoto").click(function(elemento){
+		elemento.preventDefault();
+		$('#imageUpload').click();
+	});
+
+	$(".removePhoto").click(function(elemento){
+		elemento.preventDefault();
+		$(".profile-image-area").html("");
+		$("[name='photo']").val("");
+	});
+
 });
 
 function getWorkTplNextIdx(){
@@ -84,6 +116,47 @@ function getGraduationTplNextIdx(){
 	} else {
 		var maxVal = Math.max.apply(Math, arrIdx);	
 		return (maxVal+1);
+	}
+}
+
+function simpleUpload(data, route){
+	$.ajax({
+		url: route,
+		type:'POST',
+		data: data,
+		success:function(data){
+			if(data.status){
+				var html = "<img id='photoProfile' src='"+data.image+"' alt='"+data.name+"'/>";				
+				$("[name='photo']").val(data.image);
+				$(".profile-image-area").html(html);
+			}
+		},
+		contentType: false,
+		processData: false,
+		dataType:'json'
+	});
+}
+
+function getFileValidator(){
+	return {
+		"extension": function(file, allowedExtensions){
+			var found = false;
+			for(var i = 0; i < allowedExtensions.length; i++ ){
+				var possibleExtension = file.name.slice(allowedExtensions[i].length * -1);
+				if(allowedExtensions[i].toUpperCase() == possibleExtension.toUpperCase()){
+					found = true;
+					break;
+				}
+			}
+			return found;
+		},
+		"size": function(file, maxSize){
+			var size = file.size / 1048576;
+			if(size > maxSize){
+				return false
+			}
+			return true;
+		}
 	}
 }
 

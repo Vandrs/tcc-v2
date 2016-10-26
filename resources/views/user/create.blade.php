@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @inject('enumUser','App\Models\Enums\EnumUser')
 @section('content')
+    <form action="#" id="photoForm" method="post" enctype="multipart/form-data">
+    </form>
     <div class="row margin-top-10">
         <div class="col-xs-12 text-left">
                 <h1>Atualizar Perfil</h1>
@@ -15,16 +17,44 @@
         </div>
     </div>
     <div class="row"> 
-        <div class="col-xs-12 col-md-6">
-            <div class="form-group {{$errors->has('name')?'has-error':''}}">
-                <label class="control-label" for="name">Nome*</label>
-                <input type="text" id="name" name='User[name]' class="form-control" value="{{isset($user['name']) ? $user['name'] : null}}"/>
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                        <label class="control-label" for="name">Nome*</label>
+                        <input type="text" id="name" name='User[name]' class="form-control" value="{{isset($user['name']) ? $user['name'] : null}}"/>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group {{$errors->has('email')?'has-error':''}}">
+                        <label class="control-label" for="email">Email*</label>
+                        <input type="text" id="email" name='User[email]' class="form-control" value="{{isset($user['email']) ? $user['email'] : null}}"/>
+                    </div>
+                </div>        
             </div>
         </div>
-        <div class="col-xs-12 col-md-6">
-            <div class="form-group {{$errors->has('email')?'has-error':''}}">
-                <label class="control-label" for="email">Email*</label>
-                <input type="text" id="email" name='User[email]' class="form-control" value="{{isset($user['email']) ? $user['email'] : null}}"/>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" for="email">Foto</label>
+                        <div class="profile-image-area">
+                        @if(isset($user['photo']) && $user['photo'])
+                        <img id='photoProfile' src="{{$user['photo']}}"/>
+                        @endif
+                        </div>
+                        <div class="userPhotoControls margin-top-10">
+                            <button type="button" class="btn btn-fab btn-fab-mini addPhoto margin-right-5" data-toggle="tooltip" title="Adicionar Foto">
+                                <i class="material-icons">panorama</i>
+                            </button>
+                            <button type="button" class="btn btn-fab btn-danger btn-fab-mini removePhoto" data-toggle="tooltip" title="Remover Foto">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </div>
+                        <input type="file" class="form-control hidden" placeholder="Selecionar imagens" id="imageUpload" data-upload-route="{{route('image.upload')}}"/>
+                        <input type="hidden" name="User[photo]" value="{{isset($user['photo']) ? $user['photo'] : null}}"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

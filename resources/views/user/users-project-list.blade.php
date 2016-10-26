@@ -8,7 +8,7 @@
 		@foreach($users as $key => $user)
 			<div class="col-xs-12 col-sm-4 col-md-3 margin-top-10">
 				<div class="user-card box" data-user-id="{{$user->id}}">
-					<h4><a href="{{route('user.view',['id' => $user->id])}}">{{$user->name}}</a></h4>
+					<h4>{{$user->name}}</h4>
 					<div class="user-card-info">
 						@if($work = $user->getCurrentOrLastWork())
 						<div class="work-info margin-top-10">

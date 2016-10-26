@@ -23,7 +23,7 @@ class UserProjectBusiness
 	private $validator;
 
 	public function create(User $user, C3Project $project, $role, $creator = 0, $tempRole = null)
-	{
+	{	
 		return UserProject::create([
 			'user_id'	 	 => $user->id,
 			'project_id' 	 => $project->id,

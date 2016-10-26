@@ -125,6 +125,11 @@
                             </div>
                         </div>
                         <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <a href="{{ route('user.create') }}" class="btn btn-default full-size btn-raised">Cadastrar</a>
+                        </div>
+                        </div>
+                        <div class="row">
                             <div class="col-xs-12 text-center">
                                     OU
                             </div>
@@ -170,7 +175,9 @@
                                         <button type="submit" class="btn btn-primary btn-raised submit">
                                             <i class="material-icons">account_box</i> Entrar
                                         </button>
-                                        <a href="{{ url('/password/reset') }}">Esqueceu a senha?</a>
+                                    </div>
+                                    <div class="col-xs-12 text-left">
+                                        <a href="{{ url('/password/reset') }}">Esqueceu a senha?</a>                                    
                                     </div>
                                 </div>
                             </form>

@@ -1,20 +1,40 @@
 <div class="row user-profile-area">
 	<div class="col-xs-12 personal-info-area margin-top-10">
-		<h1 class="h2">{{$user->name}}</h1>
-	</div>
-
-	@if(count($user->skills))
-	<div class="col-xs-12 skilss-area margin-top-20">
-		<h4 class="form-section-title">Habilidades</h4>
-		<div class="skills-area-items">
-		@foreach($user->skills as $skill)
-			<span class="label label-primary">
-				{{$skill}}
-			</span>
-		@endforeach
+		<div class="row">
+			@if($user->photo)
+			<div class="col-xs-12 col-sm-6 col-md-8">
+			@else
+			<div class="col-xs-12">
+			@endif
+				<div class="row">
+					<div class="col-xs-12">
+						<h1 class="h2">{{$user->name}}</h1>
+					</div>
+				</div>
+				<div class="row">
+					@if(count($user->skills))
+					<div class="col-xs-12 skilss-area margin-top-20">
+						<h4 class="form-section-title">
+							Habilidades
+						</h4>
+						<div class="skills-area-items">
+						@foreach($user->skills as $skill)
+							<span class="label label-primary">
+								{{$skill}}
+							</span>
+						@endforeach
+						</div>
+					</div>
+					@endif
+				</div>
+			</div>
+			@if($user->photo)
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<img src="{{$user->photo}}" id="photoProfileModal">
+			</div>
+			@endif
 		</div>
 	</div>
-	@endif
 
 	@if($user->works->count())
 	<div class="col-xs-12 work-info-area margin-top-20">
