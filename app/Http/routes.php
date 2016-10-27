@@ -85,6 +85,7 @@ Route::post('/project/validation/user/save/{validationId}', ['as' => 'site.valid
 /*Relatório Validação Projeto*/
 Route::get('/project/validations/reports/{id}/{validationId}',['as' => 'admin.project.validations.reports', 'uses' => 'ValidationReportsController@index']);
 Route::get('/project/validations/reports/{id}/{validationId}/report',['as' => 'admin.project.validations.reports.get', 'uses' => 'ValidationReportsController@getReport']);
+Route::get('/project/validations/reports/{id}/{validationId}/recommend-report',['as' => 'admin.project.validations.recommend-report.get', 'uses' => 'ValidationReportsController@getRecommendReport']);
 Route::get('/project/validations/reports/{id}/{validationId}/suggestion',['as' => 'admin.project.validations.reports.suggestion', 'uses' => 'ValidationReportsController@listSuggestions']);
 
 

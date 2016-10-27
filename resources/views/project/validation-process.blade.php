@@ -94,6 +94,21 @@
 	    	</div>
             <div class="row margin-top-10">
                 <div class="col-xs-12">
+                    <div class="form-group {{ $errors->has('recommend') ? "has-error": ""}}">
+                        <label class="control-label questionLabel">Você utilizaria e/ou recomendária o sistema para outra pessoa?*</label>
+                        <div class="radio">
+                        <label>
+                            <input type="radio" name="recommend" {{ old('recommend') == 1 ? "checked" : "" }} value="1">Sim
+                        </label>
+                        <label>
+                            <input type="radio" name="recommend" {{ old('recommend') === "0" ? "checked" : "" }} value="0">Não
+                        </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-top-10">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label for="suggestion" class="control-label questionLabel">Sugestão</label>
                         <textarea id="suggestion" class="form-control" name="suggestion" placeholder="Deixe qualquer mensagem para os integrantes do projeto">{{old('suggestion')}}</textarea>

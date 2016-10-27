@@ -8,7 +8,7 @@ use App\Models\DB\Answer;
 
 class Validation extends Model
 {
-	protected $fillable = ['name', 'email', 'project_validation_id', 'occupation', 'gender', 'age', 'suggestion'];
+	protected $fillable = ['name', 'email', 'project_validation_id', 'occupation', 'gender', 'age', 'recommend', 'suggestion'];
 
 	public function projectValdation()
 	{

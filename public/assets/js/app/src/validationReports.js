@@ -34,6 +34,7 @@ $(document).ready(function(){
 function refreshReports() {
 	buildGeneralReport();
 	buildQuestionsReport();
+	buildRecommendReport();
 }
 
 
@@ -77,6 +78,25 @@ function buildQuestionsReport(){
 				dataType: 'json'
 			});
 		}, 500);
+	});
+}
+
+function buildRecommendReport(){
+	var elemento = $(".recommendReport");
+	var pieChartArea = $(elemento).find(".percentual");
+	var barChartArea = $(elemento).find(".quantity");
+	var sendData = getFormData();
+	$.ajax({
+		url: RECOMMEND_REPORT_ROUTE,
+		type: "GET",
+		data: $.param(sendData),
+		success: function(data){
+			if (data.status) {
+				buildBarsReport(barChartArea, data.labels, data.data);
+				buildPieReport(pieChartArea, data.labels, data.data);
+			}
+		},
+		dataType: 'json'
 	});
 }
 

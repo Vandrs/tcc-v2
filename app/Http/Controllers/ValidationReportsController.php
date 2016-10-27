@@ -33,7 +33,8 @@ class ValidationReportsController extends Controller
 				'projectValidation' => $projectValidation,
 				'page_title' 		=> "Relatório: ".$projectValidation->title,
 				'js_variables'      => [
-					'REPORT_ROUTE'  => route('admin.project.validations.reports.get',['id' => $project->id, 'validationId' => $projectValidation->id])
+					'REPORT_ROUTE'  => route('admin.project.validations.reports.get',['id' => $project->id, 'validationId' => $projectValidation->id]),
+					'RECOMMEND_REPORT_ROUTE' => route('admin.project.validations.recommend-report.get',['id' => $project->id, 'validationId' => $projectValidation->id])
 				]
 			];
 			AssetLoader::register(['validationReports.js'],['admin.css'],['DataTables','ChartJS']);
@@ -50,11 +51,32 @@ class ValidationReportsController extends Controller
 			$projectValidation = ProjectValidation::where('project_id', '=', $id)
 												  ->where('id', '=', $validationId)
 												  ->firstOrFail();
-			$reportBusiness = new ValidationReportBusiness($projectValidation->id);
+			$reportBusiness = new ValidationReportBusiness();
 
 			$reportData = $reportBusiness->getReport(
 				$validationId, 
 				$request->input('question_id', null), 
+				$request->input('gender', null), 
+				$request->input('min_age', null), 
+				$request->input('max_age', null)
+			);
+			$reportData['status'] = 1;
+			return json_encode($reportData);
+		} catch (\Exception $e) {
+			Log::error(Utils::getExceptionFullMessage($e));
+            return $this->ajaxUnexpectedError();
+		}
+	}
+
+	public function getRecommendReport(Request $request, $id, $validationId)
+	{
+		try {
+			$projectValidation = ProjectValidation::where('project_id', '=', $id)
+													  ->where('id', '=', $validationId)
+													  ->firstOrFail();
+			$reportBusiness = new ValidationReportBusiness();
+			$reportData = $reportBusiness->recommendReport(
+				$validationId, 
 				$request->input('gender', null), 
 				$request->input('min_age', null), 
 				$request->input('max_age', null)

@@ -83,7 +83,8 @@ class ValidationBusiness
 			'occupation' => 'required',
 			'gender' 	 => 'required',
 			'age'		 => 'required|numeric|min:1',
-			'question'	 => 'required'
+			'question'	 => 'required',
+			'recommend'  => 'required'
 		];
 	}
 
@@ -96,8 +97,9 @@ class ValidationBusiness
 			'gender.required'     => 'Informe o Sexo',
 			'age.required'		  => 'Informe a Idade',
 			'age.numero'		  => 'A Idade deve ser um número positivo',
-			'age.min'			  => 'A Idade não pode ser um múmero negativo',
-			'question.required'	  => 'Preencha todas as questões.'
+			'age.min'			  => 'A Idade não pode ser um múmero nesgativo',
+			'question.required'	  => 'Preencha todas as questões.',
+			'recommend.required'  => 'Indique se você recomendário ou não o projeto'
 		];
 	}
 

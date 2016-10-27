@@ -41,7 +41,7 @@
         <div class="col-xs-12">
             <div class="row generalReport">
                 <div class="col-xs-12">
-                    <h4>Geral</h4>
+                    <h2 class="form-section-title">Geral</h2>
                 </div>
                 <div class="col-xs-12 col-md-6 margin-top-10">
                     <canvas class="generalPercentual"></canvas>
@@ -63,6 +63,17 @@
                 </div>
             </div>
             @endforeach
+            <div class="row recommendReport margin-top-20">
+                <div class="col-xs-12">
+                    <h2 class="form-section-title">Você utilizaria e/ou recomendária o sistema para outra pessoa?</h2>
+                </div>
+                <div class="col-xs-12 col-md-6 margin-top-10">
+                    <canvas class="percentual"></canvas>
+                </div>
+                <div class="col-xs-12 col-md-6 margin-top-10 ">
+                    <canvas class="quantity"></canvas>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
