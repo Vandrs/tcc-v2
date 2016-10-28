@@ -25,6 +25,11 @@ class ProjectEmailBusiness {
 		});
 	}
 
+	public function newValidationNotificationEmail($project)
+	{
+
+	}
+
 	private function buildFeedNotificationData($project, $user){
 		return [
 			'to'      	  => ['address' => $user->email, 'name' => $user->name],
@@ -37,5 +42,7 @@ class ProjectEmailBusiness {
 			]
 		];
 	}
+
+
 
 }

@@ -133,6 +133,19 @@ body {
     border-radius:5px;
 }
 
+.project-container .project-validations{
+    background-color: #ffaf49;
+    border: 1px solid #ffffff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+
+.project-container .project-validations a, 
+.project-container .project-validations a:hover{
+    color: #085d55;
+}
+
 ul.simple-list{
     list-style: none;
 }

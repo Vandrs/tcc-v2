@@ -15,6 +15,11 @@
                                 </a>
                             @endforeach
                         </div>
+                        <div class="gallery-button-container">
+                            <button class="btn btn-primary btn-raised showGallery">
+                                <i class="material-icons">image</i> Ver Imagens
+                            </button>
+                        </div>
                         @endif
                         <h2>Sobre o Projeto</h2>
                         <div class="project-description project-box">
@@ -116,11 +121,11 @@
                             </div>
                             @if($project->currentValidations()->count())
                             <div class="col-xs-12 margin-top-10">
-                                @foreach($project->currentValidations() as $validation)
-                                    <div margin-top-10>
-                                        <a href="{{$validation->url}}">{{$validation->title}}</a> <i class="material-icons">check</i>
-                                    </div>
-                                @endforeach
+                                <ul class="simple-list project-validations">
+                                    @foreach($project->currentValidations() as $validation)
+                                        <li><a href="{{$validation->url}}">{{$validation->title}} <i class="material-icons">check</i></a></li>
+                                    @endforeach
+                                </ul>
                             </div>
                             @else
                             <div class="col-xs-12 margin-top-10">
