@@ -25,9 +25,17 @@ class ProjectEmailBusiness {
 		});
 	}
 
-	public function newValidationNotificationEmail($project)
+	public function feedValidationNotificationEmail($validation)
 	{
-
+		$self = $this;
+		$validation->project->getFollowers()->each(function($user) use ($validation, $self){
+			$data = $self->buildValidationEmailData($validation, $user);
+			$mailBusiness = new MailBusiness($data);
+			if($mailBusiness->isValid()){
+				$job = (new SendEmailJob($data))->onQueue(EnumQueues::EMAIL);
+				$self->dispatch($job);
+			}
+		});
 	}
 
 	private function buildFeedNotificationData($project, $user){
@@ -39,6 +47,21 @@ class ProjectEmailBusiness {
 				'project_url'  => $project->url,
 				'project_name' => $project->title,
 				'user_name'    => $user->name,
+			]
+		];
+	}
+
+	private function buildValidationEmailData($validation, $user)
+	{
+		return [
+			'to'      	  => ['address' => $user->email, 'name' => $user->name],
+			'subject' 	  => 'Nova validação disponível	.',
+			'view' 	  	  => 'emails.new-validation',
+			'view_data'   => [
+				'project_url'  	 => $validation->project->url,
+				'project_name' 	 => $validation->project->title,
+				'user_name'    	 => $user->name,
+				'validation_url' => $validation->url
 			]
 		];
 	}

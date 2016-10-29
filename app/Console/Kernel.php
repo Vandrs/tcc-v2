@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\MakeDiffMatrix::class,
         \App\Console\Commands\ProjetcsToElastic::class,
         \App\Console\Commands\MapElasticModel::class,
-        \App\Console\Commands\ExportUsersToElastic::class
+        \App\Console\Commands\ExportUsersToElastic::class,
+        \App\Console\Commands\SendValidationEmails::class
     ];
 
     /**
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('app:make-diff-matrix')->cron('0 */6 * * *')->withoutOverlapping();
+        $schedule->command('app:make-diff-matrix')->cron('0 */2 * * *')->withoutOverlapping();
+        $schedule->command('app:send-validation-emails')->cron('0 */1 * * *')->withoutOverlapping();
     }
 }

@@ -99,6 +99,16 @@ class ProjectValidationBusiness
 		}
 	}
 
+	public function getValidationsToNotify()
+	{
+		$now = DateUtil::dateTimeInBrazil();
+		$validations = ProjectValidation::where('notified','=',0)
+						 				->where('started_at', '<=', $now)
+						 				->where('ended_at', '>=', $now)
+						 				->get(); 
+		return $validations;
+	}
+
 	public function rules($startedAt)
 	{
 		return [
