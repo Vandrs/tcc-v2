@@ -78,7 +78,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <h2 class="form-section-title">Sugestões</h2>
+            <h2 class="form-section-title">Sugestões e comentários</h2>
         </div>
     </div>
     <div class="row margin-top-10">

@@ -134,7 +134,8 @@ class CrudProjectBusiness{
 	}
 
 	public static function dispathElasticJob(Project $project){
-		(new self())->dispathJob($project);
+		$self = new self();
+		$self->exportProject($project);
 	}
 
 	public function exportProject(Project $project){

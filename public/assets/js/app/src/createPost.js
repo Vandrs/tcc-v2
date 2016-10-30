@@ -51,7 +51,7 @@ function simpleUpload(data, route){
 				if(data.status){
 					var html = "<img src='"+data.image+"' alt='"+data.name+"'/>";
 					var htmlEditor = editor.getContent();
-					editor.setContent(htmlEditor+html);					
+					editor.execCommand('mceInsertContent', false, html);
 				} else {
 					editor.windowManager.alert(data.msg);
 				}

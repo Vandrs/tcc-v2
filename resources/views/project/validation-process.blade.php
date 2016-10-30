@@ -110,7 +110,7 @@
             <div class="row margin-top-10">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="suggestion" class="control-label questionLabel">Sugestão</label>
+                        <label for="suggestion" class="control-label questionLabel">Deixe suas sugestões e comentários.</label>
                         <textarea id="suggestion" class="form-control" name="suggestion" placeholder="Deixe qualquer mensagem para os integrantes do projeto">{{old('suggestion')}}</textarea>
                     </div>
                 </div>
