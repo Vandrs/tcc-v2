@@ -13,11 +13,11 @@ class EnumLikert
 	public static function getLabels() 
 	{
 		return [
-			self::MUITO_SATISFEITO => "Muito satisfeito",
-			self::SATISFEITO => "Satisfeito",
-			self::SEM_OPINAR => "Não sei opinar",
-			self::INSATISFEITO => "Insatisfeito ",
 			self::MUITO_INSATISFEITO => "Muito Insatisfeito",
+			self::INSATISFEITO => "Insatisfeito ",
+			self::SEM_OPINAR => "Não sei opinar",
+			self::SATISFEITO => "Satisfeito",
+			self::MUITO_SATISFEITO => "Muito satisfeito",
 		];
 	}	
 

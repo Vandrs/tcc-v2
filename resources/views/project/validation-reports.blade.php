@@ -65,7 +65,7 @@
             @endforeach
             <div class="row recommendReport margin-top-20">
                 <div class="col-xs-12">
-                    <h2 class="form-section-title">Você utilizaria e/ou recomendária o sistema para outra pessoa?</h2>
+                    <h2 class="form-section-title">Você utilizaria e/ou recomendaria o sistema para outra pessoa?</h2>
                 </div>
                 <div class="col-xs-12 col-md-6 margin-top-10">
                     <canvas class="percentual"></canvas>

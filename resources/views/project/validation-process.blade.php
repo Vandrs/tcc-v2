@@ -95,7 +95,7 @@
             <div class="row margin-top-10">
                 <div class="col-xs-12">
                     <div class="form-group {{ $errors->has('recommend') ? "has-error": ""}}">
-                        <label class="control-label questionLabel">Você utilizaria e/ou recomendária o sistema para outra pessoa?*</label>
+                        <label class="control-label questionLabel">Você utilizaria e/ou recomendaria o sistema para outra pessoa?*</label>
                         <div class="radio">
                         <label>
                             <input type="radio" name="recommend" {{ old('recommend') == 1 ? "checked" : "" }} value="1">Sim
