@@ -45,9 +45,9 @@ class ProjectController extends Controller
         $description = $project->description ? StringUtil::limitaCaracteres(strip_tags($project->description), 160, '...') : '';
 
         $coverImage =  $project->images->sortByDesc(function($image){return $image->cover;})->values()->first();
-        
+
         if ($coverImage) {
-            $imageUrl = $coverImage->getImageUrl();
+            $imageUrl = $coverImage->getImageUrl(['w' => 400]);
         } else {
             $imageUrl = '';
         }
