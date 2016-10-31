@@ -12,7 +12,7 @@
 					</div>
 				</div>
 				<div class="row">
-					@if(count($user->skills))
+					@if(count($user->skills) && is_array($user->skills))
 					<div class="col-xs-12 skilss-area margin-top-20">
 						<h4 class="form-section-title">
 							Habilidades
