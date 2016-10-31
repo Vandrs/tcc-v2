@@ -12,7 +12,12 @@ class ProjectBusiness{
 		if($user && $user->qtdEvaluatedProjects()){
 			$slopeOne = new SlopeOne;
 			$projects = $slopeOne->getPredictions($user);
-			return $projects->slice(0,$qtdProjects);
+			if (empty($projects->count())) {
+				$searchProject = new ElasticSearchProject;
+    			return $searchProject->getTopRatedProjects($qtdProjects);
+			} else {
+				return $projects->slice(0,$qtdProjects);
+			}
 		} else {
 			$searchProject = new ElasticSearchProject;
     		return $searchProject->getTopRatedProjects($qtdProjects);
