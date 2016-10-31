@@ -4,6 +4,8 @@ return [
 
     'app_name' => 'C3 - Projetos',
 
+    'lear_more_link' => env('LEARN_MORE_LINK',null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

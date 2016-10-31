@@ -22,6 +22,13 @@
             </form>
         </div>
     </div>
+    @if(config('app.lear_more_link'))
+    <div class="row margin-top-10">
+        <div class="col-xs-12 text-center">
+            <h2><a href="{{config('app.lear_more_link')}}">Saiba mais!</a></h2>
+        </div>
+    </div>
+    @endif
     <div class="row margin-top-10">
         <div class="col-xs-12 text-center">
             <h2>Projetos em destaque</h2>
