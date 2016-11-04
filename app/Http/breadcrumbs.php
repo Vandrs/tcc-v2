@@ -19,6 +19,12 @@ BreadCrumbs::register('admin.user.projects',function($breadcrumbs){
 	$breadcrumbs->push('Meus projetos',route('admin.user.projects'));
 });
 
+BreadCrumbs::register('admin.user.projects-following',function($breadcrumbs){
+	$breadcrumbs->parent('admin.home');
+	$breadcrumbs->push('Projetos que sigo',route('admin.user.projects.following'));
+});
+
+
 BreadCrumbs::register('project.invitations',function($breadcrumbs){
 	$breadcrumbs->parent('admin.home');
 	$breadcrumbs->push('Convites',route('project.invitations'));

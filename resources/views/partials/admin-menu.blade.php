@@ -21,6 +21,11 @@
             </a>
         </li>
         <li>
+            <a href="{{route('admin.user.projects.following')}}">
+                <i class="glyphicon glyphicon-heart"></i> <span class="admin-menu-text">Projetos que sigo</span>
+            </a>
+        </li>
+        <li>
             <a href="{{route('search')}}">
                 <i class="glyphicon glyphicon-search"></i> <span class="admin-menu-text">Encontrar projetos</span>
             </a>

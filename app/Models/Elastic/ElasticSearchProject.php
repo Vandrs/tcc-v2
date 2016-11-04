@@ -98,6 +98,24 @@ class ElasticSearchProject{
 		return $this->doSearch($query, $page, $size);
 	}
 
+	public function searchUserFollowingProjects(User $user, $term = null, $filters = [], $page = 1, $size = 8){
+		$query = new Query();
+		$queryBuilder = new QueryBuilder;
+		$boolQuery = $queryBuilder->query()->bool();
+		if($term){
+			$boolQuery->addMust($this->simpleMultiMatchQuery($term));
+		}
+		if(!empty($filters)){
+			$boolQuery->addFilter($queryBuilder->query()->term($filters));
+		}
+		$boolQuery->addMust($queryBuilder->query()->term(["followers.id" => $user->id]));
+		$query->setQuery($boolQuery)
+			  ->setFrom(Utils::calcFromIndex($page,$size))
+			  ->setSize($size);
+		$query->addSort(['title' => ['order' => 'asc','mode' => 'min']]);
+		return $this->doSearch($query, $page, $size);
+	}
+
 	private function simpleMultiMatchQuery($term){
 		$multiMatchQuery = new MultiMatch();
 		$multiMatchQuery->setQuery($term)

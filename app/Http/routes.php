@@ -31,6 +31,7 @@ Route::get('/login/linkedin/callback',['as' => 'login.linkedin.callback', 'uses'
 
 /*Projeto*/
 Route::get('/meus-projetos',['as' => 'admin.user.projects', 'uses' => 'ProjectController@userProjects']);
+Route::get('/projetos-que-sigo',['as' => 'admin.user.projects.following', 'uses' => 'ProjectController@userFollowingProjects']);
 Route::get('/projeto/novo',['as' => 'admin.project.create', 'uses' => 'ProjectController@create']);
 Route::get('/projeto/{path}',['as' => 'site.project.view', 'uses' => 'ProjectController@view']);
 Route::post('/projeto/cadastrar',['as' => 'admin.project.store', 'uses' => 'ProjectController@store']);

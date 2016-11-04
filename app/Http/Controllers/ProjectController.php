@@ -189,6 +189,42 @@ class ProjectController extends Controller
         return view('project.user-projects',$data);
     }
 
+    public function userFollowingProjects(Request $request)
+    {
+        $page = $request->input('page',1);
+        $q = $request->get('q',null);
+        $categoryid = $request->get('category_id',null);
+        if($categoryid){
+            $filters = ["category_id" => $categoryid];
+        } else {
+            $filters = [];
+        }
+        $searchProject = new ElasticSearchProject;
+        $projects = $searchProject->searchUserFollowingProjects(Auth::user(), $q, $filters, $page, 8);
+        if($q){
+            $projects->appends(['q' => $q]);
+        }
+        if(!empty($filters)){
+            foreach($filters as $key => $value){
+                $projects->appends([$key => $value]);
+            }
+        }
+        $projects->setPath(route('admin.user.projects.following'));
+        $data = [
+            "categories"         => Category::orderBy('name','ASC')->get(),
+            "searchTerm"         => $q,
+            "selectedCategoryId" => $categoryid,
+            "page_title"         => 'Projetos que sigo',
+            "projects"           => $projects
+        ];
+        AssetLoader::register(
+            ['projectRating.js','deleteProject.js'],
+            ['admin.css'],
+            ['StarRating']
+        );
+        return view('project.user-projects-folowing',$data);
+    }
+
     public function follow(Request $request, $id){
         try{
             $project = Project::findOrFail($id);
