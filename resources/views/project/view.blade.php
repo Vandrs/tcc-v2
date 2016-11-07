@@ -43,7 +43,7 @@
                         @endif
                         @if( count($project->urls) || $project->files->count())
                         <div class="project-extra">
-                            <h2>Sobre mais sobre o projeto</h2>
+                            <h2>Mais sobre o projeto</h2>
                             <ul class="simple-list project-extra-items">
                                 @foreach($project->urls as $url)
                                     <li><a href="{{UrlUtil::makeExternal($url)}}" target="_blank"><i class="glyphicon glyphicon-link"></i> {{$url}}</a></li>
