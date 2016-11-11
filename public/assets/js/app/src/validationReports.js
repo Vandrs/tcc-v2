@@ -240,7 +240,7 @@ function buildPieReport(ctx, labels, data){
 
 						ctx.font = '18px Arial';
 						ctx.textAlign = "center";
-						ctx.fillStyle = "#ffffff";
+						ctx.fillStyle = "#000";
 
 						Chart.helpers.each(self.data.datasets.forEach(function (dataset, datasetIndex) {
 						    var meta = self.getDatasetMeta(datasetIndex),
