@@ -1,4 +1,51 @@
+Chart.pluginService.register({
+    beforeRender: function (chart) {
+        if (chart.config.options.showAllTooltips) {
+            // create an array of tooltips
+            // we can't use the chart tooltip because there is only one tooltip per chart
+            chart.pluginTooltips = [];
+            chart.config.data.datasets.forEach(function (dataset, i) {
+                chart.getDatasetMeta(i).data.forEach(function (sector, j) {
+                    chart.pluginTooltips.push(new Chart.Tooltip({
+                        _chart: chart.chart,
+                        _chartInstance: chart,
+                        _data: chart.data,
+                        _options: chart.options,
+                        _active: [sector]
+                    }, chart));
+                });
+            });
+
+            // turn off normal tooltips
+            chart.options.tooltips.enabled = false;
+        }
+    },
+    afterDraw: function (chart, easing) {
+        if (chart.config.options.showAllTooltips) {
+            // we don't want the permanent tooltips to animate, so don't do anything till the animation runs atleast once
+            if (!chart.allTooltipsOnce) {
+                if (easing !== 1)
+                    return;
+                chart.allTooltipsOnce = true;
+            }
+
+            // turn on tooltips
+            chart.options.tooltips.enabled = true;
+            Chart.helpers.each(chart.pluginTooltips, function (tooltip) {
+                tooltip.initialize();
+                tooltip.update();
+                // we don't actually need this since we are not animating tooltips
+                tooltip.pivot();
+                tooltip.transition(easing).draw();
+            });
+            chart.options.tooltips.enabled = false;
+        }
+    }
+});
+
+
 $(document).ready(function(){
+
 	var suggestionsTable = $("#suggestionsTable");
 	var dataTableRoute = $(suggestionsTable).attr('data-list-route');
 	var dataTable = $(suggestionsTable).dataTable({
@@ -173,17 +220,70 @@ function buildPieReport(ctx, labels, data){
 		    },
 		    options: {
 		    	title: {
-            		display: false,
+            		display: true,
         		},
         		scales: {
 		            yAxes: [{
 		                display: false
 		            }]
 		        },
-	        	responsive: true
+		        legend: {
+		        	display: true
+		        },
+	        	responsive: true,
+	        	animation: {
+					duration: 0,
+					onComplete: function () {
+					var self = this,
+					    chartInstance = this.chart,
+					    ctx = chartInstance.ctx;
+
+					ctx.font = '18px Arial';
+					ctx.textAlign = "center";
+					ctx.fillStyle = "#ffffff";
+
+					Chart.helpers.each(self.data.datasets.forEach(function (dataset, datasetIndex) {
+					    var meta = self.getDatasetMeta(datasetIndex),
+					        total = 0, //total values to compute fraction
+					        labelxy = [],
+					        offset = Math.PI / 2, //start sector from top
+					        radius,
+					        centerx,
+					        centery, 
+					        lastend = 0; //prev arc's end line: starting with 0
+
+					    for (var val of dataset.data) { total += val; } 
+
+					    Chart.helpers.each(meta.data.forEach( function (element, index) {
+					        radius = 0.9 * element._model.outerRadius - element._model.innerRadius;
+					        centerx = element._model.x;
+					        centery = element._model.y;
+					        var thispart = dataset.data[index],
+					            arcsector = Math.PI * (2 * thispart / total);
+					        if (element.hasValue() && dataset.data[index] > 0) {
+					          labelxy.push(lastend + arcsector / 2 + Math.PI + offset);
+					        }
+					        else {
+					          labelxy.push(-1);
+					        }
+					        lastend += arcsector;
+					    }), self)
+
+					    var lradius = radius * 3 / 4;
+					    for (var idx in labelxy) {
+					      if (labelxy[idx] === -1) continue;
+					      var langle = labelxy[idx],
+					          dx = centerx + lradius * Math.cos(langle),
+					          dy = centery + lradius * Math.sin(langle),
+					          val = Math.round(dataset.data[idx] / total * 100);
+					      ctx.fillText(val + '%', dx, dy);
+					    }
+
+					}), self);
+					}
+					},
 	        }    
 		});
-
 	ctx.data("chart",barChart);
 }
 
