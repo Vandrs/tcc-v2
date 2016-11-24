@@ -8,7 +8,7 @@
     </div>
     <div class="row margin-bottom-20">
         <div class="col-xs-12 col-md-8">
-            <form action="{{route('admin.user.projects')}}" method="GET" class="row">
+            <form action="{{route('admin.user.projects.following')}}" method="GET" class="row">
                 <div class="col-xs-4">
                     <select name='category_id' class="form-control" placeholder="Selecionar categoria">
                         <option value="">Selecionar categoria</option>
